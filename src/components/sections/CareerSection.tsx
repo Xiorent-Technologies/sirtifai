@@ -3,14 +3,14 @@
 import { useRef } from "react"
 import { motion, useInView } from "framer-motion"
 
-const MotionDiv = motion.div
-const MotionH2 = motion.h2
-const MotionP = motion.p
-const MotionButton = motion.button
+const MotionDiv = motion.div as React.ComponentType<any>
+const MotionH2 = motion.h2 as React.ComponentType<any>
+const MotionP = motion.p as React.ComponentType<any>
+const MotionButton = motion.button as React.ComponentType<any>
 
 export default function PartnersAndCTA() {
-  const sectionRef = useRef(null)
-  const isInView = useInView(sectionRef, { once: true, margin: "-100px" })
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const isInView = useInView(sectionRef as React.RefObject<Element>, { once: true, margin: "-100px" })
 
   return (
     <MotionDiv

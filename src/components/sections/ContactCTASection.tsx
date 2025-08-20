@@ -2,14 +2,16 @@
 import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
 
-const MotionSection = motion.section
-const MotionDiv = motion.div
-const MotionH2 = motion.h2
-const MotionP = motion.p
+const MotionSection = motion.section as React.ComponentType<any>
+const MotionDiv = motion.div as React.ComponentType<any>
+const MotionH2 = motion.h2 as React.ComponentType<any>
+const MotionP = motion.p as React.ComponentType<any>
+const MotionSpan = motion.span as React.ComponentType<any>
+const MotionA = motion.a as React.ComponentType<any>
 
 export const ContactCTASection = () => {
-  const ctaRef = useRef(null)
-  const ctaInView = useInView(ctaRef, { once: true, margin: "-100px" })
+  const ctaRef = useRef<HTMLDivElement>(null)
+  const ctaInView = useInView(ctaRef as React.RefObject<Element>, { once: true, margin: "-100px" })
 
   return (
     <MotionSection
@@ -36,22 +38,22 @@ export const ContactCTASection = () => {
           animate={ctaInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <motion.span
+          <MotionSpan
             className="block"
             initial={{ opacity: 0, x: -20 }}
             animate={ctaInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
             &ldquo;Your Career Questions
-          </motion.span>
-          <motion.span
+          </MotionSpan>
+          <MotionSpan
             className="block"
             initial={{ opacity: 0, x: -20 }}
             animate={ctaInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
             transition={{ duration: 0.6, delay: 0.6 }}
           >
             Deserve Instant Answers&rdquo;
-          </motion.span>
+          </MotionSpan>
         </MotionH2>
         <MotionP
           className="max-w-xl md:max-w-[52ch] mx-auto text-[13.75px] xs:text-[14.25px] md:text-[15px] lg:text-[15.5px] xl:text-[16px] leading-relaxed md:leading-relaxed text-white/95 tracking-tight"
@@ -69,31 +71,31 @@ export const ContactCTASection = () => {
           transition={{ duration: 0.6, delay: 0.8 }}
         >
           <div className="cta-row flex items-center gap-4">
-            <motion.a
+            <MotionA
               href="https://wa.me/0000000000"
               className="cta-pill bg-white text-[#1f2937] shadow-sm hover:shadow-md"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
               Chat With Us
-            </motion.a>
-            <motion.a
+            </MotionA>
+            <MotionA
               href="mailto:support@sirtifai.com"
               className="cta-pill bg-[#1f2937] text-white shadow-sm hover:shadow-md"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
               Send Us An Email
-            </motion.a>
+            </MotionA>
           </div>
-          <motion.a
+          <MotionA
             href="tel:+0000000000"
             className="cta-pill cta-call mx-auto bg-[#FF8B5C] text-white/95 shadow-sm hover:shadow-md"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             Call Us
-          </motion.a>
+          </MotionA>
         </MotionDiv>
         <MotionDiv
           className="hidden md:flex items-center justify-center gap-6 flex-wrap"
@@ -101,7 +103,7 @@ export const ContactCTASection = () => {
           animate={ctaInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.6, delay: 0.8 }}
         >
-          <motion.a
+          <MotionA
             href="https://wa.me/0000000000"
             className="cta-pill bg-white text-[#1f2937] shadow-sm hover:shadow-md px-9 py-3.5 text-[12.5px] lg:text-[13px] xl:text-[13.5px] min-w-[170px] justify-center"
             initial={{ opacity: 0, scale: 0.9 }}
@@ -111,8 +113,8 @@ export const ContactCTASection = () => {
             whileTap={{ scale: 0.95 }}
           >
             Chat With Us
-          </motion.a>
-          <motion.a
+          </MotionA>
+          <MotionA
             href="mailto:support@sirtifai.com"
             className="cta-pill bg-white text-[#1f2937] shadow-sm hover:shadow-md px-9 py-3.5 text-[12.5px] lg:text-[13px] xl:text-[13.5px] min-w-[170px] justify-center"
             initial={{ opacity: 0, scale: 0.9 }}
@@ -122,8 +124,8 @@ export const ContactCTASection = () => {
             whileTap={{ scale: 0.95 }}
           >
             Send Us An Email
-          </motion.a>
-          <motion.a
+          </MotionA>
+          <MotionA
             href="tel:+0000000000"
             className="cta-pill bg-white text-[#1f2937] shadow-sm hover:shadow-md px-9 py-3.5 text-[12.5px] lg:text-[13px] xl:text-[13.5px] min-w-[170px] justify-center"
             initial={{ opacity: 0, scale: 0.9 }}
@@ -133,7 +135,7 @@ export const ContactCTASection = () => {
             whileTap={{ scale: 0.95 }}
           >
             Call Us
-          </motion.a>
+          </MotionA>
         </MotionDiv>
       </div>
     </MotionSection>

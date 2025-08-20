@@ -9,12 +9,12 @@ import { useRef, useState } from "react"
 import "swiper/css"
 import "swiper/css/navigation"
 
-const MotionDiv = motion.div
-const MotionH2 = motion.h2
-const MotionH3 = motion.h3
-const MotionH4 = motion.h4
-const MotionP = motion.p
-const MotionImg = motion.img
+const MotionDiv = motion.div as React.ComponentType<any>
+const MotionH2 = motion.h2 as React.ComponentType<any>
+const MotionH3 = motion.h3 as React.ComponentType<any>
+const MotionH4 = motion.h4 as React.ComponentType<any>
+const MotionP = motion.p as React.ComponentType<any>
+const MotionImg = motion.img as React.ComponentType<any>
 
 const teamMembers = [
   {
@@ -47,14 +47,14 @@ const teamMembers = [
 ]
 
 export default function TeamMemberCarousel() {
-  const sectionRef = useRef(null)
-  const headerRef = useRef(null)
-  const carouselRef = useRef(null)
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const headerRef = useRef<HTMLDivElement>(null)
+  const carouselRef = useRef<HTMLDivElement>(null)
   const [expandedMembers, setExpandedMembers] = useState<number[]>([])
 
-  const sectionInView = useInView(sectionRef, { once: true, margin: "-50px" })
-  const headerInView = useInView(headerRef, { once: true, margin: "-100px" })
-  const carouselInView = useInView(carouselRef, { once: true, margin: "-100px" })
+  const sectionInView = useInView(sectionRef as React.RefObject<Element>, { once: true, margin: "-50px" })
+  const headerInView = useInView(headerRef as React.RefObject<Element>, { once: true, margin: "-100px" })
+  const carouselInView = useInView(carouselRef as React.RefObject<Element>, { once: true, margin: "-100px" })
 
   const toggleMemberExpansion = (memberId: number) => {
     setExpandedMembers(prev => 

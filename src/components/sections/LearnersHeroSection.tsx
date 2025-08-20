@@ -3,23 +3,23 @@ import { CalendarCheck } from "lucide-react"
 import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
 
-const MotionSection = motion.section
-const MotionDiv = motion.div
-const MotionH1 = motion.h1
-const MotionP = motion.p
-const MotionButton = motion.button
-const MotionImg = motion.img
-const MotionSpan = motion.span
-const MotionA = motion.a
+const MotionSection = motion.section as React.ComponentType<any>
+const MotionDiv = motion.div as React.ComponentType<any>
+const MotionH1 = motion.h1 as React.ComponentType<any>
+const MotionP = motion.p as React.ComponentType<any>
+const MotionButton = motion.button as React.ComponentType<any>
+const MotionImg = motion.img as React.ComponentType<any>
+const MotionSpan = motion.span as React.ComponentType<any>
+const MotionA = motion.a as React.ComponentType<any>
 
 export const LearnersHeroSection = () => {
-  const sectionRef = useRef(null)
-  const leftContentRef = useRef(null)
-  const rightContentRef = useRef(null)
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const leftContentRef = useRef<HTMLDivElement>(null)
+  const rightContentRef = useRef<HTMLDivElement>(null)
 
-  const sectionInView = useInView(sectionRef, { once: true, margin: "-50px" })
-  const leftInView = useInView(leftContentRef, { once: true, margin: "-100px" })
-  const rightInView = useInView(rightContentRef, { once: true, margin: "-100px" })
+  const sectionInView = useInView(sectionRef as React.RefObject<Element>, { once: true, margin: "-50px" })
+  const leftInView = useInView(leftContentRef as React.RefObject<Element>, { once: true, margin: "-100px" })
+  const rightInView = useInView(rightContentRef as React.RefObject<Element>, { once: true, margin: "-100px" })
 
   return (
     <MotionSection
@@ -86,13 +86,13 @@ export const LearnersHeroSection = () => {
               >
                 <div className="flex -ml-2 items-center border  rounded-full px-5 py-1.5 border-zinc-300">
                   <span className="tracking-wide ">Book A Demo</span>
-                  <motion.div
+                  <MotionDiv
                     className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center ml-3"
                     whileHover={{ rotate: 360 }}
                     transition={{ duration: 0.3 }}
                   >
                     <CalendarCheck size={20} className="text-white" />
-                  </motion.div>
+                  </MotionDiv>
                 </div>
               </MotionButton>
 
@@ -189,7 +189,6 @@ export const LearnersHeroSection = () => {
                 animate={rightInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 50, scale: 0 }}
                 transition={{ duration: 0.6, delay: 1.0 }}
                 whileHover={{ scale: 1.1, rotate: 360 }}
-                transition={{ duration: 0.3 }}
               >
                 <img src="/assets/ic_round-wifi-tethering.svg" alt="Wifi Icon" className="w-10 h-10" />
               </MotionDiv>

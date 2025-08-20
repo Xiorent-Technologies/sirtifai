@@ -23,26 +23,27 @@ const industries = ["HR", "Finance", "Legal", "Education", "Construction", "Heal
 
 import { AboutSection } from "./AboutSection"
 
-const MotionDiv = motion.div
-const MotionImg = motion.img
-const MotionH1 = motion.h1
-const MotionP = motion.p
-const MotionH2 = motion.h2
-const MotionH3 = motion.h3
-const MotionUl = motion.ul
-const MotionLi = motion.li
-const MotionSection = motion.section
+// Strongly typed motion components to fix TypeScript errors
+const MotionDiv = motion.div as React.ComponentType<any>
+const MotionImg = motion.img as React.ComponentType<any>
+const MotionH1 = motion.h1 as React.ComponentType<any>
+const MotionP = motion.p as React.ComponentType<any>
+const MotionH2 = motion.h2 as React.ComponentType<any>
+const MotionH3 = motion.h3 as React.ComponentType<any>
+const MotionUl = motion.ul as React.ComponentType<any>
+const MotionLi = motion.li as React.ComponentType<any>
+const MotionSection = motion.section as React.ComponentType<any>
 
 export const AboutUsPage = () => {
-  const heroRef = useRef(null)
-  const whySertifaiRef = useRef(null)
-  const industriesRef = useRef(null)
-  const howDifferentRef = useRef(null)
+  const heroRef = useRef<HTMLDivElement>(null)
+  const whySertifaiRef = useRef<HTMLDivElement>(null)
+  const industriesRef = useRef<HTMLDivElement>(null)
+  const howDifferentRef = useRef<HTMLDivElement>(null)
 
-  const heroInView = useInView(heroRef, { once: true, margin: "-100px" })
-  const whySertifaiInView = useInView(whySertifaiRef, { once: true, margin: "-100px" })
-  const industriesInView = useInView(industriesRef, { once: true, margin: "-100px" })
-  const howDifferentInView = useInView(howDifferentRef, { once: true, margin: "-100px" })
+  const heroInView = useInView(heroRef as React.RefObject<Element>, { once: true, margin: "-100px" })
+  const whySertifaiInView = useInView(whySertifaiRef as React.RefObject<Element>, { once: true, margin: "-100px" })
+  const industriesInView = useInView(industriesRef as React.RefObject<Element>, { once: true, margin: "-100px" })
+  const howDifferentInView = useInView(howDifferentRef as React.RefObject<Element>, { once: true, margin: "-100px" })
 
   return (
     <div className="min-h-screen bg-[#FEF7F1]">
@@ -127,7 +128,7 @@ export const AboutUsPage = () => {
             />
           </MotionDiv>
         </div>
-      </MotionSection>
+            </MotionSection>
 
       {/* Why Sertifai (Figma) */}
       <MotionSection
@@ -180,15 +181,15 @@ export const AboutUsPage = () => {
               <div className="mt-3 flex -space-x-2">
                 {[avatar1, avatar2, avatar3, avatar4, avatar5, avatar6].map((a, i) => (
                   <MotionImg
-                    key={i}
-                    src={a}
-                    alt="avatar"
-                    className="w-6 h-6 rounded-full ring-2 ring-white object-cover"
+                      key={i}
+                      src={a}
+                      alt="avatar"
+                      className="w-6 h-6 rounded-full ring-2 ring-white object-cover"
                     initial={{ opacity: 0, scale: 0 }}
                     animate={whySertifaiInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
                     transition={{ duration: 0.3, delay: 1.0 + i * 0.1 }}
                     whileHover={{ scale: 1.2, zIndex: 10 }}
-                  />
+                    />
                 ))}
               </div>
             </MotionDiv>
@@ -284,11 +285,11 @@ export const AboutUsPage = () => {
               animate={whySertifaiInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.6, delay: 2.0 }}
             >
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <MotionDiv whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Button className="rounded-full" variant="primary" size="md">
-                  View More
-                </Button>
-              </motion.div>
+                View More
+              </Button>
+              </MotionDiv>
             </MotionDiv>
           </MotionDiv>
         </div>
@@ -305,28 +306,28 @@ export const AboutUsPage = () => {
         animate={industriesInView ? { opacity: 1 } : { opacity: 0 }}
         transition={{ duration: 0.8 }}
       >
-        <div className="max-w-7xl mx-auto px-6 py-4 overflow-hidden">
-          <div className="relative w-full">
-            {/* Marquee wrapper */}
-            <div className="flex whitespace-nowrap animate-marquee">
-              {industries.concat(industries).map((item, idx) => (
+      <div className="max-w-7xl mx-auto px-6 py-4 overflow-hidden">
+        <div className="relative w-full">
+          {/* Marquee wrapper */}
+          <div className="flex whitespace-nowrap animate-marquee">
+            {industries.concat(industries).map((item, idx) => (
                 <MotionDiv
-                  key={idx}
-                  className="italic mx-5 opacity-90 text-lg flex-shrink-0"
+                key={idx}
+                className="italic mx-5 opacity-90 text-lg flex-shrink-0"
                   initial={{ opacity: 0, y: 20 }}
                   animate={industriesInView ? { opacity: 0.9, y: 0 } : { opacity: 0, y: 20 }}
                   transition={{ duration: 0.4, delay: idx * 0.1 }}
                   whileHover={{ scale: 1.1, opacity: 1 }}
-                >
-                  {item}
+              >
+                {item}
                 </MotionDiv>
-              ))}
-            </div>
+            ))}
           </div>
         </div>
+      </div>
 
-        {/* Tailwind + custom animation */}
-        <style>{`
+      {/* Tailwind + custom animation */}
+      <style>{`
         @keyframes marquee {
           0% { transform: translateX(0); }
           100% { transform: translateX(-50%); }
@@ -338,7 +339,7 @@ export const AboutUsPage = () => {
       `}</style>
       </MotionSection>
 
-      {/* How Sirtifai is different? */}
+   {/* How Sirtifai is different? */}
       <MotionSection
         ref={howDifferentRef}
         className="py-16 bg-white"
@@ -347,14 +348,14 @@ export const AboutUsPage = () => {
         transition={{ duration: 0.8 }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-3 gap-12">
-          {/* Left column */}
+    {/* Left column */}
           <MotionDiv
             className="flex flex-col gap-8"
             initial={{ opacity: 0, x: -50 }}
             animate={howDifferentInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            {/* Intro text */}
+      {/* Intro text */}
             <div className="text-center lg:text-left">
               <MotionH2
                 className="text-xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight"
@@ -362,7 +363,7 @@ export const AboutUsPage = () => {
                 animate={howDifferentInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
               >
-                How Sirtifai is different?
+          How Sirtifai is different?
               </MotionH2>
               <MotionP
                 className="text-sm ext-gray-600 sm:text-lg max-w-lg mx-auto lg:mx-0"
@@ -373,9 +374,9 @@ export const AboutUsPage = () => {
                 Sirtifai is a career transformation platform that connects learning directly with earning and job
                 placement.
               </MotionP>
-            </div>
+      </div>
 
-            {/* Global Certifications card */}
+      {/* Global Certifications card */}
             <MotionDiv
               className="hidden md:block rounded-[28px] border border-[#000] bg-white shadow-[0_6px_0_0_#D4D4D4] p-4 sm:p-6 min-h-0 md:min-h-[210px] lg:min-h-[250px] h-auto w-full lg:max-w-[360px] mt-0 sm:mt-5"
               initial={{ opacity: 0, y: 50, scale: 0.9 }}
@@ -383,10 +384,10 @@ export const AboutUsPage = () => {
               transition={{ duration: 0.6, delay: 0.8 }}
               whileHover={{ scale: 1.02, y: -5 }}
             >
-              <div className="flex items-start gap-4 mb-4">
+        <div className="flex items-start gap-4 mb-4">
                 <MotionImg
-                  src={aboutStart}
-                  alt="feature icon"
+            src={aboutStart}
+            alt="feature icon"
                   className="w-14 h-14 sm:w-16 sm:h-16 object-contain -mt-1 drop-shadow-[2px_4px_0_rgba(0,0,0,0.25)]"
                   initial={{ opacity: 0, rotate: -10 }}
                   animate={howDifferentInView ? { opacity: 1, rotate: 0 } : { opacity: 0, rotate: -10 }}
@@ -398,9 +399,9 @@ export const AboutUsPage = () => {
                   animate={howDifferentInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                   transition={{ duration: 0.4, delay: 1.2 }}
                 >
-                  Global Certifications
+            Global Certifications
                 </MotionH3>
-              </div>
+        </div>
               <div className="h-px w-full bg-black my-4 sm:my-5" />
               <MotionP
                 className="text-sm sm:text-[15px] text-gray-700 leading-6 sm:leading-7"
@@ -408,7 +409,7 @@ export const AboutUsPage = () => {
                 animate={howDifferentInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
                 transition={{ duration: 0.4, delay: 1.4 }}
               >
-                NSQF Certification: Globally recognized certification, trusted by employers in India, MENA, and SEA.
+          NSQF Certification: Globally recognized certification, trusted by employers in India, MENA, and SEA.
               </MotionP>
             </MotionDiv>
           </MotionDiv>
@@ -445,7 +446,7 @@ export const AboutUsPage = () => {
                 >
                   Income from Day 1
                 </MotionH3>
-              </div>
+      </div>
               <div className="h-px w-full bg-black my-4 sm:my-5" />
               <MotionP
                 className="text-sm sm:text-[15px] text-gray-700 leading-6 sm:leading-7"
@@ -482,7 +483,7 @@ export const AboutUsPage = () => {
                 >
                   Verified Payroll (DEEL™)
                 </MotionH3>
-              </div>
+    </div>
               <div className="h-px w-full bg-black my-4 sm:my-5" />
               <MotionP
                 className="text-sm sm:text-[15px] text-gray-700 leading-6 sm:leading-7"
@@ -501,11 +502,11 @@ export const AboutUsPage = () => {
               animate={howDifferentInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 50, scale: 0.9 }}
               transition={{ duration: 0.6, delay: 1.0 }}
               whileHover={{ scale: 1.02, y: -5 }}
-            >
-              <div className="flex items-start gap-4 mb-4">
+        >
+          <div className="flex items-start gap-4 mb-4">
                 <MotionImg
-                  src={aboutStart}
-                  alt="feature icon"
+              src={aboutStart}
+              alt="feature icon"
                   className="w-14 h-14 sm:w-16 sm:h-16 object-contain -mt-1 drop-shadow-[2px_4px_0_rgba(0,0,0,0.25)]"
                   initial={{ opacity: 0, rotate: -10 }}
                   animate={howDifferentInView ? { opacity: 1, rotate: 0 } : { opacity: 0, rotate: -10 }}
@@ -519,7 +520,7 @@ export const AboutUsPage = () => {
                 >
                   Global Certifications
                 </MotionH3>
-              </div>
+          </div>
               <div className="h-px w-full bg-black my-4 sm:my-5" />
               <MotionP
                 className="text-sm sm:text-[15px] text-gray-700 leading-6 sm:leading-7"
@@ -556,7 +557,7 @@ export const AboutUsPage = () => {
                 >
                   Lifetime Re-entry & Career Switch Support
                 </MotionH3>
-              </div>
+    </div>
               <div className="h-px w-full bg-black my-4 sm:my-5" />
               <MotionP
                 className="text-sm sm:text-[15px] text-gray-700 leading-6 sm:leading-7"
@@ -605,7 +606,7 @@ export const AboutUsPage = () => {
               </MotionP>
             </MotionDiv>
           </MotionDiv>
-        </div>
+          </div>
       </MotionSection>
 
       <AboutSection />

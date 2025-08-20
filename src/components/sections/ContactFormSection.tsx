@@ -5,19 +5,21 @@ import { Instagram, Twitter, Facebook, Youtube } from "lucide-react"
 import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
 
-const MotionSection = motion.section
-const MotionDiv = motion.div
-const MotionH2 = motion.h2
-const MotionP = motion.p
-const MotionForm = motion.form
-const MotionInput = motion.input
-const MotionTextarea = motion.textarea
-const MotionButton = motion.button
-const MotionLabel = motion.label
+const MotionSection = motion.section as React.ComponentType<any>
+const MotionDiv = motion.div as React.ComponentType<any>
+const MotionH2 = motion.h2 as React.ComponentType<any>
+const MotionP = motion.p as React.ComponentType<any>
+const MotionForm = motion.form as React.ComponentType<any>
+const MotionInput = motion.input as React.ComponentType<any>
+const MotionTextarea = motion.textarea as React.ComponentType<any>
+const MotionButton = motion.button as React.ComponentType<any>
+const MotionLabel = motion.label as React.ComponentType<any>
+const MotionHeader = motion.header as React.ComponentType<any>
+const MotionA = motion.a as React.ComponentType<any>
 
 export const ContactFormSection = () => {
-  const sectionRef = useRef(null)
-  const sectionInView = useInView(sectionRef, { once: true, margin: "-100px" })
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const sectionInView = useInView(sectionRef as React.RefObject<Element>, { once: true, margin: "-100px" })
 
   return (
     <MotionSection
@@ -50,7 +52,7 @@ export const ContactFormSection = () => {
               animate={sectionInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              <motion.header
+              <MotionHeader
                 className="mb-10"
                 initial={{ opacity: 0, y: 30 }}
                 animate={sectionInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
@@ -72,7 +74,7 @@ export const ContactFormSection = () => {
                 >
                   Let&apos;s get in touch!
                 </MotionP>
-              </motion.header>
+              </MotionHeader>
 
               <MotionForm
                 className="space-y-8 max-w-2xl"
@@ -211,7 +213,7 @@ export const ContactFormSection = () => {
                 transition={{ duration: 0.6, delay: 1.0 }}
               >
                 {[Instagram, Twitter, Facebook, Youtube].map((Icon, index) => (
-                  <motion.a
+                  <MotionA
                     key={index}
                     href="#"
                     aria-label={Icon.name}
@@ -223,7 +225,7 @@ export const ContactFormSection = () => {
                     whileTap={{ scale: 0.9 }}
                   >
                     <Icon size={16} strokeWidth={1.8} />
-                  </motion.a>
+                  </MotionA>
                 ))}
               </MotionDiv>
             </MotionDiv>
@@ -259,7 +261,7 @@ export const ContactFormSection = () => {
               animate={sectionInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               transition={{ duration: 0.6, delay: 0.6 }}
             >
-              <motion.header
+              <MotionHeader
                 className="mb-7"
                 initial={{ opacity: 0, y: 20 }}
                 animate={sectionInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -281,7 +283,7 @@ export const ContactFormSection = () => {
                 >
                   Let&apos;s get in touch!
                 </MotionP>
-              </motion.header>
+              </MotionHeader>
               <MotionForm
                 className="space-y-5"
                 initial={{ opacity: 0, y: 20 }}
@@ -388,7 +390,7 @@ export const ContactFormSection = () => {
                 </MotionP>
                 <div className="flex items-center justify-center gap-5 text-black">
                   {[Instagram, Twitter, Facebook, Youtube].map((Icon, index) => (
-                    <motion.a
+                    <MotionA
                       key={index}
                       href="#"
                       aria-label={Icon.name}
@@ -400,7 +402,7 @@ export const ContactFormSection = () => {
                       whileTap={{ scale: 0.9 }}
                     >
                       <Icon size={17} strokeWidth={1.8} />
-                    </motion.a>
+                    </MotionA>
                   ))}
                 </div>
               </MotionDiv>

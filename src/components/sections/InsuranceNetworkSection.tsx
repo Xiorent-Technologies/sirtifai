@@ -1,9 +1,17 @@
 "use client"
 import { motion } from "framer-motion"
 
+// Strongly typed motion components to fix TypeScript errors
+const MotionSection = motion.section as React.ComponentType<any>
+const MotionDiv = motion.div as React.ComponentType<any>
+const MotionH2 = motion.h2 as React.ComponentType<any>
+const MotionH3 = motion.h3 as React.ComponentType<any>
+const MotionP = motion.p as React.ComponentType<any>
+const MotionSpan = motion.span as React.ComponentType<any>
+
 export const InsuranceNetworkSection = () => {
   return (
-    <motion.section
+    <MotionSection
       className="w-full bg-white py-8 sm:py-12 px-4 sm:px-6"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
@@ -12,7 +20,7 @@ export const InsuranceNetworkSection = () => {
     >
       <div className="w-full max-w-[1400px] xl:max-w-[1550px] 2xl:max-w-[1700px] mx-auto">
         <div className="text-center mb-10 sm:mb-12">
-          <motion.h2
+          <MotionH2
             className="text-[2.2rem] xs:text-3xl sm:text-4xl font-bold text-gray-900 mb-4 leading-tight"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -20,8 +28,8 @@ export const InsuranceNetworkSection = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             Our Insurance Network
-          </motion.h2>
-          <motion.p
+          </MotionH2>
+          <MotionP
             className="text-gray-600 text-base xs:text-lg lg:text-xl mb-8 max-w-3xl xl:max-w-4xl mx-auto"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -29,9 +37,9 @@ export const InsuranceNetworkSection = () => {
             transition={{ duration: 0.6, delay: 0.4 }}
           >
             We&apos;ve partnered with leading insurance providers to ensure comprehensive and reliable coverage.
-          </motion.p>
+          </MotionP>
 
-          <motion.div
+          <MotionDiv
             className="flex flex-wrap justify-center items-center gap-x-8 gap-y-4 text-gray-600 font-medium text-sm xs:text-xl sm:text-2xl"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -39,7 +47,7 @@ export const InsuranceNetworkSection = () => {
             transition={{ duration: 0.6, delay: 0.6 }}
           >
             {["Pazcare", "Star Health", "HDFC ERGO", "ICICI Lombard"].map((provider, index) => (
-              <motion.span
+              <MotionSpan
                 key={provider}
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
@@ -48,30 +56,30 @@ export const InsuranceNetworkSection = () => {
                 whileHover={{ scale: 1.1, color: "#FE7642" }}
               >
                 {provider}
-              </motion.span>
+              </MotionSpan>
             ))}
-          </motion.div>
+          </MotionDiv>
         </div>
 
-        <motion.div
+        <MotionDiv
           className="bg-[#FFE5D6] rounded-xl sm:rounded-2xl overflow-hidden max-w-full mx-auto shadow-2xl shadow-black/10"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 1.0 }}
         >
-          <motion.div
+          <MotionDiv
             className="text-center py-5 sm:py-6"
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 1.2 }}
           >
-            <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900">Available Insurance Add-ons</h3>
-          </motion.div>
+            <MotionH3 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900">Available Insurance Add-ons</MotionH3>
+          </MotionDiv>
 
           {/* Table Header */}
-          <motion.div
+          <MotionDiv
             className="hidden sm:grid grid-cols-12 border-t border-b border-white/40 px-4 sm:px-6 py-3"
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -82,10 +90,10 @@ export const InsuranceNetworkSection = () => {
             <span className="text-[#FE7642] font-semibold col-span-6">Description</span>
             <span className="text-[#FE7642] font-semibold col-span-2">Availability</span>
             <span className="text-[#FE7642] font-semibold col-span-2">Cost</span>
-          </motion.div>
+          </MotionDiv>
 
           {/* Mobile Table Header */}
-          <motion.div
+          <MotionDiv
             className="grid sm:hidden grid-cols-4 border-t border-b border-white/40 px-2 py-2 text-xs font-semibold text-[#FE7642]"
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -96,84 +104,98 @@ export const InsuranceNetworkSection = () => {
             <span className="col-span-1">Description</span>
             <span className="col-span-1">Availability</span>
             <span className="col-span-1">Cost</span>
-          </motion.div>
+          </MotionDiv>
 
-          <div className="hidden sm:block divide-y divide-white/40">
-            {[
-              {
-                addon: "Legal Support",
-                desc: "Contract review, dispute resolution, legal consultation",
-                avail: "All Programs",
-                cost: "₹4,999/year",
-              },
-              {
-                addon: "CA/Tax Services",
-                desc: "Tax filing, GST registration, financial advice",
-                avail: "Domestic & International",
-                cost: "₹7,499/year",
-              },
-              {
-                addon: "Resume Verification",
-                desc: "Background check, credential verification, reference validation",
-                avail: "International Only",
-                cost: "₹5,999/year",
-              },
-            ].map((row, index) => (
-              <motion.div
-                key={index}
-                className="grid grid-cols-12 px-6 py-4 text-sm lg:text-base"
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 1.6 + index * 0.2 }}
-                whileHover={{ backgroundColor: "rgba(254, 118, 66, 0.05)" }}
-              >
-                <span className="font-semibold text-gray-900 col-span-2">{row.addon}</span>
-                <span className="text-gray-800 col-span-6">{row.desc}</span>
-                <span className="text-gray-800 col-span-2">{row.avail}</span>
-                <span className="font-semibold text-gray-900 col-span-2">{row.cost}</span>
-              </motion.div>
-            ))}
-          </div>
+          {/* Table Rows */}
+          {[
+            {
+              addon: "Health Insurance",
+              description: "Comprehensive health coverage including hospitalization, OPD, and critical illness",
+              availability: "All Programs",
+              cost: "₹500/month",
+            },
+            {
+              addon: "Accident Coverage",
+              description: "Protection against accidents with disability and death benefits",
+              availability: "All Programs",
+              cost: "₹200/month",
+            },
+            {
+              addon: "Professional Liability",
+              description: "Coverage for professional errors, omissions, and negligence claims",
+              availability: "Freelancer Programs",
+              cost: "₹300/month",
+            },
+            {
+              addon: "Income Protection",
+              description: "Monthly income replacement if unable to work due to illness or injury",
+              availability: "All Programs",
+              cost: "₹400/month",
+            },
+            {
+              addon: "Travel Insurance",
+              description: "Coverage for domestic and international travel including medical emergencies",
+              availability: "International Programs",
+              cost: "₹150/month",
+            },
+          ].map((row, index) => (
+            <MotionDiv
+              key={index}
+              className="grid grid-cols-4 sm:grid-cols-12 border-b border-white/40 px-2 sm:px-6 py-3 sm:py-4 hover:bg-white/30 transition-colors"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 1.6 + index * 0.1 }}
+            >
+              <div className="col-span-1 sm:col-span-2 font-semibold text-gray-900 text-sm sm:text-base">
+                {row.addon}
+              </div>
+              <div className="col-span-1 sm:col-span-6 text-gray-700 text-xs sm:text-sm leading-relaxed">
+                {row.description}
+              </div>
+              <div className="col-span-1 sm:col-span-2 text-gray-600 text-xs sm:text-sm">
+                {row.availability}
+              </div>
+              <div className="col-span-1 sm:col-span-2 font-semibold text-[#FE7642] text-xs sm:text-sm">
+                {row.cost}
+              </div>
+            </MotionDiv>
+          ))}
+        </MotionDiv>
 
-          <div className="sm:hidden divide-y divide-white/40 text-xs">
-            {[
-              {
-                addon: "Legal Support",
-                desc: "Contract review, dispute resolution, legal consultation",
-                avail: "All Programs",
-                cost: "₹4,999/year",
-              },
-              {
-                addon: "CA/Tax Services",
-                desc: "Tax filing, GST registration, financial advice",
-                avail: "Domestic & International",
-                cost: "₹7,499/year",
-              },
-              {
-                addon: "Resume Verification",
-                desc: "Background check, credential verification, reference validation",
-                avail: "International Only",
-                cost: "₹5,999/year",
-              },
-            ].map((row, index) => (
-              <motion.div
-                key={index}
-                className="grid grid-cols-4 px-2 py-3"
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 1.6 + index * 0.2 }}
-              >
-                <span className="font-semibold text-gray-900 col-span-1">{row.addon}</span>
-                <span className="text-gray-800 col-span-1">{row.desc}</span>
-                <span className="text-gray-800 col-span-1">{row.avail}</span>
-                <span className="font-semibold text-gray-900 col-span-1">{row.cost}</span>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+        {/* Bottom CTA */}
+        <MotionDiv
+          className="text-center mt-12 sm:mt-16"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 2.0 }}
+        >
+          <MotionP
+            className="text-gray-600 text-lg mb-6"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 2.2 }}
+          >
+            Customize your insurance coverage based on your specific needs and program requirements.
+          </MotionP>
+          <MotionDiv
+            className="flex flex-col sm:flex-row gap-4 justify-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 2.4 }}
+          >
+            <button className="bg-[#FE7642] text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-[#FE7642]/90 transition-colors">
+              Get Insurance Quote
+            </button>
+            <button className="bg-white text-[#FE7642] border-2 border-[#FE7642] px-8 py-4 rounded-lg font-semibold text-lg hover:bg-[#FE7642] hover:text-white transition-colors">
+              View All Add-ons
+            </button>
+          </MotionDiv>
+        </MotionDiv>
       </div>
-    </motion.section>
+    </MotionSection>
   )
 }

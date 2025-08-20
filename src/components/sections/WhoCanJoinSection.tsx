@@ -3,11 +3,11 @@
 import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
 
-const MotionSection = motion.section
-const MotionDiv = motion.div
-const MotionH2 = motion.h2
-const MotionH3 = motion.h3
-const MotionP = motion.p
+const MotionSection = motion.section as React.ComponentType<any>
+const MotionDiv = motion.div as React.ComponentType<any>
+const MotionH2 = motion.h2 as React.ComponentType<any>
+const MotionH3 = motion.h3 as React.ComponentType<any>
+const MotionP = motion.p as React.ComponentType<any>
 
 interface AudienceCard {
   id: string
@@ -62,13 +62,13 @@ const AUDIENCE_CARDS: AudienceCard[] = [
 ]
 
 export const WhoCanJoinSection = () => {
-  const sectionRef = useRef(null)
-  const headerRef = useRef(null)
-  const cardsRef = useRef(null)
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const headerRef = useRef<HTMLDivElement>(null)
+  const cardsRef = useRef<HTMLDivElement>(null)
 
-  const sectionInView = useInView(sectionRef, { once: true, margin: "-50px" })
-  const headerInView = useInView(headerRef, { once: true, margin: "-100px" })
-  const cardsInView = useInView(cardsRef, { once: true, margin: "-100px" })
+  const sectionInView = useInView(sectionRef as React.RefObject<Element>, { once: true, margin: "-50px" })
+  const headerInView = useInView(headerRef as React.RefObject<Element>, { once: true, margin: "-100px" })
+  const cardsInView = useInView(cardsRef as React.RefObject<Element>, { once: true, margin: "-100px" })
 
   return (
     <MotionSection

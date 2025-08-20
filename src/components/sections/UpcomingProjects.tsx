@@ -3,15 +3,15 @@
 import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
 
-const MotionDiv = motion.div
-const MotionImg = motion.img
-const MotionH1 = motion.h1
-const MotionP = motion.p
-const MotionButton = motion.button
+const MotionDiv = motion.div as React.ComponentType<any>
+const MotionImg = motion.img as React.ComponentType<any>
+const MotionH1 = motion.h1 as React.ComponentType<any>
+const MotionP = motion.p as React.ComponentType<any>
+const MotionButton = motion.button as React.ComponentType<any>
 
 export default function UpcomingProjectsHero() {
-  const sectionRef = useRef(null)
-  const isInView = useInView(sectionRef, { once: true, margin: "-100px" })
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const isInView = useInView(sectionRef as React.RefObject<Element>, { once: true, margin: "-100px" })
 
   return (
     <MotionDiv
