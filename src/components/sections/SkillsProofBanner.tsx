@@ -4,15 +4,15 @@ import { ChevronRight } from "lucide-react"
 import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
 
-const MotionSection = motion.section
-const MotionDiv = motion.div
-const MotionH2 = motion.h2
-const MotionP = motion.p
-const MotionButton = motion.button
+const MotionSection = motion.section as React.ComponentType<any>
+const MotionDiv = motion.div as React.ComponentType<any>
+const MotionH2 = motion.h2 as React.ComponentType<any>
+const MotionP = motion.p as React.ComponentType<any>
+const MotionButton = motion.button as React.ComponentType<any>
 
 export const SkillsProofBanner = () => {
-  const bannerRef = useRef(null)
-  const bannerInView = useInView(bannerRef, { once: true, margin: "-100px" })
+  const bannerRef = useRef<HTMLDivElement>(null)
+  const bannerInView = useInView(bannerRef as React.RefObject<Element>, { once: true, margin: "-100px" })
 
   return (
     <MotionSection
@@ -66,12 +66,12 @@ export const SkillsProofBanner = () => {
               transition={{ duration: 0.6, delay: 0.8 }}
             >
               Join a certified program
-              <motion.div
+              <MotionDiv
                 animate={{ x: [0, 5, 0] }}
                 transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
               >
                 <ChevronRight size={20} className="text-[#FE7743]" />
-              </motion.div>
+              </MotionDiv>
             </MotionButton>
           </MotionDiv>
         </div>

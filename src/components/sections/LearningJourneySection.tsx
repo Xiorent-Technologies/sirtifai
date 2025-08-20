@@ -4,11 +4,11 @@ import { CheckCircle2 } from "lucide-react"
 import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
 
-const MotionSection = motion.section
-const MotionDiv = motion.div
-const MotionH2 = motion.h2
-const MotionH3 = motion.h3
-const MotionP = motion.p
+const MotionSection = motion.section as React.ComponentType<any>
+const MotionDiv = motion.div as React.ComponentType<any>
+const MotionH2 = motion.h2 as React.ComponentType<any>
+const MotionH3 = motion.h3 as React.ComponentType<any>
+const MotionP = motion.p as React.ComponentType<any>
 
 interface JourneyStep {
   id: string
@@ -47,13 +47,13 @@ const JOURNEY_STEPS: JourneyStep[] = [
 ]
 
 export const LearningJourneySection = () => {
-  const sectionRef = useRef(null)
-  const headerRef = useRef(null)
-  const stepsRef = useRef(null)
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const headerRef = useRef<HTMLDivElement>(null)
+  const stepsRef = useRef<HTMLDivElement>(null)
 
-  const sectionInView = useInView(sectionRef, { once: true, margin: "-50px" })
-  const headerInView = useInView(headerRef, { once: true, margin: "-100px" })
-  const stepsInView = useInView(stepsRef, { once: true, margin: "-100px" })
+  const sectionInView = useInView(sectionRef as React.RefObject<Element>, { once: true, margin: "-50px" })
+  const headerInView = useInView(headerRef as React.RefObject<Element>, { once: true, margin: "-100px" })
+  const stepsInView = useInView(stepsRef as React.RefObject<Element>, { once: true, margin: "-100px" })
 
   return (
     <MotionSection

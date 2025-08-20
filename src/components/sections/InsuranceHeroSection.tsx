@@ -2,6 +2,14 @@
 import Image from "next/image"
 import { motion } from "framer-motion"
 
+// Strongly typed motion components to fix TypeScript errors
+const MotionSection = motion.section as React.ComponentType<any>
+const MotionDiv = motion.div as React.ComponentType<any>
+const MotionH1 = motion.h1 as React.ComponentType<any>
+const MotionSpan = motion.span as React.ComponentType<any>
+const MotionP = motion.p as React.ComponentType<any>
+const MotionButton = motion.button as React.ComponentType<any>
+
 const insuranceImage = "/assets/insurance/Rectangle-9.png"
 const star = "/assets/star.png"
 
@@ -19,7 +27,7 @@ export const InsuranceHeroSection = () => {
       </style>
 
       {/* Insurance Hero Section */}
-      <motion.section
+      <MotionSection
         className="w-full flex flex-col md:flex-row justify-between items-start overflow-hidden relative px-5 sm:px-6 md:px-8 xl:px-12 pt-8 md:pt-14 pb-10 md:pb-16"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -27,13 +35,13 @@ export const InsuranceHeroSection = () => {
       >
         {/* Left Side - Content */}
         <div className="flex-1 max-w-[1150px] md:pr-6 lg:pr-10">
-          <motion.h1
+          <MotionH1
             className="font-sans font-medium text-[2.45rem] xs:text-[2.9rem] sm:text-6xl md:text-[4.2rem] lg:text-[5.3rem] leading-[1.1] tracking-tight text-[#0F0F0F]"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <motion.span
+            <MotionSpan
               className="block font-bold"
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
@@ -41,7 +49,7 @@ export const InsuranceHeroSection = () => {
             >
               Your Career.
               <span className="inline-block align-middle ml-1 sm:ml-2">
-                <motion.div
+                <MotionDiv
                   initial={{ rotate: 0, scale: 0 }}
                   animate={{ rotate: 360, scale: 1 }}
                   transition={{ duration: 0.8, delay: 0.8 }}
@@ -54,28 +62,28 @@ export const InsuranceHeroSection = () => {
                     className="inline w-5 h-5 sm:w-7 sm:h-7 md:w-8 md:h-8 lg:w-[30px] lg:h-[30px] relative -top-1 sm:-top-2 md:-top-3 lg:-top-4"
                     priority
                   />
-                </motion.div>
+                </MotionDiv>
               </span>
-            </motion.span>
-            <motion.span
+            </MotionSpan>
+            <MotionSpan
               className="block font-bold"
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.6 }}
             >
               Your Earnings.
-            </motion.span>
-            <motion.span
+            </MotionSpan>
+            <MotionSpan
               className="block font-bold"
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.8 }}
             >
               Fully Protected.
-            </motion.span>
-          </motion.h1>
+            </MotionSpan>
+          </MotionH1>
 
-          <motion.div
+          <MotionDiv
             className="mt-8 ml-20 overflow-hidden mb-4 md:hidden w-full flex justify-center"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -95,60 +103,79 @@ export const InsuranceHeroSection = () => {
                 priority
               />
             </div>
-          </motion.div>
+          </MotionDiv>
 
-          <motion.p
-            className="mt-4 sm:mt-6 md:mt-5 text-[#4B5563] font-sans font-normal text-[0.95rem] sm:text-lg md:text-xl lg:text-[1.5rem] leading-relaxed max-w-[900px]"
+          <MotionP
+            className="text-[#666666] text-base sm:text-lg md:text-xl lg:text-2xl max-w-[600px] leading-relaxed"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.2 }}
           >
-            We understand the importance of security in your career journey. Our comprehensive insurance coverage
-            ensures your skills, earnings, and career progression are protected at every step.
-          </motion.p>
+            Comprehensive insurance coverage for freelancers, students, and professionals. Protect your income,
+            career growth, and future opportunities with our tailored insurance solutions.
+          </MotionP>
 
-          <motion.div
-            className="flex flex-row flex-wrap gap-3 sm:gap-6 mt-10 sm:mt-12 md:mt-14 lg:mt-16 items-stretch w-full"
+          {/* CTA Buttons */}
+          <MotionDiv
+            className="flex flex-col sm:flex-row gap-4 mt-8 md:mt-10"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.4 }}
           >
-            <motion.button
-              className="double-border-btn relative group hover:opacity-90 hover:cursor-pointer transition-all duration-300 text-sm sm:text-base flex-1 min-w-[46%] basis-[46%] md:flex-initial md:basis-auto md:min-w-0"
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.98 }}
-              transition={{ type: "spring", stiffness: 400, damping: 17 }}
-            >
-              Check Your Coverage
-            </motion.button>
-            <motion.button
-              className="px-3 py-2.5 sm:px-10 sm:py-4 bg-[#FE7642] text-white rounded-full text-sm sm:text-base font-semibold tracking-wide hover:bg-[#ff8d61] hover:cursor-pointer transition-all duration-300 shadow-md flex-1 min-w-[46%] basis-[46%] md:flex-initial md:basis-auto md:min-w-0"
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.98 }}
-              transition={{ type: "spring", stiffness: 400, damping: 17 }}
-            >
-              File A Claim
-            </motion.button>
-          </motion.div>
+            <MotionButton className="double-border-btn">
+              Get Insurance Quote
+            </MotionButton>
+            <MotionButton className="double-border-btn bg-white text-[#1f2937] border-2 border-[#1f2937] hover:bg-[#1f2937] hover:text-white">
+              Learn More
+            </MotionButton>
+          </MotionDiv>
         </div>
 
-        <motion.div
-          className="relative hidden md:block md:w-[460px] lg:w-[600px] xl:w-[700px] h-[320px] sm:h-[380px] md:h-[420px] lg:h-[480px] xl:h-[500px] flex-shrink-0 mt-10 md:mt-0"
-          initial={{ opacity: 0, x: 100 }}
+        {/* Right Side - Image */}
+        <MotionDiv
+          className="hidden md:block flex-1 relative"
+          initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1.0, delay: 0.6 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
         >
-          <div className="relative w-full h-full overflow-hidden">
+          <div className="relative w-full h-[500px] lg:h-[600px]">
             <Image
               src={insuranceImage || "/placeholder.svg"}
-              alt="Insurance Coverage - Laptop with people's hands and legs"
+              alt="Insurance coverage visual"
               fill
-              className="object-cover object-center"
+              className="object-cover object-center rounded-2xl"
               priority
             />
+            
+            {/* Floating stats card */}
+            <MotionDiv
+              className="absolute -top-6 -left-6 bg-white rounded-xl shadow-lg p-6 max-w-xs"
+              initial={{ opacity: 0, scale: 0.8, y: -20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 1.6 }}
+              whileHover={{ scale: 1.05 }}
+            >
+              <div className="text-center">
+                <div className="text-3xl font-bold text-[#FE7642] mb-2">₹50L+</div>
+                <div className="text-sm text-gray-600">Total Coverage Provided</div>
+              </div>
+            </MotionDiv>
+
+            <MotionDiv
+              className="absolute -bottom-6 -right-6 bg-[#FE7642] text-white rounded-xl shadow-lg p-6 max-w-xs"
+              initial={{ opacity: 0, scale: 0.8, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 1.8 }}
+              whileHover={{ scale: 1.05 }}
+            >
+              <div className="text-center">
+                <div className="text-3xl font-bold mb-2">99.8%</div>
+                <div className="text-sm opacity-90">Claim Success Rate</div>
+              </div>
+            </MotionDiv>
           </div>
-        </motion.div>
-      </motion.section>
+        </MotionDiv>
+      </MotionSection>
     </>
   )
 }

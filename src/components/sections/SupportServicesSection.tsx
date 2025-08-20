@@ -4,15 +4,16 @@ import Image from "next/image"
 import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
 
-const MotionSection = motion.section
-const MotionDiv = motion.div
-const MotionH2 = motion.h2
-const MotionImg = motion.img
-const MotionButton = motion.button
+const MotionSection = motion.section as React.ComponentType<any>
+const MotionDiv = motion.div as React.ComponentType<any>
+const MotionH2 = motion.h2 as React.ComponentType<any>
+const MotionImg = motion.img as React.ComponentType<any>
+const MotionButton = motion.button as React.ComponentType<any>
+const MotionSpan = motion.span as React.ComponentType<any>
 
 export const SupportServicesSection = () => {
-  const sectionRef = useRef(null)
-  const sectionInView = useInView(sectionRef, { once: true, margin: "-100px" })
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const sectionInView = useInView(sectionRef as React.RefObject<Element>, { once: true, margin: "-100px" })
 
   return (
     <MotionSection
@@ -53,30 +54,30 @@ export const SupportServicesSection = () => {
               animate={sectionInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              <motion.span
+              <MotionSpan
                 className="block"
                 initial={{ opacity: 0, x: -20 }}
                 animate={sectionInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                 transition={{ duration: 0.6, delay: 0.6 }}
               >
                 What we
-              </motion.span>
-              <motion.span
+              </MotionSpan>
+              <MotionSpan
                 className="block"
                 initial={{ opacity: 0, x: -20 }}
                 animate={sectionInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                 transition={{ duration: 0.6, delay: 0.8 }}
               >
                 Support you
-              </motion.span>
-              <motion.span
+              </MotionSpan>
+              <MotionSpan
                 className="block"
                 initial={{ opacity: 0, x: -20 }}
                 animate={sectionInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                 transition={{ duration: 0.6, delay: 1.0 }}
               >
                 with
-              </motion.span>
+              </MotionSpan>
             </MotionH2>
           </MotionDiv>
 
@@ -97,7 +98,7 @@ export const SupportServicesSection = () => {
                 animate={sectionInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
                 transition={{ duration: 0.8, delay: 0.6 }}
                 whileHover={{ scale: 1.02 }}
-                onError={(e) => {
+                onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
                   const fallback = (e.target as HTMLElement).parentElement?.querySelector(
                     ".image-fallback",
                   ) as HTMLElement
@@ -134,12 +135,12 @@ export const SupportServicesSection = () => {
                     className="rounded-full shrink-0"
                   />
                   <span className="text-gray-900 font-medium text-sm">Program Support</span>
-                  <motion.div
+                  <MotionDiv
                     className="w-7 h-7 bg-orange-500 rounded-full flex items-center justify-center shadow-sm ml-auto shrink-0"
                     whileHover={{ rotate: 10 }}
                   >
                     <MessageCircle size={14} className="text-white" />
-                  </motion.div>
+                  </MotionDiv>
                 </div>
               </MotionDiv>
 
@@ -160,12 +161,12 @@ export const SupportServicesSection = () => {
                     className="rounded-full shrink-0"
                   />
                   <span className="text-gray-900 font-medium text-sm">Certification Verification</span>
-                  <motion.div
+                  <MotionDiv
                     className="w-7 h-7 bg-orange-500 rounded-full flex items-center justify-center shadow-sm ml-auto shrink-0"
                     whileHover={{ rotate: 10 }}
                   >
                     <MessageCircle size={14} className="text-white" />
-                  </motion.div>
+                  </MotionDiv>
                 </div>
               </MotionDiv>
 
@@ -186,12 +187,12 @@ export const SupportServicesSection = () => {
                     className="rounded-full shrink-0"
                   />
                   <span className="text-gray-900 font-medium text-sm">Technical Support</span>
-                  <motion.div
+                  <MotionDiv
                     className="w-7 h-7 bg-orange-500 rounded-full flex items-center justify-center shadow-sm ml-auto shrink-0"
                     whileHover={{ rotate: 10 }}
                   >
                     <MessageCircle size={14} className="text-white" />
-                  </motion.div>
+                  </MotionDiv>
                 </div>
               </MotionDiv>
 
@@ -212,12 +213,12 @@ export const SupportServicesSection = () => {
                     className="rounded-full shrink-0"
                   />
                   <span className="text-gray-900 font-medium text-sm">Career Services</span>
-                  <motion.div
+                  <MotionDiv
                     className="w-7 h-7 bg-orange-500 rounded-full flex items-center justify-center shadow-sm ml-auto shrink-0"
                     whileHover={{ rotate: 10 }}
                   >
                     <MessageCircle size={14} className="text-white" />
-                  </motion.div>
+                  </MotionDiv>
                 </div>
               </MotionDiv>
 
@@ -238,12 +239,12 @@ export const SupportServicesSection = () => {
                     className="rounded-full shrink-0"
                   />
                   <span className="text-gray-900 font-medium text-sm">Payment Assistance</span>
-                  <motion.div
+                  <MotionDiv
                     className="w-7 h-7 bg-orange-500 rounded-full flex items-center justify-center shadow-sm ml-auto shrink-0"
                     whileHover={{ rotate: 10 }}
                   >
                     <MessageCircle size={14} className="text-white" />
-                  </motion.div>
+                  </MotionDiv>
                 </div>
               </MotionDiv>
 

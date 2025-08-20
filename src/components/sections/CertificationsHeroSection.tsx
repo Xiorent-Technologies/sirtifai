@@ -4,17 +4,19 @@ import { BarChart3 } from "lucide-react"
 import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
 
-const MotionDiv = motion.div
-const MotionH1 = motion.h1
-const MotionP = motion.p
-const MotionImg = motion.img
-const MotionSection = motion.section
-const MotionUl = motion.ul
-const MotionLi = motion.li
+const MotionDiv = motion.div as React.ComponentType<any>
+const MotionH1 = motion.h1 as React.ComponentType<any>
+const MotionH3 = motion.h3 as React.ComponentType<any>
+const MotionP = motion.p as React.ComponentType<any>
+const MotionImg = motion.img as React.ComponentType<any>
+const MotionA = motion.a as React.ComponentType<any>
+const MotionSection = motion.section as React.ComponentType<any>
+const MotionUl = motion.ul as React.ComponentType<any>
+const MotionLi = motion.li as React.ComponentType<any>
 
 export const CertificationsHeroSection = () => {
-  const heroRef = useRef(null)
-  const heroInView = useInView(heroRef, { once: true, margin: "-100px" })
+  const heroRef = useRef<HTMLDivElement>(null)
+  const heroInView = useInView(heroRef as React.RefObject<Element>, { once: true, margin: "-100px" })
 
   return (
     <MotionSection
@@ -62,32 +64,32 @@ export const CertificationsHeroSection = () => {
             >
               <span className="text-lg font-semibold text-gray-900">Join Now :</span>
               <div className="flex items-center gap-4">
-                <motion.a
+                <MotionA
                   href="#"
                   className="text-orange-500 font-semibold hover:text-orange-600 transition-colors"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
                   SPP Int
-                </motion.a>
+                </MotionA>
                 <span className="text-gray-400">|</span>
-                <motion.a
+                <MotionA
                   href="#"
                   className="text-orange-500 font-semibold hover:text-orange-600 transition-colors"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
                   SPP Freelance
-                </motion.a>
+                </MotionA>
                 <span className="text-gray-400">|</span>
-                <motion.a
+                <MotionA
                   href="#"
                   className="text-orange-500 font-semibold hover:text-orange-600 transition-colors"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
                   SPP Student
-                </motion.a>
+                </MotionA>
               </div>
             </MotionDiv>
           </MotionDiv>
@@ -109,7 +111,7 @@ export const CertificationsHeroSection = () => {
                 animate={heroInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
                 transition={{ duration: 0.8, delay: 0.5 }}
                 whileHover={{ scale: 1.05, rotateY: 5 }}
-                onError={(e) => {
+                onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
                   const target = e.target as HTMLImageElement
                   target.style.display = "none"
                   const fallback = target.nextElementSibling as HTMLElement
@@ -154,14 +156,14 @@ export const CertificationsHeroSection = () => {
               </div>
 
               {/* Title */}
-              <motion.h3
+              <MotionH3
                 className="text-lg font-bold text-gray-900 mb-4"
                 initial={{ opacity: 0, y: 10 }}
                 animate={heroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
                 transition={{ duration: 0.4, delay: 1.2 }}
               >
                 Best For
-              </motion.h3>
+              </MotionH3>
 
               {/* Bullet Points */}
               <MotionUl

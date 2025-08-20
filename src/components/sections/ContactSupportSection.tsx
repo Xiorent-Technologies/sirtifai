@@ -4,14 +4,16 @@ import { MessageCircle, Mail, Phone } from "lucide-react"
 import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
 
-const MotionSection = motion.section
-const MotionDiv = motion.div
-const MotionH1 = motion.h1
-const MotionP = motion.p
+const MotionSection = motion.section as React.ComponentType<any>
+const MotionDiv = motion.div as React.ComponentType<any>
+const MotionH1 = motion.h1 as React.ComponentType<any>
+const MotionP = motion.p as React.ComponentType<any>
+const MotionSpan = motion.span as React.ComponentType<any>
+const MotionA = motion.a as React.ComponentType<any>
 
 export const ContactSupportSection = () => {
-  const heroRef = useRef(null)
-  const heroInView = useInView(heroRef, { once: true, margin: "-100px" })
+  const heroRef = useRef<HTMLDivElement>(null)
+  const heroInView = useInView(heroRef as React.RefObject<Element>, { once: true, margin: "-100px" })
 
   return (
     <MotionSection
@@ -45,20 +47,20 @@ export const ContactSupportSection = () => {
               animate={heroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              <motion.span
+              <MotionSpan
                 initial={{ opacity: 0, x: -20 }}
                 animate={heroInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                 transition={{ duration: 0.6, delay: 0.6 }}
               >
                 Get in Touch
-              </motion.span>
-              <motion.span
+              </MotionSpan>
+              <MotionSpan
                 initial={{ opacity: 0, x: -20 }}
                 animate={heroInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                 transition={{ duration: 0.6, delay: 0.8 }}
               >
                 with Sirtifai Support
-              </motion.span>
+              </MotionSpan>
             </MotionH1>
             <MotionP
               className="mt-6 md:mt-7 lg:mt-8 text-[13.25px] xs:text-[14px] md:text-[1.25rem] lg:text-[1.45rem] xl:text-[1.55rem] text-white/90 leading-relaxed max-w-[60ch]"
@@ -78,7 +80,7 @@ export const ContactSupportSection = () => {
               transition={{ duration: 0.6, delay: 1.2 }}
             >
               {/* WhatsApp */}
-              <motion.a
+              <MotionA
                 href="https://wa.me/0000000000"
                 aria-label="Chat with us on WhatsApp"
                 className="group flex items-center gap-3 text-white hover:opacity-90 transition-opacity"
@@ -88,16 +90,16 @@ export const ContactSupportSection = () => {
                 whileHover={{ scale: 1.05, x: 5 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <motion.div
+                <MotionDiv
                   className="w-10 h-10 md:w-11 md:h-11 bg-green-500 rounded-full flex items-center justify-center shadow-lg"
                   whileHover={{ scale: 1.1, rotate: 5 }}
                 >
                   <MessageCircle size={20} className="text-white" />
-                </motion.div>
+                </MotionDiv>
                 <span className="text-base md:text-xl lg:text-[1.55rem] font-medium">Chat with Us</span>
-              </motion.a>
+              </MotionA>
               {/* Email */}
-              <motion.a
+              <MotionA
                 href="mailto:support@sirtifai.com"
                 aria-label="Email us"
                 className="group flex items-center gap-3 text-white hover:opacity-90 transition-opacity"
@@ -107,16 +109,16 @@ export const ContactSupportSection = () => {
                 whileHover={{ scale: 1.05, x: 5 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <motion.div
+                <MotionDiv
                   className="w-10 h-10 md:w-11 md:h-11 bg-yellow-500 rounded-full flex items-center justify-center shadow-lg"
                   whileHover={{ scale: 1.1, rotate: 5 }}
                 >
                   <Mail size={20} className="text-white" />
-                </motion.div>
+                </MotionDiv>
                 <span className="text-base md:text-xl lg:text-[1.55rem] font-medium">Email Us</span>
-              </motion.a>
+              </MotionA>
               {/* Call */}
-              <motion.a
+              <MotionA
                 href="tel:+0000000000"
                 aria-label="Call us"
                 className="group flex items-center gap-3 text-white hover:opacity-90 transition-opacity"
@@ -126,14 +128,14 @@ export const ContactSupportSection = () => {
                 whileHover={{ scale: 1.05, x: 5 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <motion.div
+                <MotionDiv
                   className="w-10 h-10 md:w-11 md:h-11 bg-white/20 rounded-full flex items-center justify-center shadow-lg"
                   whileHover={{ scale: 1.1, rotate: 5 }}
                 >
                   <Phone size={20} className="text-white" />
-                </motion.div>
+                </MotionDiv>
                 <span className="text-base md:text-xl lg:text-[1.55rem] font-medium">Call Us</span>
-              </motion.a>
+              </MotionA>
             </MotionDiv>
           </MotionDiv>
         </div>
@@ -148,42 +150,42 @@ export const ContactSupportSection = () => {
           <div className="flex items-center gap-3">
             <span className="font-semibold text-[#FE7642] tracking-wide">Join Now :</span>
             <nav className="flex items-center gap-x-4 gap-y-2 flex-wrap">
-              <motion.a
+              <MotionA
                 href="#"
                 className="hover:text-orange-300 transition-colors"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
                 SPP Int
-              </motion.a>
+              </MotionA>
               <span className="hidden sm:inline text-blue-400/60">|</span>
-              <motion.a
+              <MotionA
                 href="#"
                 className="hover:text-orange-300 transition-colors"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
                 SPP Freelance
-              </motion.a>
+              </MotionA>
               <span className="hidden sm:inline text-blue-400/60">|</span>
-              <motion.a
+              <MotionA
                 href="#"
                 className="hover:text-orange-300 transition-colors"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
                 SPP Student
-              </motion.a>
+              </MotionA>
             </nav>
           </div>
-          <motion.div
+          <MotionDiv
             className="text-white/50 text-xs sm:text-sm lg:text-base"
             initial={{ opacity: 0 }}
             animate={heroInView ? { opacity: 0.5 } : { opacity: 0 }}
             transition={{ duration: 0.6, delay: 1.8 }}
           >
             24/7 Support • Avg response &lt; 24h
-          </motion.div>
+          </MotionDiv>
         </MotionDiv>
       </div>
     </MotionSection>

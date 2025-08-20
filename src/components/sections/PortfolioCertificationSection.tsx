@@ -6,15 +6,15 @@ import { Sun, Folder, QrCode, Eye } from "lucide-react"
 import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
 
-const MotionSection = motion.section
-const MotionDiv = motion.div
-const MotionH2 = motion.h2
-const MotionH3 = motion.h3
-const MotionH4 = motion.h4
-const MotionP = motion.p
-const MotionA = motion.a
-const MotionButton = motion.button
-const MotionSpan = motion.span
+const MotionSection = motion.section as React.ComponentType<any>
+const MotionDiv = motion.div as React.ComponentType<any>
+const MotionH2 = motion.h2 as React.ComponentType<any>
+const MotionH3 = motion.h3 as React.ComponentType<any>
+const MotionH4 = motion.h4 as React.ComponentType<any>
+const MotionP = motion.p as React.ComponentType<any>
+const MotionA = motion.a as React.ComponentType<any>
+const MotionButton = motion.button as React.ComponentType<any>
+const MotionSpan = motion.span as React.ComponentType<any>
 
 interface BenefitItem {
   id: string
@@ -45,13 +45,13 @@ const BENEFIT_ITEMS: BenefitItem[] = [
 ]
 
 export const PortfolioCertificationSection = () => {
-  const sectionRef = useRef(null)
-  const leftContentRef = useRef(null)
-  const rightContentRef = useRef(null)
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const leftContentRef = useRef<HTMLDivElement>(null)
+  const rightContentRef = useRef<HTMLDivElement>(null)
 
-  const sectionInView = useInView(sectionRef, { once: true, margin: "-50px" })
-  const leftInView = useInView(leftContentRef, { once: true, margin: "-100px" })
-  const rightInView = useInView(rightContentRef, { once: true, margin: "-100px" })
+  const sectionInView = useInView(sectionRef as React.RefObject<Element>, { once: true, margin: "-50px" })
+  const leftInView = useInView(leftContentRef as React.RefObject<Element>, { once: true, margin: "-100px" })
+  const rightInView = useInView(rightContentRef as React.RefObject<Element>, { once: true, margin: "-100px" })
 
   return (
     <MotionSection

@@ -3,15 +3,18 @@ import { Check, Phone, MessageCircle, BarChart3, ImageIcon } from "lucide-react"
 import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
 
-const MotionSection = motion.section
-const MotionDiv = motion.div
-const MotionH2 = motion.h2
-const MotionP = motion.p
-const MotionImg = motion.img
+const MotionSection = motion.section as React.ComponentType<any>
+const MotionDiv = motion.div as React.ComponentType<any>
+const MotionH2 = motion.h2 as React.ComponentType<any>
+const MotionP = motion.p as React.ComponentType<any>
+const MotionImg = motion.img as React.ComponentType<any>
+const MotionSpan = motion.span as React.ComponentType<any>
+const MotionLi = motion.li as React.ComponentType<any>
+const MotionA = motion.a as React.ComponentType<any>
 
 export const PhoneSupportSection = () => {
-  const sectionRef = useRef(null)
-  const sectionInView = useInView(sectionRef, { once: true, margin: "-100px" })
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const sectionInView = useInView(sectionRef as React.RefObject<Element>, { once: true, margin: "-100px" })
 
   return (
     <MotionSection
@@ -45,7 +48,7 @@ export const PhoneSupportSection = () => {
                 animate={sectionInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
                 whileHover={{ scale: 1.02 }}
-                onError={(e) => {
+                onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
                   const fallback = (e.target as HTMLElement).parentElement?.querySelector(
                     ".image-fallback",
                   ) as HTMLElement
@@ -80,12 +83,12 @@ export const PhoneSupportSection = () => {
                       <p className="text-[11px] text-gray-600 leading-none">10:00 AM–6:00PM</p>
                     </div>
                   </div>
-                  <motion.div
+                  <MotionDiv
                     className="w-7 h-7 bg-orange-500 rounded-full flex items-center justify-center flex-shrink-0"
                     whileHover={{ rotate: 10 }}
                   >
                     <MessageCircle size={14} className="text-white" />
-                  </motion.div>
+                  </MotionDiv>
                 </MotionDiv>
 
                 {/* Best For Card */}
@@ -98,12 +101,12 @@ export const PhoneSupportSection = () => {
                 >
                   <div className="flex items-start justify-between mb-2">
                     <p className="text-[12px] font-semibold text-gray-800">Best For</p>
-                    <motion.div
+                    <MotionDiv
                       className="w-6 h-6 bg-orange-500 rounded-full flex items-center justify-center"
                       whileHover={{ rotate: 10 }}
                     >
                       <BarChart3 size={13} className="text-white" />
-                    </motion.div>
+                    </MotionDiv>
                   </div>
                   <ul className="text-[11px] leading-[1.15rem] text-gray-700 space-y-0.5">
                     <li>• Verify Certificates</li>
@@ -121,12 +124,12 @@ export const PhoneSupportSection = () => {
                   transition={{ duration: 0.6, delay: 1.0 }}
                   whileHover={{ scale: 1.05, y: -3 }}
                 >
-                  <motion.div
+                  <MotionDiv
                     className="w-5 h-5 bg-orange-500 rounded-full flex items-center justify-center"
                     whileHover={{ rotate: 10 }}
                   >
                     <Check size={12} className="text-white" />
-                  </motion.div>
+                  </MotionDiv>
                   <p className="text-[12px] text-gray-700">We are always there for you</p>
                 </MotionDiv>
 
@@ -157,22 +160,22 @@ export const PhoneSupportSection = () => {
               animate={sectionInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               transition={{ duration: 0.8, delay: 0.5 }}
             >
-              <motion.span
+              <MotionSpan
                 className="block"
                 initial={{ opacity: 0, x: -20 }}
                 animate={sectionInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                 transition={{ duration: 0.6, delay: 0.7 }}
               >
                 Phone Support-
-              </motion.span>
-              <motion.span
+              </MotionSpan>
+              <MotionSpan
                 className="block"
                 initial={{ opacity: 0, x: -20 }}
                 animate={sectionInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                 transition={{ duration: 0.6, delay: 0.9 }}
               >
                 Direct & Personal
-              </motion.span>
+              </MotionSpan>
             </MotionH2>
 
             {/* Purpose */}
@@ -182,7 +185,7 @@ export const PhoneSupportSection = () => {
               animate={sectionInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
               transition={{ duration: 0.6, delay: 0.8 }}
             >
-              <motion.div
+              <MotionDiv
                 className="w-5 h-5 bg-orange-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
                 initial={{ scale: 0 }}
                 animate={sectionInView ? { scale: 1 } : { scale: 0 }}
@@ -190,7 +193,7 @@ export const PhoneSupportSection = () => {
                 whileHover={{ scale: 1.1 }}
               >
                 <Check size={12} className="text-white" />
-              </motion.div>
+              </MotionDiv>
               <MotionP
                 className="text-gray-800 text-[13.5px] sm:text-[15px] md:text-xl lg:text-[1.55rem] leading-relaxed max-w-xl"
                 initial={{ opacity: 0, y: 10 }}
@@ -209,7 +212,7 @@ export const PhoneSupportSection = () => {
               animate={sectionInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
               transition={{ duration: 0.6, delay: 1.0 }}
             >
-              <motion.div
+              <MotionDiv
                 className="w-5 h-5 bg-orange-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
                 initial={{ scale: 0 }}
                 animate={sectionInView ? { scale: 1 } : { scale: 0 }}
@@ -217,25 +220,25 @@ export const PhoneSupportSection = () => {
                 whileHover={{ scale: 1.1 }}
               >
                 <Check size={12} className="text-white" />
-              </motion.div>
+              </MotionDiv>
               <div className="text-gray-800 text-[13.5px] sm:text-[15px] md:text-xl lg:text-[1.55rem] leading-relaxed max-w-xl w-full">
                 <span className="font-semibold block mb-1">Content:</span>
                 <ul className="list-disc pl-5 space-y-1.5 marker:text-gray-600">
-                  <motion.li
+                  <MotionLi
                     initial={{ opacity: 0, x: -10 }}
                     animate={sectionInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }}
                     transition={{ duration: 0.4, delay: 1.4 }}
                   >
                     <span className="font-semibold">Number:</span> 91-xxxxxxxxxxx
-                  </motion.li>
-                  <motion.li
+                  </MotionLi>
+                  <MotionLi
                     initial={{ opacity: 0, x: -10 }}
                     animate={sectionInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }}
                     transition={{ duration: 0.4, delay: 1.6 }}
                   >
                     <span className="font-semibold">Availability:</span> 10:00 AM-6:00PM
-                  </motion.li>
-                  <motion.li
+                  </MotionLi>
+                  <MotionLi
                     initial={{ opacity: 0, x: -10 }}
                     animate={sectionInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }}
                     transition={{ duration: 0.4, delay: 1.8 }}
@@ -243,7 +246,7 @@ export const PhoneSupportSection = () => {
                     <span className="font-semibold">Languages Supported:</span>
                     <br />
                     English, Hindi, Telugu & Tamil
-                  </motion.li>
+                  </MotionLi>
                 </ul>
               </div>
             </MotionDiv>
@@ -255,7 +258,7 @@ export const PhoneSupportSection = () => {
               animate={sectionInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.6, delay: 1.4 }}
             >
-              <motion.a
+              <MotionA
                 href="tel:+919000000000"
                 className="double-border-btn ml-auto lg:ml-0 !px-8 !py-3 !text-sm sm:!text-base font-semibold group"
                 aria-label="Call Support"
@@ -266,7 +269,7 @@ export const PhoneSupportSection = () => {
                 <span className="w-7 h-7 rounded-full bg-gray-200 flex items-center justify-center border border-white/40 group-hover:bg-gray-100 transition-colors">
                   <Phone size={14} className="text-gray-700" />
                 </span>
-              </motion.a>
+              </MotionA>
             </MotionDiv>
           </MotionDiv>
         </div>

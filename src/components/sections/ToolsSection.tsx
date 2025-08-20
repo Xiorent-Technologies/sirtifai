@@ -4,12 +4,12 @@ import { CheckCircle2 } from "lucide-react"
 import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
 
-const MotionSection = motion.section
-const MotionDiv = motion.div
-const MotionH2 = motion.h2
-const MotionH3 = motion.h3
-const MotionP = motion.p
-const MotionButton = motion.button
+const MotionSection = motion.section as React.ComponentType<any>
+const MotionDiv = motion.div as React.ComponentType<any>
+const MotionH2 = motion.h2 as React.ComponentType<any>
+const MotionH3 = motion.h3 as React.ComponentType<any>
+const MotionP = motion.p as React.ComponentType<any>
+const MotionButton = motion.button as React.ComponentType<any>
 
 interface ToolCard {
   id: string
@@ -44,13 +44,13 @@ const TOOL_CARDS: ToolCard[] = [
 ]
 
 export const ToolsSection = () => {
-  const sectionRef = useRef(null)
-  const headerRef = useRef(null)
-  const cardsRef = useRef(null)
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const headerRef = useRef<HTMLDivElement>(null)
+  const cardsRef = useRef<HTMLDivElement>(null)
 
-  const sectionInView = useInView(sectionRef, { once: true, margin: "-50px" })
-  const headerInView = useInView(headerRef, { once: true, margin: "-100px" })
-  const cardsInView = useInView(cardsRef, { once: true, margin: "-100px" })
+  const sectionInView = useInView(sectionRef as React.RefObject<Element>, { once: true, margin: "-50px" })
+  const headerInView = useInView(headerRef as React.RefObject<Element>, { once: true, margin: "-100px" })
+  const cardsInView = useInView(cardsRef as React.RefObject<Element>, { once: true, margin: "-100px" })
 
   return (
     <MotionSection

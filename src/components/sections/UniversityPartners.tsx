@@ -3,12 +3,13 @@
 import { useState, useMemo, useRef } from "react"
 import { motion, useInView } from "framer-motion"
 
-const MotionDiv = motion.div
-const MotionH2 = motion.h2
-const MotionH3 = motion.h3
-const MotionP = motion.p
-const MotionButton = motion.button
-const MotionSelect = motion.select
+const MotionDiv = motion.div as React.ComponentType<any>
+const MotionH2 = motion.h2 as React.ComponentType<any>
+const MotionH3 = motion.h3 as React.ComponentType<any>
+const MotionP = motion.p as React.ComponentType<any>
+const MotionButton = motion.button as React.ComponentType<any>
+const MotionSelect = motion.select as React.ComponentType<any>
+const MotionImg = motion.img as React.ComponentType<any>
 
 const universityImages = [
   // ... (your original universityImages array remains unchanged)
@@ -209,15 +210,15 @@ const UniversityPartners = () => {
   const [selectedDiscipline, setSelectedDiscipline] = useState("")
   const [selectedOffering, setSelectedOffering] = useState("")
 
-  const sectionRef = useRef(null)
-  const headerRef = useRef(null)
-  const filtersRef = useRef(null)
-  const gridRef = useRef(null)
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const headerRef = useRef<HTMLDivElement>(null)
+  const filtersRef = useRef<HTMLDivElement>(null)
+  const gridRef = useRef<HTMLDivElement>(null)
 
-  const sectionInView = useInView(sectionRef, { once: true, margin: "-50px" })
-  const headerInView = useInView(headerRef, { once: true, margin: "-100px" })
-  const filtersInView = useInView(filtersRef, { once: true, margin: "-100px" })
-  const gridInView = useInView(gridRef, { once: true, margin: "-100px" })
+  const sectionInView = useInView(sectionRef as React.RefObject<Element>, { once: true, margin: "-50px" })
+  const headerInView = useInView(headerRef as React.RefObject<Element>, { once: true, margin: "-100px" })
+  const filtersInView = useInView(filtersRef as React.RefObject<Element>, { once: true, margin: "-100px" })
+  const gridInView = useInView(gridRef as React.RefObject<Element>, { once: true, margin: "-100px" })
 
   const disciplines = useMemo(() => {
     return [...new Set(universityImages.map((item) => item.discipline))]
@@ -275,7 +276,7 @@ const UniversityPartners = () => {
         >
           <MotionSelect
             value={selectedDiscipline}
-            onChange={(e) => setSelectedDiscipline(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSelectedDiscipline(e.target.value)}
             className="w-full sm:w-auto px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent bg-white sm:min-w-48"
             initial={{ opacity: 0, x: -20 }}
             animate={filtersInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
@@ -292,7 +293,7 @@ const UniversityPartners = () => {
 
           <MotionSelect
             value={selectedOffering}
-            onChange={(e) => setSelectedOffering(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSelectedOffering(e.target.value)}
             className="w-full sm:w-auto px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent bg-white sm:min-w-48"
             initial={{ opacity: 0, x: 20 }}
             animate={filtersInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
@@ -358,14 +359,14 @@ const UniversityPartners = () => {
                 className="aspect-[3/2] bg-gray-50 flex items-center justify-center p-3 sm:p-4 group-hover:bg-gray-100 transition-colors duration-300"
                 whileHover={{ scale: 1.02 }}
               >
-                <motion.img
+                <MotionImg
                   src={item.url}
                   alt={`University Logo ${index + 1}`}
                   className="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-105"
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={gridInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
                   transition={{ duration: 0.3, delay: 0.6 + index * 0.05 }}
-                  onError={(e) => {
+                  onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
                     const img = e.currentTarget as HTMLImageElement
                     img.src =
                       "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2Y0ZjRmNCIvPjx0ZXh0IHg9IjEwMCIgeT0iNTUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgZmlsbD0iIzk5OTk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+TG9nbyBub3QgZm91bmQ8L3RleHQ+PC9zdmc+"
