@@ -2,10 +2,10 @@
 
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Navigation } from "swiper/modules"
-import { ChevronLeft, ChevronRight } from "lucide-react"
+import { ChevronLeft, ChevronRight, ChevronDown, ChevronUp } from "lucide-react"
 import { Button } from "../ui/Button"
 import { motion, useInView } from "framer-motion"
-import { useRef } from "react"
+import { useRef, useState } from "react"
 import "swiper/css"
 import "swiper/css/navigation"
 
@@ -19,49 +19,50 @@ const MotionImg = motion.img
 const teamMembers = [
   {
     id: 1,
-    name: "Vakati Ravichandra",
-    title: "Visionary & Founder",
-    quote: "Turning Bharat's talent potential into global career reality through Skill → Practice → Progress.",
-    image: "/assets/about/person1.jpg",
+    name: "Jay Barochiya",
+    title: "Chief Technology Officer (CTO)",
+    image: "/assets/about/cto.jpeg",
+    bio: "Jay Barochiya is an accomplished technology leader and senior mobile applications developer with more than 8 years of experience in designing, developing, and deploying innovative Android solutions. He brings expertise in Android app design, API integration, Room & SQLite databases, Firebase services, and e-commerce application development. Over his career, Jay has successfully delivered 50+ Android applications across diverse industries, combining strong technical execution with client-focused communication and project management. His core strength lies in creating scalable, user-friendly, and business-aligned digital products that drive organizational success.",
+    linkedin: "linkedin.com/in/jay-barochiya-908a41146",
+    departmentOversight: "As CTO, Jay leads the mobile technology vision and strategy, overseeing the full lifecycle of Android application development, testing, and deployment. He manages end-to-end mobile solutions, including API integration, database management, and app maintenance, while ensuring robust system performance and scalability. Beyond technology, Jay plays a key role in client communication, operational analysis, and team leadership, ensuring timely delivery of high-quality applications that align with the company's strategic objectives and growth roadmap."
   },
   {
     id: 2,
-    name: "Vakati Ravichandra",
-    title: "Visionary & Founder",
-    quote: "Turning Bharat's talent potential into global career reality through Skill → Practice → Progress.",
-    image: "/assets/about/person2.jpg",
+    name: "Nikunj Viradiya",
+    title: "Chief Learning Officer (CLO)",
+    image: "/assets/about/CLO.jpeg",
+    bio: "Nikunj Viradiya is a forward-thinking IT and learning leader with 8+ years of experience in software development, IT management, and digital learning solutions. With strong expertise in PHP Core, Laravel, CodeIgniter, C# Windows, and Android development, he has transformed technical knowledge into impactful learning frameworks and training ecosystems. Passionate about empowering teams through technology-driven education, Nikunj focuses on building scalable learning platforms, fostering continuous skill development, and aligning workforce training with organizational growth objectives.",
+    linkedin: "linkedin.com/in/nikunj-viradiya-a40273b3",
+    departmentOversight: "As CLO, Nikunj oversees the corporate learning, training, and skill development functions. He integrates IT expertise with learning strategy, ensuring that technical and business teams remain future-ready. His role emphasizes the creation of digital learning systems, upskilling programs, and knowledge-sharing platforms, while also driving innovation in employee development, leadership training, and organizational learning culture."
   },
   {
     id: 3,
-    name: "Vakati Ravichandra",
-    title: "Visionary & Founder",
-    quote: "Turning Bharat's talent potential into global career reality through Skill → Practice → Progress.",
-    image: "/assets/about/person3.jpg",
-  },
-  {
-    id: 4,
-    name: "Sarah Johnson",
-    title: "Head of Innovation",
-    quote: "Bridging the gap between traditional education and modern industry needs through cutting-edge technology.",
-    image: "/assets/about/person1.jpg",
-  },
-  {
-    id: 5,
-    name: "Michael Chen",
-    title: "Chief Technology Officer",
-    quote: "Building scalable solutions that empower millions of learners to achieve their career aspirations.",
-    image: "/assets/about/person2.jpg",
-  },
+    name: "Dharmesh Gajera",
+    title: "Director & Chief Sales Officer (CSO)",
+    image: "/assets/about/ceo.jpeg",
+    bio: "Dharmesh Gajera is an accomplished business leader with over a decade of expertise in sales, marketing, public relations, digital marketing, operations, and management. He has a proven track record of driving sustainable business growth, leading high-impact campaigns, and optimizing organizational processes. Recognized for his ability to blend strategic vision with executional excellence, Dharmesh excels at building strong teams and creating scalable systems that align with long-term organizational goals.",
+    linkedin: "linkedin.com/in/dharmesh-patel-5b156625b",
+    departmentOversight: "As Director & CSO, Dharmesh spearheads the sales, marketing, PR, digital outreach, operations, and business development functions. He plays a pivotal role in shaping the company's strategic direction, corporate governance, and global expansion roadmap, particularly across high-growth markets such as the UAE and Singapore. His leadership ensures ethical, growth-oriented, and customer-centric operations, while continuously fostering innovation and competitive advantage in the global marketplace."
+  }
 ]
 
 export default function TeamMemberCarousel() {
   const sectionRef = useRef(null)
   const headerRef = useRef(null)
   const carouselRef = useRef(null)
+  const [expandedMembers, setExpandedMembers] = useState<number[]>([])
 
   const sectionInView = useInView(sectionRef, { once: true, margin: "-50px" })
   const headerInView = useInView(headerRef, { once: true, margin: "-100px" })
   const carouselInView = useInView(carouselRef, { once: true, margin: "-100px" })
+
+  const toggleMemberExpansion = (memberId: number) => {
+    setExpandedMembers(prev => 
+      prev.includes(memberId) 
+        ? prev.filter(id => id !== memberId)
+        : [...prev, memberId]
+    )
+  }
 
   return (
     <MotionDiv
@@ -98,6 +99,15 @@ export default function TeamMemberCarousel() {
 
           .swiper-button-disabled {
             opacity: 0.5 !important;
+          }
+
+          .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            min-height: 4.5rem;
           }
         `}
       </style>
@@ -195,7 +205,10 @@ export default function TeamMemberCarousel() {
                     <img
                       src={member.image || "/placeholder.svg"}
                       alt={member.name}
-                      className="w-full h-full object-cover"
+                      className={`w-full h-full object-cover ${
+                        member.id === 2 ? 'object-center scale-110' : ''
+                      }`}
+                      style={member.id === 2 ? { objectPosition: 'center 30%' } : {}}
                     />
                   </MotionDiv>
 
@@ -207,7 +220,7 @@ export default function TeamMemberCarousel() {
                   />
 
                   <MotionDiv
-                    className="p-4 sm:p-5 text-center flex-grow"
+                    className="p-4 sm:p-5 text-center flex-grow flex flex-col"
                     initial={{ opacity: 0, y: 20 }}
                     animate={carouselInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                     transition={{ duration: 0.6, delay: 1.2 + index * 0.1 }}
@@ -229,13 +242,75 @@ export default function TeamMemberCarousel() {
                       {member.title}
                     </MotionP>
                     <MotionP
-                      className="text-gray-600 text-xs sm:text-sm md:text-base leading-relaxed italic"
+                      className="text-gray-600 text-xs sm:text-sm md:text-base leading-relaxed mb-4 line-clamp-3"
                       initial={{ opacity: 0, y: 10 }}
                       animate={carouselInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
                       transition={{ duration: 0.4, delay: 1.8 + index * 0.1 }}
                     >
-                      "{member.quote}"
+                      {member.bio.substring(0, 100)}...
                     </MotionP>
+
+                    {/* Read More Button */}
+                    <MotionDiv
+                      className="mt-auto"
+                      initial={{ opacity: 0 }}
+                      animate={carouselInView ? { opacity: 1 } : { opacity: 0 }}
+                      transition={{ duration: 0.4, delay: 2.0 + index * 0.1 }}
+                    >
+                      <Button
+                        onClick={() => toggleMemberExpansion(member.id)}
+                        variant="outline"
+                        size="sm"
+                        className="w-full text-orange-500 border-orange-300 hover:bg-orange-50 hover:border-orange-400 transition-all duration-200 text-xs sm:text-sm"
+                      >
+                        {expandedMembers.includes(member.id) ? (
+                          <>
+                            <ChevronUp className="w-4 h-4 mr-2" />
+                            Read Less
+                          </>
+                        ) : (
+                          <>
+                            <ChevronDown className="w-4 h-4 mr-2" />
+                            Read More
+                          </>
+                        )}
+                      </Button>
+                    </MotionDiv>
+
+                    {/* Expanded Content */}
+                    {expandedMembers.includes(member.id) && (
+                      <MotionDiv
+                        className="mt-4 text-left"
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <div className="space-y-3">
+                          <div>
+                            <h5 className="font-semibold text-gray-800 text-sm mb-1">Brief Bio</h5>
+                            <p className="text-gray-600 text-xs leading-relaxed">{member.bio}</p>
+                          </div>
+                          
+                          <div>
+                            <h5 className="font-semibold text-gray-800 text-sm mb-1">LinkedIn</h5>
+                            <a 
+                              href={`https://${member.linkedin}`} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="text-orange-500 text-xs hover:underline"
+                            >
+                              {member.linkedin}
+                            </a>
+                          </div>
+
+                          <div>
+                            <h5 className="font-semibold text-gray-800 text-sm mb-1">Department Oversight</h5>
+                            <p className="text-gray-600 text-xs leading-relaxed">{member.departmentOversight}</p>
+                          </div>
+                        </div>
+                      </MotionDiv>
+                    )}
                   </MotionDiv>
                 </MotionDiv>
               </SwiperSlide>
