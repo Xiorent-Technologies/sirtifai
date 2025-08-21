@@ -52,6 +52,7 @@ export const PartnersRecognitionSection = () => {
     "/assets/home/Logos/GoogleLogo.png",
     "/assets/home/Logos/mircrosoftLogo.jpg",
     "/assets/home/Logos/linkiedLogo.webp",
+    "/assets/about/salesPartner.jpeg"
   ];
   return (
     <section ref={ref} className="w-full bg-white pt-0 pb-8">
