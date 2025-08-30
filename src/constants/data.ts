@@ -16,7 +16,7 @@ import type {
 } from "../types";
 
 export const NAVIGATION_ITEMS: NavigationItem[] = [
-  { label: "Home", href: "/", isActive: true },
+  { label: "Home", href: "/", isActive: false },
   // { label: "About", href: "/about" },
   {
     label: "About",
@@ -41,7 +41,7 @@ export const NAVIGATION_ITEMS: NavigationItem[] = [
       { label: "International ", href: "/sirtifai-international" },
       { label: "Freelancer ", href: "/freelancer" },
       { label: "Spp", href: "/program" },
-
+      { label: "Training Partner Program", href: "/training-partner-program" },
     ],
 
 
@@ -72,6 +72,7 @@ export const SPP_OPTIONS: SPPOption[] = [
   { id: "spp-int", label: "International", href: "/sirtifai-international" },
   { id: "spp-freelance", label: "Freelance", href: "/freelancer" },
   { id: "spp-student", label: "SPP Student", href: "/program" },
+  { id: "spp-partner", label: "Training Partner Program", href: "/training-partner-program" },
 ];
 
 export const USERS: User[] = [
