@@ -7,6 +7,7 @@ import { ComprehensiveVisaSupport } from "../../components/sections/Comprehensiv
 import { RealSuccessStories } from "../../components/sections/RealSuccessStories"
 import { OptionalAddOns } from "../../components/sections/OptionalAddOns"
 import { SuccessStoryCTABanner } from "../../components/sections/SuccessStoryCTABanner"
+import { SuccessStoriesSection } from "../../components/sections/SuccessStoriesSection"
 
 export default function SirtifyInternationalPage() {
   return (
@@ -16,7 +17,8 @@ export default function SirtifyInternationalPage() {
       <GlobalCareerRoadmap />
       <InternationalPricingPlans />
       <ComprehensiveVisaSupport />
-      <RealSuccessStories />
+      {/* <RealSuccessStories /> */}
+      <SuccessStoriesSection />
       <OptionalAddOns />
       <SuccessStoryCTABanner />
       <Footer />

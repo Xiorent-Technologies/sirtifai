@@ -7,6 +7,7 @@ import { PortfolioCertificationSection } from "../../components/sections/Portfol
 import { LearningJourneySection } from "../../components/sections/LearningJourneySection"
 import { TestimonialsSection } from "../../components/sections/TestimonialsSection"
 import { CTABannerSection } from "../../components/sections/CTABannerSection"
+import { SuccessStoriesSection } from "../../components/sections/SuccessStoriesSection"
 
 export default function LearnersPage() {
   return (
@@ -17,7 +18,8 @@ export default function LearnersPage() {
       <ToolsSection />
       <PortfolioCertificationSection />
       <LearningJourneySection />
-      <TestimonialsSection />
+      <SuccessStoriesSection />
+      {/* <TestimonialsSection /> */}
       <CTABannerSection />
       <Footer />
     </div>
