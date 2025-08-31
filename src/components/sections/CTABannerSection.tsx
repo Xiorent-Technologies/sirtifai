@@ -1,68 +1,94 @@
-"use client"
+'use client';
 
-import { motion, useInView } from "framer-motion"
-import { useRef } from "react"
+import { motion } from 'framer-motion';
+import React from 'react';
 
-const MotionSection = motion.section as React.ComponentType<any>
-const MotionDiv = motion.div as React.ComponentType<any>
-const MotionH2 = motion.h2 as React.ComponentType<any>
-const MotionP = motion.p as React.ComponentType<any>
-const MotionButton = motion.button as React.ComponentType<any>
+// ✅ Strongly typed motion components
+const MotionDiv = motion.div as React.ComponentType<
+  React.HTMLAttributes<HTMLDivElement> & import('framer-motion').MotionProps
+>;
+
+const MotionH2 = motion.h2 as React.ComponentType<
+  React.HTMLAttributes<HTMLHeadingElement> & import('framer-motion').MotionProps
+>;
+
+const MotionP = motion.p as React.ComponentType<
+  React.HTMLAttributes<HTMLParagraphElement> & import('framer-motion').MotionProps
+>;
+
+const MotionButton = motion.button as React.ComponentType<
+  React.ButtonHTMLAttributes<HTMLButtonElement> & import('framer-motion').MotionProps
+>;
 
 export const CTABannerSection = () => {
-  const sectionRef = useRef<HTMLDivElement>(null)
-  const isInView = useInView(sectionRef as React.RefObject<Element>, { once: true, margin: "-100px" })
-
   return (
-    <MotionSection
-      ref={sectionRef}
-      className="w-full bg-orange-500 py-20"
-      initial={{ opacity: 0, y: 50 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-      transition={{ duration: 0.8 }}
-    >
-      <MotionDiv
-        className="max-w-7xl mx-auto px-6 text-center"
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
-        transition={{ duration: 0.8, delay: 0.2 }}
-      >
-        <MotionH2
-          className="text-3xl md:text-5xl font-bold text-white mb-6"
+    <section className="w-full bg-[#FE7642] py-16 lg:py-20 px-8 lg:px-16 xl:px-24">
+      <div className="max-w-6xl mx-auto text-center">
+        {/* Main Question */}
+        <MotionDiv
+          className="mb-8"
           initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <MotionH2
+            className="text-3xl lg:text-4xl xl:text-5xl font-bold text-white leading-tight mb-6"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            Ready to transform your career with real skills, income, and global placement?
+          </MotionH2>
+        </MotionDiv>
+
+        {/* Price Text */}
+        <MotionDiv
+          className="mb-12"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          Ready to Start Your Journey?
-        </MotionH2>
+          <MotionP
+            className="text-xl lg:text-2xl text-white font-medium"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+          >
+            Start with just ₹1,999/month.
+          </MotionP>
+        </MotionDiv>
 
-        <MotionP
-          className="sm:text-xl text-sm text-orange-50 mb-12 max-w-3xl mx-auto leading-relaxed"
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-        >
-          Join thousands of learners who have transformed their careers with Sirtifai's structured programs.
-        </MotionP>
-
+        {/* CTA Buttons */}
         <MotionDiv
           className="flex flex-col sm:flex-row gap-4 justify-center items-center"
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.8 }}
         >
+          {/* Join SPP Button */}
           <MotionButton
-            className="px-8 py-4 bg-white text-orange-500 border-2 border-orange-500 rounded-full font-semibold hover:bg-orange-50 transition-colors shadow-md hover:shadow-lg min-w-[200px]"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
-            transition={{ duration: 0.4, delay: 1.0 }}
-            whileHover={{ scale: 1.05, y: -3 }}
+            className="px-8 py-4 bg-white text-[#FE7642] rounded-full font-semibold text-lg hover:bg-gray-50 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+            whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            Join SPP Now
+            Join SPP
+          </MotionButton>
+
+          {/* Talk to a Career Advisor Button */}
+          <MotionButton
+            className="px-8 py-4 bg-[#FE7642] text-white border-2 border-white rounded-full font-semibold text-lg hover:bg-[#e65a2e] transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Talk to a Career Advisor
           </MotionButton>
         </MotionDiv>
-      </MotionDiv>
-    </MotionSection>
-  )
-}
+      </div>
+    </section>
+  );
+};
