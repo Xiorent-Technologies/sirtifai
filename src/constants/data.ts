@@ -25,6 +25,7 @@ export const NAVIGATION_ITEMS: NavigationItem[] = [
     dropdownItems: [
 
       { label: "About Us", href: "/about" },
+      { label: "Investors", href: "/investors" },
       // { label: "media and campaigns", href: "/media-and-campaign" },
       { label: "Insurance", href: "/insurance" },
       { label: "Why Sirtifai", href: "/why-sirtifai" },
@@ -60,6 +61,8 @@ export const NAVIGATION_ITEMS: NavigationItem[] = [
       // { label:"Media and Campaign",  href:"/media-and-campaign"},
       // { label:"Freelancer",  href:"/freelancer"},
       // { label: "Sirtify International", href: "/sirtify-international" },
+       { label: "Drop I India", href: "/drop-i-india" },
+        { label: "Grenov", href: "/grenov" },
       { label: "Contact Us", href: "/contact" },
       { label: "FAQ", href: "/faq" },         
     ],
