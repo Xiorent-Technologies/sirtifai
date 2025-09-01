@@ -68,84 +68,84 @@ const benefits = [
 
 export const WhyJoinAscendSection = () => {
   return (
-    <section className="w-full bg-[#FEF7F1] py-16 lg:py-24 px-8 lg:px-16 xl:px-24">
+  <section className="w-full bg-[#FEF7F1] py-16 lg:py-24 px-6 sm:px-8 lg:px-16 xl:px-24">
+  <div className="w-full mx-auto">
+    {/* Section Header */}
+    <MotionDiv
+      className="text-center mb-12 sm:mb-16"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.8 }}
+    >
+      <MotionH2
+        className="text-xl sm:text-2xl lg:text-4xl xl:text-5xl font-bold text-black mb-4 whitespace-nowrap"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+      >
+        Why Small Companies Join Ascend
+      </MotionH2>
+    </MotionDiv>
 
-      <div className=" w-full mx-auto">
-        {/* Section Header */}
-        <MotionDiv
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-        >
-          <MotionH2
-            className="text-3xl lg:text-4xl xl:text-5xl font-bold text-black mb-4"
-            initial={{ opacity: 0, y: 20 }}
+    {/* Benefits Grid */}
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-12">
+      {benefits.map((benefit) => {
+        const IconComponent = benefit.icon;
+        return (
+          <MotionDiv
+            key={benefit.id}
+            className="flex items-start gap-3 sm:gap-4"
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 0.8, delay: benefit.delay }}
           >
-            Why Small Companies Join Ascend
-          </MotionH2>
-        </MotionDiv>
+            {/* Icon */}
+            <MotionDiv
+              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-orange-100 flex items-center justify-center flex-shrink-0"
+              initial={{ scale: 0 }}
+              whileInView={{ scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: benefit.delay + 0.2 }}
+            >
+              <IconComponent className="w-5 h-5 sm:w-6 sm:h-6 text-orange-500" />
+            </MotionDiv>
 
-        {/* Benefits Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
-          {benefits.map((benefit) => {
-            const IconComponent = benefit.icon;
-            return (
-              <MotionDiv
-                key={benefit.id}
-                className="flex items-start gap-4"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
+            {/* Content */}
+            <MotionDiv
+              className="flex-1"
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: benefit.delay + 0.3 }}
+            >
+              <MotionH3
+                className="text-sm sm:text-base lg:text-xl font-bold text-black mb-1 sm:mb-2 whitespace-nowrap"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: benefit.delay }}
+                transition={{ duration: 0.8, delay: benefit.delay + 0.4 }}
               >
-                {/* Icon */}
-                <MotionDiv
-                  className="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center flex-shrink-0"
-                  initial={{ scale: 0 }}
-                  whileInView={{ scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: benefit.delay + 0.2 }}
-                >
-                  <IconComponent className="w-6 h-6 text-orange-500" />
-                </MotionDiv>
+                {benefit.title}
+              </MotionH3>
+              <MotionP
+                className="text-xs sm:text-sm lg:text-base text-gray-600 leading-relaxed"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: benefit.delay + 0.5 }}
+              >
+                {benefit.description}
+              </MotionP>
+            </MotionDiv>
+          </MotionDiv>
+        );
+      })}
+    </div>
+  </div>
+</section>
 
-                {/* Content */}
-                <MotionDiv
-                  className="flex-1"
-                  initial={{ opacity: 0, x: 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.8, delay: benefit.delay + 0.3 }}
-                >
-                  <MotionH3
-                    className="text-lg lg:text-xl font-bold text-black mb-2"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.8, delay: benefit.delay + 0.4 }}
-                  >
-                    {benefit.title}
-                  </MotionH3>
-                  <MotionP
-                    className="text-gray-600 leading-relaxed"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.8, delay: benefit.delay + 0.5 }}
-                  >
-                    {benefit.description}
-                  </MotionP>
-                </MotionDiv>
-              </MotionDiv>
-            );
-          })}
-        </div>
-      </div>
-    </section>
   );
 };
