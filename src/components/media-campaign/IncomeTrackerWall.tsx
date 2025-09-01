@@ -2,35 +2,71 @@ import { Card } from "../ui/Card"
 
 export default function IncomeTrackerWall() {
   return (
-    <section className="bg-white py-16 lg:py-24">
+    <section className="bg-[#FEF7F1] py-16 lg:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16">
           <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">Income Tracker Wall</h2>
-          <p className="text-lg text-gray-600">Real-time salary increases from our community</p>
+          <p className="text-lg text-gray-600">Real-time earning from our learners. Watch the numbers grow as careers transform. </p>
         </div>
 
         {/* Main Stats Card */}
-        <Card className="bg-gradient-to-r from-gray-800 to-gray-900 text-white p-8 rounded-2xl mb-8">
-          <div className="text-center">
+        <div
+          className="relative overflow-hidden rounded-2xl shadow-lg 
+                 bg-[url('/assets/dollar_image.jpg')] bg-cover bg-center 
+                 text-white p-8 mb-8"
+        >
+          {/* Dark overlay for text readability */}
+          <div className="absolute inset-0 bg-black/60 rounded-2xl"></div>
+
+          <div className="relative text-center">
+            <p className="text-xl text-gray-200">Total Earnings by SPP Learners</p>
             <h3 className="text-5xl lg:text-6xl font-bold text-[#ff7847] mb-2">$7,423,419</h3>
-            <p className="text-xl text-gray-300">Total salary increases tracked this year</p>
           </div>
-        </Card>
+        </div>
+
 
         {/* Stats Grid */}
         <div className="grid md:grid-cols-3 gap-6 mb-8">
-          <Card className="p-6 text-center">
-            <h4 className="text-sm font-medium text-gray-500 mb-2">Average Monthly</h4>
-            <p className="text-2xl font-bold text-gray-900">$2,847</p>
+          <Card className="p-6">
+            <div className="flex items-center justify-between mb-3">
+              <h4 className="text-sm font-medium text-gray-500">Average Monthly</h4>
+              <p className="text-2xl font-bold text-gray-900">$2,847</p>
+            </div>
+            <div className="w-full bg-gray-200 rounded-full h-2">
+              <div
+                className="bg-[#ff7847] h-2 rounded-full"
+                style={{ width: "65%" }}
+              />
+            </div>
           </Card>
-          <Card className="p-6 text-center">
-            <h4 className="text-sm font-medium text-gray-500 mb-2">Highest Earner</h4>
-            <p className="text-2xl font-bold text-gray-900">$8,500</p>
+
+          {/* Card 2 */}
+          <Card className="p-6">
+            <div className="flex items-center justify-between mb-3">
+              <h4 className="text-sm font-medium text-gray-500">Highest Earner</h4>
+              <p className="text-2xl font-bold text-gray-900">$8,500</p>
+            </div>
+            <div className="w-full bg-gray-200 rounded-full h-2">
+              <div
+                className="bg-[#ff7847] h-2 rounded-full"
+                style={{ width: "90%" }}
+              />
+            </div>
           </Card>
-          <Card className="p-6 text-center">
-            <h4 className="text-sm font-medium text-gray-500 mb-2">Placement Rate</h4>
-            <p className="text-2xl font-bold text-gray-900">94%</p>
+
+          {/* Card 3 */}
+          <Card className="p-6">
+            <div className="flex items-center justify-between mb-3">
+              <h4 className="text-sm font-medium text-gray-500">Placement Rate</h4>
+              <p className="text-2xl font-bold text-gray-900">94%</p>
+            </div>
+            <div className="w-full bg-gray-200 rounded-full h-2">
+              <div
+                className="bg-[#ff7847] h-2 rounded-full"
+                style={{ width: "94%" }}
+              />
+            </div>
           </Card>
         </div>
 
@@ -50,9 +86,8 @@ export default function IncomeTrackerWall() {
                 <div key={person.name} className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <div
-                      className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
-                        person.rank === 1 ? "bg-[#ff7847] text-white" : "bg-gray-100 text-gray-600"
-                      }`}
+                      className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${person.rank === 1 ? "bg-[#ff7847] text-white" : "bg-gray-100 text-gray-600"
+                        }`}
                     >
                       {person.rank}
                     </div>
