@@ -17,7 +17,7 @@ export default function UpcomingWebinars() {
           {/* Event 1 */}
           <Card className="overflow-hidden">
             <img
-              src="/placeholder.svg?height=200&width=400"
+              src="https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg"
               alt="Global Career Webinar"
               className="w-full h-48 object-cover"
             />
@@ -49,7 +49,7 @@ export default function UpcomingWebinars() {
           {/* Event 2 */}
           <Card className="overflow-hidden">
             <img
-              src="/placeholder.svg?height=200&width=400"
+              src="https://images.pexels.com/photos/1181396/pexels-photo-1181396.jpeg"
               alt="Placement Drive"
               className="w-full h-48 object-cover"
             />
@@ -79,7 +79,7 @@ export default function UpcomingWebinars() {
           {/* Event 3 */}
           <Card className="overflow-hidden">
             <img
-              src="/placeholder.svg?height=200&width=400"
+              src="https://images.pexels.com/photos/416320/pexels-photo-416320.jpeg"
               alt="Alumni Networking"
               className="w-full h-48 object-cover"
             />

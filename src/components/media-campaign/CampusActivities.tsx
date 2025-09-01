@@ -3,11 +3,11 @@ import { CheckCircle } from "lucide-react"
 
 export default function CampusActivities() {
   return (
-    <section className="bg-gray-50 py-16 lg:py-24">
+    <section className="bg-[#FEF7F1] py-16 lg:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16">
-          <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">Campus Activities & Career Fairs</h2>
+          <h2 className="text-4xl font-semibold text-gray-900 mb-4">Campus Activities & Career Fairs</h2>
           <p className="text-lg text-gray-600">Bringing career opportunities directly to your campus</p>
         </div>
 
@@ -15,7 +15,7 @@ export default function CampusActivities() {
           {/* Left Content */}
           <div>
             <img
-              src="/placeholder.svg?height=400&width=500"
+              src="https://images.pexels.com/photos/1647919/pexels-photo-1647919.jpeg"
               alt="Campus career fair"
               className="w-full h-80 object-cover rounded-2xl"
             />
@@ -67,8 +67,8 @@ export default function CampusActivities() {
               </div>
             </div>
 
-            <Button className="bg-[#ff7847] hover:bg-[#e56a3f] text-white px-8 py-3 rounded-full">
-              Partner With Us
+            <Button className="w-full bg-[#ff7847] hover:bg-[#e56a3f] text-white px-8 py-3 rounded-sm">
+             Invite Sirtifai to Your Campus
             </Button>
           </div>
         </div>
