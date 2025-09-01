@@ -1,11 +1,11 @@
 import { Header } from "../../components/layout/Header"
 import { Footer } from "../../components/layout/Footer"
-import  FeaturedLearnerStories from "../../components/sections/FeaturedLearnerStories";
-import  IncomeTrackerWall from "../../components/sections/IncomeTrackerWall";
-import SuccessGallery from "../../components/sections/SuccessGallery";
-import UpcomingWebinars from "../../components/sections/UpcomingWebinars";
-import CampusActivities from "../../components/sections/CampusActivities";
-import FooterCTA from "../../components/sections/FooterCta";
+import  FeaturedLearnerStories from "../../components/media-campaign/FeaturedLearnerStories";
+import  IncomeTrackerWall from "../../components/media-campaign/IncomeTrackerWall";
+import SuccessGallery from "../../components/media-campaign/SuccessGallery";
+import UpcomingWebinars from "../../components/media-campaign/UpcomingWebinars";
+import CampusActivities from "../../components/media-campaign/CampusActivities";
+import FooterCTA from "../../components/media-campaign/FooterCta";
 
 export default function MediaCampaignPage() {
   return (
