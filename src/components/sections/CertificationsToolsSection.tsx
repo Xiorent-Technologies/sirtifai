@@ -15,6 +15,7 @@ interface CertificationTool {
   title: string
   description: string
   features: string[]
+  image: string
 }
 
 const CERTIFICATION_TOOLS: CertificationTool[] = [
@@ -27,6 +28,7 @@ const CERTIFICATION_TOOLS: CertificationTool[] = [
       "Employers can verify within seconds — no calls or emails required",
       "Stored in the Sirtifai Digital Wallet for lifetime access.",
     ],
+    image: "/assets/certification/certificate.png", // 🔹 add your image path here
   },
   {
     id: "certification-showcase",
@@ -37,6 +39,7 @@ const CERTIFICATION_TOOLS: CertificationTool[] = [
       "Practice Phase Certificate - Confirms paid project experience with payroll verification.",
       "Progress Phase Certificate - Confirms employability readiness and career track completion.",
     ],
+    image: "/assets/certification/certificate2.png",
   },
   {
     id: "recruitment-help",
@@ -48,6 +51,7 @@ const CERTIFICATION_TOOLS: CertificationTool[] = [
       "Unlocks Global Roles: Meets skill verification requirements for overseas job applications.",
       "Adds LinkedIn Credibility: Certificates link directly to public recruiter-facing pages.",
     ],
+    image: "/assets/certification/certificate3.png",
   },
 ]
 
@@ -100,29 +104,39 @@ export const CertificationsToolsSection = () => {
               transition={{ duration: 0.6, delay: 0.4 + index * 0.2 }}
               whileHover={{ scale: 1.02, y: -5 }}
             >
-              {/* Top Orange Section */}
+              {/* 🔹 Top Image Section with Overlay */}
               <MotionDiv
-                className="bg-orange-500 p-6 text-white"
+                className="relative p-6 text-white h-40 flex flex-col justify-end"
+                style={{
+                  backgroundImage: `url(${tool.image})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }}
                 initial={{ opacity: 0, y: -20 }}
                 animate={sectionInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
                 transition={{ duration: 0.4, delay: 0.6 + index * 0.2 }}
               >
-                <MotionH3
-                  className="text-lg font-bold mb-2 leading-tight"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={sectionInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-                  transition={{ duration: 0.4, delay: 0.8 + index * 0.2 }}
-                >
-                  {tool.title}
-                </MotionH3>
-                <MotionP
-                  className="text-orange-100 text-sm leading-relaxed"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={sectionInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-                  transition={{ duration: 0.4, delay: 1.0 + index * 0.2 }}
-                >
-                  {tool.description}
-                </MotionP>
+                {/* Overlay for readability */}
+                <div className="absolute inset-0 bg-black/40" />
+
+                <div className="relative z-10">
+                  <MotionH3
+                    className="text-lg font-bold mb-2 leading-tight"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={sectionInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+                    transition={{ duration: 0.4, delay: 0.8 + index * 0.2 }}
+                  >
+                    {tool.title}
+                  </MotionH3>
+                  <MotionP
+                    className="text-sm leading-relaxed text-gray-100"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={sectionInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+                    transition={{ duration: 0.4, delay: 1.0 + index * 0.2 }}
+                  >
+                    {tool.description}
+                  </MotionP>
+                </div>
               </MotionDiv>
 
               {/* Bottom White Section */}
@@ -132,7 +146,6 @@ export const CertificationsToolsSection = () => {
                 animate={sectionInView ? { opacity: 1 } : { opacity: 0 }}
                 transition={{ duration: 0.6, delay: 0.8 + index * 0.2 }}
               >
-                {/* Features List */}
                 <div className="space-y-3">
                   {tool.features.map((feature, featureIndex) => (
                     <MotionDiv

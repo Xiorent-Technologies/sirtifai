@@ -1,5 +1,6 @@
 "use client"
 import { motion } from "framer-motion"
+import Image from "next/image"
 
 // Strongly typed motion components to fix TypeScript errors
 const MotionSection = motion.section as React.ComponentType<any>
@@ -8,6 +9,20 @@ const MotionH2 = motion.h2 as React.ComponentType<any>
 const MotionH3 = motion.h3 as React.ComponentType<any>
 const MotionP = motion.p as React.ComponentType<any>
 const MotionSpan = motion.span as React.ComponentType<any>
+const PROVIDERS = [
+  { name: "Tata AIG", logo: "/assets/insurance/tata.png" },
+  { name: "New India Assurance", logo: "/assets/insurance/new_India.png" },
+  { name: "HDFC ERGO", logo: "/assets/insurance/hdfc.png" },
+  { name: "ICICI Lombard", logo: "/assets/insurance/icici.png" },
+
+  { name: "Chubb", logo: "/assets/insurance/chubb.png" },
+  { name: "Hiscox", logo: "/assets/insurance/hiscox.png" },
+  { name: "Lloyd's", logo: "/assets/insurance/llyod.webp" },
+]
+
+const firstRow = PROVIDERS.slice(0, 4);
+const secondRow = PROVIDERS.slice(4);
+
 
 export const InsuranceNetworkSection = () => {
   return (
@@ -29,7 +44,7 @@ export const InsuranceNetworkSection = () => {
           >
             Our Insurance Network
           </MotionH2>
-          <MotionP
+           <MotionP
             className="text-gray-600 text-base xs:text-lg lg:text-xl mb-8 max-w-3xl xl:max-w-4xl mx-auto"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -39,26 +54,60 @@ export const InsuranceNetworkSection = () => {
             We&apos;ve partnered with leading insurance providers to ensure comprehensive and reliable coverage.
           </MotionP>
 
-          <MotionDiv
-            className="flex flex-wrap justify-center items-center gap-x-8 gap-y-4 text-gray-600 font-medium text-sm xs:text-xl sm:text-2xl"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-          >
-            {["Pazcare", "Star Health", "HDFC ERGO", "ICICI Lombard"].map((provider, index) => (
-              <MotionSpan
-                key={provider}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: 0.8 + index * 0.1 }}
-                whileHover={{ scale: 1.1, color: "#FE7642" }}
-              >
-                {provider}
-              </MotionSpan>
-            ))}
-          </MotionDiv>
+           <MotionDiv
+  className="flex flex-col items-center gap-y-6"
+  initial={{ opacity: 0, y: 20 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.6, delay: 0.6 }}
+>
+  {/* First row (4 items) */}
+  <div className="flex justify-center flex-wrap gap-x-8">
+    {firstRow.map((provider, index) => (
+      <MotionDiv
+        key={provider.name}
+        initial={{ opacity: 0, scale: 0.8 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.4, delay: 0.8 + index * 0.1 }}
+        whileHover={{ scale: 1.05 }}
+        className="flex justify-center"
+      >
+        <Image
+          src={provider.logo}
+          alt={provider.name}
+          width={140}
+          height={60}
+          className="object-contain"
+        />
+      </MotionDiv>
+    ))}
+  </div>
+
+  {/* Second row (3 items) */}
+  <div className="flex justify-center flex-wrap gap-x-8">
+    {secondRow.map((provider, index) => (
+      <MotionDiv
+        key={provider.name}
+        initial={{ opacity: 0, scale: 0.8 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.4, delay: 1.2 + index * 0.1 }}
+        whileHover={{ scale: 1.05 }}
+        className="flex justify-center"
+      >
+        <Image
+          src={provider.logo}
+          alt={provider.name}
+          width={140}
+          height={60}
+          className="object-contain"
+        />
+      </MotionDiv>
+    ))}
+  </div>
+</MotionDiv>
+
         </div>
 
         <MotionDiv

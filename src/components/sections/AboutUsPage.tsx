@@ -21,7 +21,7 @@ import CareerSection from "./CareerSection"
 
 const industries = ["HR", "Finance", "Legal", "Education", "Construction", "Healthcare", "Aerospace", "BFSI"]
 
-import { AboutSection } from "./AboutSection"
+// import { AboutSection } from "./AboutSection"
 
 // Strongly typed motion components to fix TypeScript errors
 const MotionDiv = motion.div as React.ComponentType<any>
@@ -609,7 +609,7 @@ export const AboutUsPage = () => {
           </div>
       </MotionSection>
 
-      <AboutSection />
+      {/* <AboutSection /> */}
       {/* Gap between Our Mission (AboutSection) and Upcoming Projects */}
       <div className="h-8 md:h-12 bg-white w-full" />
 
