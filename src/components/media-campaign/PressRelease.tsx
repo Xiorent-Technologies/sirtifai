@@ -2,7 +2,7 @@ import { ExternalLink, Share2 } from "lucide-react";
 import { Button } from "../ui/Button";
 import { Card } from "../ui/Card";
 
-const MediaLogo = ({ name, logo, description, category }) => {
+const MediaLogo = ({ name, logo, description, category }:any) => {
   return (
     <Card className="p-6 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer group">
       <div className="text-center space-y-4">
