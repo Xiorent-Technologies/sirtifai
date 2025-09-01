@@ -11,6 +11,7 @@ import JobTech from "@/components/sections/investors_page/jobtech";
 export default function ContactPage() {
   return (
     <div className="bg-[#fff] font-sans min-h-screen overflow-x-hidden">
+      {/* <h1>hello</h1> */}
       <Header />
       <HeroSection />
       <PrimeInvestor />
@@ -19,9 +20,8 @@ export default function ContactPage() {
       <InnovationInAction />
       <LogoMarquee /> */}
 
-      
       {/* <CtaBand /> */}
-      
+
       <Footer />
     </div>
   );
