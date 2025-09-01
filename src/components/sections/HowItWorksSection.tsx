@@ -15,6 +15,9 @@ const MotionH2 = motion.h2 as React.ComponentType<
 const MotionH3 = motion.h3 as React.ComponentType<
   React.HTMLAttributes<HTMLHeadingElement> & import('framer-motion').MotionProps
 >;
+const MotionH4 = motion.h4 as React.ComponentType<
+  React.HTMLAttributes<HTMLHeadingElement> & import('framer-motion').MotionProps
+>;
 
 const MotionP = motion.p as React.ComponentType<
   React.HTMLAttributes<HTMLParagraphElement> & import('framer-motion').MotionProps
@@ -73,7 +76,7 @@ const processSteps = [
 
 export const HowItWorksSection = () => {
   return (
-    <section className="w-full bg-[#FEF7F1] py-16 lg:py-24 px-8 lg:px-16 xl:px-24">
+<section className="w-full bg-[#FEF7F1] py-16 lg:py-24 px-8 lg:px-16 xl:px-24">
       <div className="max-w-7xl mx-auto">
         {/* HOW IT WORKS Section */}
         <MotionDiv
@@ -85,7 +88,7 @@ export const HowItWorksSection = () => {
         >
           {/* Section Title */}
           <MotionH2
-            className="text-3xl lg:text-4xl xl:text-5xl font-bold text-black text-center mb-12"
+            className="text-2xl lg:text-4xl xl:text-5xl font-bold text-black text-center mb-8 lg:mb-12"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -94,12 +97,12 @@ export const HowItWorksSection = () => {
             HOW IT WORKS
           </MotionH2>
 
-          {/* Process Steps */}
-          <div className="flex flex-row justify-center items-center gap-2 lg:gap-4 overflow-x-auto">
+          {/* Process Steps - Mobile: Vertical Stack, Desktop: Horizontal Flow */}
+          <div className="flex flex-col lg:flex-row lg:justify-center lg:items-center gap-4 lg:gap-4 lg:overflow-x-auto">
             {processSteps.map((step, index) => (
               <MotionDiv
                 key={step.id}
-                className={`flex flex-col items-center text-center px-4 py-6 rounded-lg relative min-w-[200px] lg:min-w-[220px] ${
+                className={`flex flex-col items-center text-center px-4 py-4 lg:py-6 rounded-lg relative w-full lg:min-w-[220px] ${
                   step.isHighlighted 
                     ? 'bg-[#FE7642] text-white' 
                     : 'bg-white text-black'
@@ -111,7 +114,7 @@ export const HowItWorksSection = () => {
               >
                 {/* Step Number */}
                 <MotionH3
-                  className={`text-3xl lg:text-4xl font-bold mb-2 ${
+                  className={`text-2xl lg:text-4xl font-bold mb-2 ${
                     step.isHighlighted ? 'text-white' : 'text-black'
                   }`}
                   initial={{ opacity: 0 }}
@@ -124,7 +127,7 @@ export const HowItWorksSection = () => {
 
                 {/* Step Title */}
                 <MotionH3
-                  className={`text-lg lg:text-xl font-bold mb-2 ${
+                  className={`text-base lg:text-xl font-bold mb-2 ${
                     step.isHighlighted ? 'text-white' : 'text-black'
                   }`}
                   initial={{ opacity: 0 }}
@@ -148,10 +151,10 @@ export const HowItWorksSection = () => {
                   {step.description}
                 </MotionP>
 
-                {/* Arrow connecting to next step */}
+                {/* Arrow connecting to next step - Only show on desktop */}
                 {index < processSteps.length - 1 && (
                   <MotionDiv
-                    className={`absolute -right-2 top-1/2 transform -translate-y-1/2 w-0 h-0 border-l-[12px] border-l-current border-t-[12px] border-t-transparent border-b-[12px] border-b-transparent ${
+                    className={`hidden lg:block absolute -right-2 top-1/2 transform -translate-y-1/2 w-0 h-0 border-l-[12px] border-l-current border-t-[12px] border-t-transparent border-b-[12px] border-b-transparent ${
                       step.isHighlighted ? 'text-white' : 'text-gray-400'
                     }`}
                     initial={{ opacity: 0 }}
@@ -167,7 +170,7 @@ export const HowItWorksSection = () => {
 
         {/* Sirtifai - Our Process Section */}
         <MotionDiv
-          className="flex  flex-col lg:flex-row items-center gap-12 lg:gap-16"
+          className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -181,20 +184,20 @@ export const HowItWorksSection = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.8 }}
           >
-                         <MotionImg
-               src="/assets/training partner program/how-it-works.jpg"
-               alt="Sirtifai Process - How it works illustration"
-               className="w-full h-[300px] lg:h-[350px] object-cover rounded-lg shadow-lg"
-               initial={{ scale: 0.9, opacity: 0 }}
-               whileInView={{ scale: 1, opacity: 1 }}
-               viewport={{ once: true }}
-               transition={{ duration: 0.8, delay: 1.0 }}
-             />
+            <MotionImg
+              src="/assets/training partner program/how-it-works.jpg"
+              alt="Sirtifai Process - How it works illustration"
+              className="w-full h-[250px] lg:h-[350px] object-cover rounded-lg shadow-lg"
+              initial={{ scale: 0.9, opacity: 0 }}
+              whileInView={{ scale: 1, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 1.0 }}
+            />
           </MotionDiv>
 
           {/* Right Column - Text and Button */}
           <MotionDiv
-            className="w-full lg:w-1/2 flex flex-col gap-6"
+            className="w-full lg:w-1/2 flex flex-col gap-4 lg:gap-6"
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -202,7 +205,7 @@ export const HowItWorksSection = () => {
           >
             {/* Title */}
             <MotionH2
-              className="text-3xl lg:text-4xl xl:text-5xl font-bold text-black"
+              className="text-2xl lg:text-4xl xl:text-5xl font-bold text-black"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -213,7 +216,7 @@ export const HowItWorksSection = () => {
 
             {/* Description */}
             <MotionP
-              className="text-lg lg:text-xl text-gray-700 leading-relaxed"
+              className="text-base lg:text-xl text-gray-700 leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -224,14 +227,14 @@ export const HowItWorksSection = () => {
 
             {/* CTA Button */}
             <MotionDiv
-              className="mt-4"
+              className="mt-2 lg:mt-4"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 1.6 }}
             >
               <MotionButton
-                className="px-8 py-4 bg-[#FE7642] text-white rounded-full font-semibold text-lg hover:bg-[#e65a2e] transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+                className="px-6 py-3 lg:px-8 lg:py-4 bg-[#FE7642] text-white rounded-full font-semibold text-base lg:text-lg hover:bg-[#e65a2e] transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >

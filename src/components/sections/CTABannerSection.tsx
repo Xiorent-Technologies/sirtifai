@@ -33,7 +33,7 @@ export const CTABannerSection = () => {
           transition={{ duration: 0.8 }}
         >
           <MotionH2
-            className="text-3xl lg:text-4xl xl:text-5xl font-bold text-white leading-tight mb-6"
+            className="sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-white leading-tight mb-6"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -63,31 +63,32 @@ export const CTABannerSection = () => {
         </MotionDiv>
 
         {/* CTA Buttons */}
-        <MotionDiv
-          className="flex flex-col sm:flex-row gap-4 justify-center items-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.8 }}
-        >
-          {/* Join SPP Button */}
-          <MotionButton
-            className="px-8 py-4 bg-white text-[#FE7642] rounded-full font-semibold text-lg hover:bg-gray-50 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Join SPP
-          </MotionButton>
+      <MotionDiv
+  className="flex flex-row flex-wrap justify-center items-center gap-3 sm:gap-4"
+  initial={{ opacity: 0, y: 20 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.8, delay: 0.8 }}
+>
+  {/* Join SPP Button */}
+  <MotionButton
+    className="px-4 py-2 sm:px-6 sm:py-3 lg:px-8 lg:py-4 bg-white text-[#FE7642] rounded-full font-semibold text-xs sm:text-sm lg:text-lg hover:bg-gray-50 transition-all duration-300 shadow-md hover:shadow-lg hover:scale-105 whitespace-nowrap"
+    whileHover={{ scale: 1.05 }}
+    whileTap={{ scale: 0.95 }}
+  >
+    Join SPP
+  </MotionButton>
 
-          {/* Talk to a Career Advisor Button */}
-          <MotionButton
-            className="px-8 py-4 bg-[#FE7642] text-white border-2 border-white rounded-full font-semibold text-lg hover:bg-[#e65a2e] transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Talk to a Career Advisor
-          </MotionButton>
-        </MotionDiv>
+  {/* Talk to a Career Advisor Button */}
+  <MotionButton
+    className="px-4 py-2 sm:px-6 sm:py-3 lg:px-8 lg:py-4 bg-[#FE7642] text-white border-2 border-white rounded-full font-semibold text-xs sm:text-sm lg:text-lg hover:bg-[#e65a2e] transition-all duration-300 shadow-md hover:shadow-lg hover:scale-105 whitespace-nowrap"
+    whileHover={{ scale: 1.05 }}
+    whileTap={{ scale: 0.95 }}
+  >
+    Talk to a Career Advisor
+  </MotionButton>
+</MotionDiv>
+
       </div>
     </section>
   );
