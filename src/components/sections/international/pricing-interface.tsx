@@ -25,7 +25,7 @@ const PricingInterface = () => {
   const router = useRouter()
 
   const [selectedProgram, setSelectedProgram] = useState<InternationalProgramKey>("international-basic")
-  const [selectedDurations, setSelectedDurations] = useState<Record<InternationalProgramKey, number>>({
+  const [selectedDurations, setSelectedDurations] = useState<{ [key: string]: number }>({
     "international-basic": 1,
     "international-pro": 1,
     "international-elite": 1,
@@ -42,8 +42,8 @@ const PricingInterface = () => {
     legal: true
   })
 
-  const toggleSection = (key: SectionKey) =>
-    setExpandedSections((prev) => ({ ...prev, [key]: !prev[key] }));
+  const toggleSection = (key: string) =>
+    setExpandedSections((prev) => ({ ...prev, [key as SectionKey]: !prev[key as SectionKey] }));
 
   const handleAddonSelect = (sectionKey: string, addonId: string) =>
     setSelectedAddons((prev) => ({ ...prev, [sectionKey]: addonId }));

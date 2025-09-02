@@ -62,6 +62,7 @@ const ProgramSelection: React.FC<ProgramSelectionProps> = ({
 
           const durationOptions = isMonthly
             ? (() => {
+                if (!program.monthlyOptions) return [3, 6];
                 const [min, max] = program.monthlyOptions.split("-").map(Number);
                 return Array.from({ length: max - min + 1 }, (_, i) => min + i);
               })()
@@ -163,6 +164,7 @@ const ProgramSelection: React.FC<ProgramSelectionProps> = ({
 
           const durationOptions = isMonthly
             ? (() => {
+                if (!program.monthlyOptions) return [3, 6];
                 const [min, max] = program.monthlyOptions.split("-").map(Number);
                 return Array.from({ length: max - min + 1 }, (_, i) => min + i);
               })()

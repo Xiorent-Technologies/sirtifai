@@ -22,7 +22,7 @@ const PricingInterface = () => {
 
   type ProgramKey = "freelancer-basic" | "freelancer-pro" | "freelancer-elite";
   const [selectedProgram, setSelectedProgram] = useState<ProgramKey>("freelancer-basic")
-  const [selectedDurations, setSelectedDurations] = useState<Record<ProgramKey, number>>({
+  const [selectedDurations, setSelectedDurations] = useState<{ [key: string]: number }>({
     "freelancer-basic": 1,
     "freelancer-pro": 1,
     "freelancer-elite": 1,

@@ -21,7 +21,7 @@ const PricingInterface = () => {
   const router = useRouter()
 
   const [selectedProgram, setSelectedProgram] = useState("skill-phase")
-  const [selectedDurations, setSelectedDurations] = useState({
+  const [selectedDurations, setSelectedDurations] = useState<{ [key: string]: number }>({
     "skill-phase": 6,
     "practice-basic": 3,
     "practice-pro": 3,
@@ -36,7 +36,7 @@ const PricingInterface = () => {
     legal: ""
   });
 
-  const [expandedSections, setExpandedSections] = useState({
+  const [expandedSections, setExpandedSections] = useState<{ [key: string]: boolean }>({
     payroll: true,
     ca: true,
     legal: true
@@ -67,14 +67,14 @@ const PricingInterface = () => {
   }
 
   const calculateTotal = () => {
-    const program = products.programs?.[selectedProgram];
+    const program = products.programs?.[selectedProgram as keyof typeof products.programs];
     const duration = selectedDurations[selectedProgram] || 1;
     const programCost = program ? program.price * duration : 0;
 
     const allAddons = { ...products.programAddons, ...products.freelancerAddons };
 
     const addonCosts = Object.values(selectedAddons).reduce((sum, addonId) => {
-      const addon = allAddons[addonId];
+      const addon = allAddons[addonId as keyof typeof allAddons];
       return sum + (addon ? addon.price : 0);
     }, 0);
 
@@ -247,16 +247,16 @@ const PricingInterface = () => {
           </h3>
 
           <div className="space-y-3">
-            {selectedProgram && products.programs[selectedProgram] && (
+            {selectedProgram && products.programs[selectedProgram as keyof typeof products.programs] && (
               <div className="flex justify-between items-center">
-                <span className="text-white/90">{products.programs[selectedProgram].name}</span>
+                <span className="text-white/90">{products.programs[selectedProgram as keyof typeof products.programs].name}</span>
                 <span className="font-semibold">₹{costs.programCost.toLocaleString()}</span>
               </div>
             )}
 
             {["payroll", "ca", "legal"].map((key) => {
               const addonId = selectedAddons[key];
-              const addon = { ...products.programAddons, ...products.freelancerAddons }[addonId];
+              const addon = { ...products.programAddons, ...products.freelancerAddons }[addonId as keyof typeof products.programAddons];
               return (
                 <div key={key} className="flex justify-between items-center">
                   <span className="text-white/90">
