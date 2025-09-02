@@ -83,7 +83,7 @@ export const PartnerNetworkSection = () => {
         </MotionDiv>
 
         {/* Partners Grid */}
-        <div className="flex flex-row justify-between items-center gap-4 lg:gap-8 xl:gap-12 overflow-x-auto">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 lg:gap-8 xl:gap-12 sm:overflow-x-auto">
           {partners.map((partner, index) => (
             <MotionDiv
               key={partner.id}
@@ -119,6 +119,7 @@ export const PartnerNetworkSection = () => {
             </MotionDiv>
           ))}
         </div>
+
 
 
       </div>

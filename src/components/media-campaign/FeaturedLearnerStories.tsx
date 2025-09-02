@@ -20,7 +20,7 @@ export default function FeaturedLearnerStories() {
           <Card className="bg-white p-6 rounded-2xl shadow-sm">
             <div className="relative mb-6">
               <img
-                src="/cozy-laptop-work.png"
+                src="/assets/laptop-woman.jpg"
                 alt="Video testimonial"
                 className="w-full h-48 object-cover rounded-lg"
               />
