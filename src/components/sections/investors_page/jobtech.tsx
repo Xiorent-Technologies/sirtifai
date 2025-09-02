@@ -112,7 +112,7 @@ export default function JobTech() {
                   track.
                 </li>
               </ul>
-              <p className="mt-1">💰 Pricing: ₹5,999 – ₹59999/month</p>
+              <p className="mt-1">💰 Pricing: ₹5,999 – ₹5,99,999/month</p>
 
               <h5 className="font-bold mt-4 mb-1">Sirtifai International</h5>
               <ul className="list-disc list-inside space-y-1 text-gray-700">
@@ -121,8 +121,8 @@ export default function JobTech() {
                 <li>ROI: ₹59,000–₹3L investment → ₹20–35L/year jobs abroad.</li>
               </ul>
               <p className="mt-1">
-                💰 Pricing: Basic – ₹59,000 | Pro – ₹1,77,000 | Elite –
-                ₹3,00,000
+                💰 Pricing: Basic – ₹79,999 | Pro – ₹2,12,999 | Elite –
+                ₹6,37,999
               </p>
 
               <h5 className="font-bold mt-4 mb-1">
@@ -134,7 +134,7 @@ export default function JobTech() {
                 <li>Income range: ₹12K–₹35K/month.</li>
               </ul>
               <p className="mt-1">
-                💰 Pricing: Basic – ₹11,798 | Pro – ₹23,598 | Elite – ₹42,478
+                💰 Pricing: Basic – ₹15,000 | Pro – ₹31,860 | Elite – ₹70,800
               </p>
             </div>
 
