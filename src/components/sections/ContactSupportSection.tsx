@@ -81,7 +81,7 @@ export const ContactSupportSection = () => {
             >
               {/* WhatsApp */}
               <MotionA
-                href="https://wa.me/0000000000"
+                href="https://wa.me/917013540039"
                 aria-label="Chat with us on WhatsApp"
                 className="group flex items-center gap-3 text-white hover:opacity-90 transition-opacity"
                 initial={{ opacity: 0, x: -30 }}
@@ -151,30 +151,30 @@ export const ContactSupportSection = () => {
             <span className="font-semibold text-[#FE7642] tracking-wide">Join Now :</span>
             <nav className="flex items-center gap-x-4 gap-y-2 flex-wrap">
               <MotionA
-                href="#"
+                href="/program"
                 className="hover:text-orange-300 transition-colors"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                SPP Int
+                SPP 
               </MotionA>
               <span className="hidden sm:inline text-blue-400/60">|</span>
               <MotionA
-                href="#"
+                href="/freelancer"
                 className="hover:text-orange-300 transition-colors"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                SPP Freelance
+                Freelancer
               </MotionA>
               <span className="hidden sm:inline text-blue-400/60">|</span>
               <MotionA
-                href="#"
+                href="/sirtifai-international"
                 className="hover:text-orange-300 transition-colors"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                SPP Student
+                International
               </MotionA>
             </nav>
           </div>
