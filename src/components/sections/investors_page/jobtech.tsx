@@ -228,14 +228,14 @@ export default function JobTech() {
         </div>
 
         {/* Optional CTA Button with animation */}
-        <motion.div
+        <MotionDiv
           className="mt-12 text-center"
           initial="hidden"
           animate={jobTechInView ? "visible" : "hidden"}
           variants={ctaVariants}
         >
           {/* <CtaButton>Learn More</CtaButton> */}
-        </motion.div>
+        </MotionDiv>
       </MotionDiv>
     </MotionSection>
   );

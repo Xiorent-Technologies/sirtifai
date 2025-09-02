@@ -71,13 +71,17 @@ export default function LogoMarquee({
 
   return (
     <section id="partners" className="w-full py-16">
-      <div className="mx-auto max-w-6xl px-6">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <MotionDiv
           variants={container}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.25, margin: "-120px 0px -120px 0px" }}
-          className="flex justify-between flex-col gap-12 lg:flex-row lg:gap-0"
+          viewport={{
+            once: true,
+            amount: 0.25,
+            margin: "-120px 0px -120px 0px",
+          }}
+          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-8 sm:gap-10 place-items-center"
         >
           {logos.map((logo, idx) => (
             <MotionDiv
@@ -85,7 +89,7 @@ export default function LogoMarquee({
               variants={item}
               whileHover={{ scale: 1.03 }}
               transition={{ type: "spring", stiffness: 300, damping: 24 }}
-              className="mx-6 flex items-center justify-center"
+              className="flex items-center justify-center"
             >
               <div className="flex flex-col justify-center items-center py-1">
                 <MotionDiv
@@ -93,14 +97,15 @@ export default function LogoMarquee({
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true, amount: 0.6 }}
                   transition={{ duration: 0.4, ease: "easeOut" }}
-                  className="h-22 w-auto"
+                  className="w-24 h-12 sm:w-28 sm:h-14 md:w-32 md:h-16"
                 >
                   <Image
                     src={logo.src}
                     alt={`${logo.alt} logo`}
                     width={150}
                     height={150}
-                    className="h-22 w-auto object-contain"
+                    sizes="(max-width: 640px) 33vw, (max-width: 1024px) 20vw, 150px"
+                    className="h-full w-full object-contain"
                   />
                 </MotionDiv>
                 <MotionH2
@@ -108,7 +113,7 @@ export default function LogoMarquee({
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true, amount: 0.8 }}
                   transition={{ duration: 0.35 }}
-                  className="text-md font-semibold"
+                  className="text-sm sm:text-base font-semibold text-center"
                 >
                   {logo.title}
                 </MotionH2>

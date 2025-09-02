@@ -35,7 +35,7 @@ export default function HeroSection() {
   };
 
   return (
-    <main className="h-full bg-orange-50 px-20 lg:bg-gradient-to-br from-gray-50 to-white">
+    <main className="h-full bg-orange-50 lg:px-20 lg:bg-gradient-to-br from-gray-50 to-white">
       {/* <div className="mx-auto grid max-w-6xl grid-cols-1 items-stretch gap-8 px-4 md:grid-cols-2 md:gap-10">
         <div className="order-2 flex flex-col justify-start md:order-1 pt-[120px]">
           <h1 className="text-pretty font-sans text-xl font-extrabold leading-tight text-gray-900 sm:text-5xl">
@@ -94,16 +94,24 @@ export default function HeroSection() {
           >
             <div className="relative w-full max-w-sm md:max-w-md lg:max-w-lg">
               <Image
+                src="/assets/grenov/image.png"
+                alt="AI Brain Innovation - 3D illustration of a brain connected to circuit boards representing AI-driven technology"
+                width={1500}
+                height={1500}
+                className="w-full h-auto hidden lg:block object-contain scale-230 lg:absolute right-[150px] -top-[150px]"
+                priority
+              />
+              <Image
                 src="/Grenov_brain.png"
                 alt="AI Brain Innovation - 3D illustration of a brain connected to circuit boards representing AI-driven technology"
                 width={500}
                 height={500}
-                className="w-full h-auto object-contain"
+                className="w-full h-auto block lg:hidden object-contain"
                 priority
               />
 
               {/* Decorative elements */}
-              <MotionDiv
+              {/* <MotionDiv
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true, amount: 0.8 }}
@@ -130,7 +138,7 @@ export default function HeroSection() {
                 viewport={{ once: true, amount: 0.8 }}
                 transition={{ duration: 0.35, delay: 0.2 }}
                 className="absolute bottom-1/3 -left-2 w-6 h-6 bg-blue-100 rounded-full opacity-30"
-              ></MotionDiv>
+              ></MotionDiv> */}
             </div>
           </MotionDiv>
 
@@ -169,7 +177,7 @@ export default function HeroSection() {
 
             <MotionDiv
               variants={container}
-              className="flex gap-12 justify-center lg:justify-start"
+              className="flex gap-2 justify-center lg:justify-start"
             >
               <MotionDiv
                 variants={item}
