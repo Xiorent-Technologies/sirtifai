@@ -1,12 +1,13 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import { CtaButton } from "../../common/cta-button"
+import Image from "next/image";
+import { CtaButton } from "../../common/cta-button";
+import { Button } from "@/components/ui/Button";
 
 export default function HeroSection() {
   return (
-    <section className="relative isolate">
-      <div className="mx-auto grid max-w-6xl grid-cols-1 items-stretch gap-8 px-4 md:grid-cols-2 md:gap-10">
+    <main className="h-full bg-orange-50 lg:bg-gradient-to-br from-gray-50 to-white">
+      {/* <div className="mx-auto grid max-w-6xl grid-cols-1 items-stretch gap-8 px-4 md:grid-cols-2 md:gap-10">
         <div className="order-2 flex flex-col justify-start md:order-1 pt-[120px]">
           <h1 className="text-pretty font-sans text-xl font-extrabold leading-tight text-gray-900 sm:text-5xl">
             One Drop Can Change Millions of Lives
@@ -47,8 +48,67 @@ export default function HeroSection() {
             />
           </div>
         </div>
-      </div>
+      </div> */}
+      <div className="container mx-auto px-4 py-8 lg:py-16">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          {/* Image Section - appears first on mobile, second on desktop */}
+          <div className="relative flex justify-center lg:justify-end order-1 lg:order-2">
+            <div className="relative w-full max-w-sm md:max-w-md lg:max-w-lg">
+              <Image
+                src="/Grenov_brain.png"
+                alt="AI Brain Innovation - 3D illustration of a brain connected to circuit boards representing AI-driven technology"
+                width={500}
+                height={500}
+                className="w-full h-auto object-contain"
+                priority
+              />
 
-    </section>
-  )
+              {/* Decorative elements */}
+              <div className="absolute -top-4 -left-4 w-8 h-8 border-l-2 border-t-2 border-orange-200 opacity-60"></div>
+              <div className="absolute -bottom-4 -right-4 w-8 h-8 border-r-2 border-b-2 border-orange-200 opacity-60"></div>
+              <div className="absolute top-1/4 -right-2 w-4 h-4 bg-orange-100 rounded-full opacity-40"></div>
+              <div className="absolute bottom-1/3 -left-2 w-6 h-6 bg-blue-100 rounded-full opacity-30"></div>
+            </div>
+          </div>
+
+          {/* Content Section */}
+          <div className="space-y-6 lg:space-y-8 order-2 lg:order-1 text-center lg:text-left">
+            <div className="space-y-4">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-balance">
+                <span className="text-orange-500">Grenov</span>
+                <span className="text-gray-900">
+                  {" "}
+                  – The Next Frontier in AI-Driven Innovation"
+                </span>
+              </h1>
+
+              <p className="text-lg md:text-xl text-gray-600 leading-relaxed max-w-lg mx-auto lg:mx-0">
+                Empowering industries with advanced automation, intelligence,
+                and connectivity.
+              </p>
+            </div>
+
+            <div className="flex gap-12 justify-center lg:justify-start">
+              <Button
+                size="lg"
+                className="bg-orange-500 hover:bg-orange-600 text-white py-2 h-12 rounded-full text-md font-medium lg:text-base"
+              >
+                Discover More
+              </Button>
+              <Button
+                variant="secondary"
+                size="lg"
+                className="bg-gray-800 hover:bg-gray-900 text-white py-2 h-12 rounded-full text-md font-medium lg:text-base"
+              >
+                Get Started
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="hidden lg:block w-[95%] mx-auto">
+        <hr className="border-t border-gray-300" />
+      </div>
+    </main>
+  );
 }
