@@ -49,6 +49,7 @@ export const NAVIGATION_ITEMS: NavigationItem[] = [
   },
   { label: "Learners", href: "/learners" },
   { label: "Certifications", href: "/certifications" },
+  { label: "Media and Campaign", href: "/media-and-campaign" },
   {
     label: "More",
     href: "#",
@@ -63,6 +64,8 @@ export const NAVIGATION_ITEMS: NavigationItem[] = [
       // { label: "Sirtify International", href: "/sirtify-international" },
        { label: "Drop I India", href: "/drop-i-india" },
         { label: "Grenov", href: "/grenov" },
+        
+        { label: "Programmer", href: "/programmer" },
       { label: "Contact Us", href: "/contact" },
       { label: "FAQ", href: "/faq" },         
     ],
