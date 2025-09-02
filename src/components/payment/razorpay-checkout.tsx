@@ -102,7 +102,9 @@ const RazorpayCheckout: React.FC<RazorpayCheckoutProps> = ({
       const packageData = JSON.parse(localStorage.getItem("selectedPackage") || "{}")
       console.log("Creating order with package data:", packageData)
 
-      const orderResponse = await fetch("http://localhost:8000/api/v1/payments/create-order", {
+      const backend_url = process.env.BACKEND_URL || "http://localhost:8000"
+
+      const orderResponse = await fetch(`${backend_url}/api/v1/payments/create-order`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -143,7 +145,9 @@ const RazorpayCheckout: React.FC<RazorpayCheckoutProps> = ({
             setPaymentProcessing(true)
             setLoading(false)
 
-            const verifyResponse = await fetch("/api/verify-payment", {
+            const backend_url = process.env.BACKEND_URL || "http://localhost:8000"
+
+            const verifyResponse = await fetch(`${backend_url}/api/v1/payments/verify`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",

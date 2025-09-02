@@ -5,9 +5,9 @@ import { GeistSans } from "geist/font/sans"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "Sirtify - Professional Certification & Training Platform",
+  title: "Sirtifai - Professional Certification & Training Platform",
   description:
-    "Transform your career with Sirtify's comprehensive certification programs, professional training, and global career opportunities.",
+    "Transform your career with Sirtifai's comprehensive certification programs, professional training, and global career opportunities.",
   generator: "Next.js",
   keywords: "certification, training, professional development, career growth, skills development",
   icons: {

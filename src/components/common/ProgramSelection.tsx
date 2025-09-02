@@ -43,9 +43,9 @@ const ProgramSelection: React.FC<ProgramSelectionProps> = ({
       {/* Desktop Table View */}
       <div className="hidden lg:block">
         {/* Table header */}
-        <div className="grid grid-cols-4 gap-6 text-sm font-semibold text-gray-700 pb-2 border-b border-gray-200 px-5">
+        <div className="grid grid-cols-5 gap-6 text-sm font-semibold text-gray-700 pb-2 border-b border-gray-200 px-5">
           <div>Plan Name</div>
-          {/* <div>Duration</div> */}
+          <div>Duration</div>
           <div>Price (₹)</div>
           <div>Key Features</div>
           <div className="text-center">Select</div>
@@ -71,7 +71,7 @@ const ProgramSelection: React.FC<ProgramSelectionProps> = ({
           return (
             <div
               key={programId}
-              className={`grid grid-cols-4 gap-6 text-sm py-5 px-5 rounded-lg border transition-all mt-2 ${
+              className={`grid grid-cols-5 gap-6 text-sm py-5 px-5 rounded-lg border transition-all mt-2 ${
                 selectedProgram === programId
                   ? "border-orange-500 bg-orange-50 shadow-sm"
                   : "border-gray-200 hover:border-gray-300"
@@ -84,7 +84,7 @@ const ProgramSelection: React.FC<ProgramSelectionProps> = ({
               </div>
 
               {/* Duration dropdown */}
-              {/* <div className="flex items-center">
+              <div className="flex items-center">
                 <select
                   className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 bg-white"
                   value={duration}
@@ -101,7 +101,7 @@ const ProgramSelection: React.FC<ProgramSelectionProps> = ({
                     </option>
                   ))}
                 </select>
-              </div> */}
+              </div>
 
               {/* Price */}
               <div className="flex items-center font-bold text-gray-900">
@@ -207,10 +207,10 @@ const ProgramSelection: React.FC<ProgramSelectionProps> = ({
               </div>
 
               {/* Mobile Duration and Price Row */}
-              <div className="grid grid-cols-1 gap-4 mb-4">
+              <div className="grid grid-cols-1 gap-5 mb-4">
                 <div>
                   {/* <label className="block text-sm font-medium text-gray-700 mb-2">Duration</label> */}
-                  {/* <select
+                  <select
                     className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 bg-white"
                     value={duration}
                     onChange={(e) =>
@@ -225,7 +225,7 @@ const ProgramSelection: React.FC<ProgramSelectionProps> = ({
                         {month} Month{month > 1 ? "s" : ""}
                       </option>
                     ))}
-                  </select> */}
+                  </select>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Price</label>
