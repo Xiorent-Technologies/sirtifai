@@ -33,7 +33,7 @@ const item = {
 
 function GrenovEcoSystem() {
   return (
-    <main className="h-full bg-orange-50 px-20">
+    <main className="h-full bg-orange-50 lg:px-20">
       <div className="container mx-auto px-4 py-8 lg:py-16">
         <MotionDiv
           variants={container}

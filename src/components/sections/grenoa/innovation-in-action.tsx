@@ -30,7 +30,7 @@ const item = {
 
 export default function InnovationInAction() {
   return (
-    <section className="bg-orange-50 py-16 lg:py-24 px-20">
+    <section className="bg-orange-50 py-16 lg:py-24 lg:px-20">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12 lg:mb-16">
           <MotionH2

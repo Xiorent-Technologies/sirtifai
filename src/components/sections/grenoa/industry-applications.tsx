@@ -4,19 +4,14 @@ import Image from "next/image";
 import { motion, MotionProps } from "framer-motion";
 
 // Typed motion components
-type DivMotionComponentProps = React.HTMLAttributes<HTMLDivElement> &
-  MotionProps;
+type DivMotionComponentProps = React.HTMLAttributes<HTMLDivElement> & MotionProps;
 const MotionDiv = motion.div as unknown as React.FC<DivMotionComponentProps>;
 
-type HeaderMotionComponentProps = React.HTMLAttributes<HTMLHeadingElement> &
-  MotionProps;
-const MotionHeader =
-  motion.h2 as unknown as React.FC<HeaderMotionComponentProps>;
+type HeaderMotionComponentProps = React.HTMLAttributes<HTMLHeadingElement> & MotionProps;
+const MotionHeader = motion.h2 as unknown as React.FC<HeaderMotionComponentProps>;
 
-type ArticleMotionComponentProps = React.HTMLAttributes<HTMLHeadingElement> &
-  MotionProps;
-const MotionArticle =
-  motion.h2 as unknown as React.FC<ArticleMotionComponentProps>;
+type ArticleMotionComponentProps = React.HTMLAttributes<HTMLElement> & MotionProps;
+const MotionArticle = motion.article as unknown as React.FC<ArticleMotionComponentProps>;
 
 const DEFAULT_ITEMS = [
   {
@@ -70,8 +65,8 @@ export default function IndustryApplications({
   };
 
   return (
-    <section id="applications" className="w-full py-16 bg-white px-20">
-      <div className="mx-auto max-w-6xl px-6">
+    <section id="applications" className="w-full py-16 bg-white">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-20">
         {/* Header */}
         <MotionHeader
           initial={{ opacity: 0, y: 18 }}
@@ -82,9 +77,9 @@ export default function IndustryApplications({
             margin: "-100px 0px -100px 0px",
           }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="mb-12 text-center"
+          className="mb-10 sm:mb-12 text-center"
         >
-          <h2 className="text-3xl font-bold uppercase tracking-wide md:text-4xl">
+          <h2 className="text-2xl sm:text-3xl font-bold uppercase tracking-wide md:text-4xl">
             Industry Applications
           </h2>
         </MotionHeader>
@@ -99,7 +94,7 @@ export default function IndustryApplications({
             amount: 0.25,
             margin: "-120px 0px -120px 0px",
           }}
-          className="grid gap-10 sm:grid-cols-2 lg:grid-cols-5"
+          className="grid gap-8 sm:gap-10 grid-cols-2 sm:grid-cols-3 lg:grid-cols-5"
         >
           {items.map((it, idx) => (
             <MotionArticle
@@ -114,7 +109,7 @@ export default function IndustryApplications({
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true, amount: 0.6 }}
                 transition={{ duration: 0.45, ease: "easeOut" }}
-                className="w-[112px] h-[112px]"
+                className="w-20 h-20 sm:w-[112px] sm:h-[112px]"
               >
                 <Image
                   src={it.image}
@@ -125,10 +120,10 @@ export default function IndustryApplications({
                 />
               </MotionDiv>
 
-              <h3 className="text-sm font-bold uppercase tracking-wide">
+              <h3 className="text-xs sm:text-sm font-bold uppercase tracking-wide">
                 {it.title}
               </h3>
-              <p className="mt-1 text-sm text-gray-700 max-w-[14ch]">
+              <p className="mt-1 text-xs sm:text-sm text-gray-700 max-w-[16ch] sm:max-w-[14ch]">
                 {it.desc}
               </p>
             </MotionArticle>
