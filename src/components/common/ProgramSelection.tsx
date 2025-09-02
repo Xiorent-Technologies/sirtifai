@@ -6,7 +6,7 @@ type Program = {
   description: string;
   category: string;
   type: string;
-  monthlyOptions: string;
+  monthlyOptions?: string; // ← make optional
   sacCode: string;
   priceEnvVar: string;
   price: number;
@@ -110,17 +110,17 @@ const ProgramSelection: React.FC<ProgramSelectionProps> = ({
               {/* Features */}
               <div className="flex items-start">
                 <ul className="space-y-1 text-gray-600">
-                  {program.features.slice(0, 4).map((feature, idx) => (
+                  {program.features.slice(0, 10).map((feature, idx) => (
                     <li key={idx} className="flex items-start">
                       <span className="text-orange-500 mr-2 text-xs mt-[6px]">●</span>
                       <span className="text-xs leading-snug">{feature}</span>
                     </li>
                   ))}
-                  {program.features.length > 4 && (
+                  {/* {program.features.length > 4 && (
                     <li className="text-xs text-gray-500 ml-4">
                       +{program.features.length - 4} more
                     </li>
-                  )}
+                  )} */}
                 </ul>
               </div>
 

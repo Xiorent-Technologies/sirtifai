@@ -17,28 +17,32 @@ import products from "@/data/products.json"
 import ProgramSelection from "@/components/common/ProgramSelection"
 import AddonSection from "@/components/common/AddonSection"
 
+type SectionKey = "payroll" | "ca" | "legal";
+
+type InternationalProgramKey = "international-basic" | "international-pro" | "international-elite";
+
 const PricingInterface = () => {
   const router = useRouter()
 
-  const [selectedProgram, setSelectedProgram] = useState("international-basic")
-  const [selectedDurations, setSelectedDurations] = useState({
+  const [selectedProgram, setSelectedProgram] = useState<InternationalProgramKey>("international-basic")
+  const [selectedDurations, setSelectedDurations] = useState<Record<InternationalProgramKey, number>>({
     "international-basic": 1,
     "international-pro": 1,
     "international-elite": 1,
   })
-  const [selectedAddons, setSelectedAddons] = useState<{ [key: string]: string }>({
+  const [selectedAddons, setSelectedAddons] = useState<Record<SectionKey, string>>({
     payroll: "",
     ca: "",
     legal: ""
   });
 
-  const [expandedSections, setExpandedSections] = useState({
+  const [expandedSections, setExpandedSections] = useState<Record<SectionKey, boolean>>({
     payroll: true,
     ca: true,
     legal: true
   })
 
-  const toggleSection = (key: string) =>
+  const toggleSection = (key: SectionKey) =>
     setExpandedSections((prev) => ({ ...prev, [key]: !prev[key] }));
 
   const handleAddonSelect = (sectionKey: string, addonId: string) =>
@@ -70,7 +74,7 @@ const PricingInterface = () => {
     const allAddons = { ...products.programAddons, ...products.freelancerAddons };
 
     const addonCosts = Object.values(selectedAddons).reduce((sum, addonId) => {
-      const addon = allAddons[addonId];
+      const addon = allAddons[addonId as keyof typeof allAddons];
       return sum + (addon ? addon.price : 0);
     }, 0);
 
@@ -127,7 +131,7 @@ const PricingInterface = () => {
               category="international"
               products={products}
               selectedProgram={selectedProgram}
-              setSelectedProgram={setSelectedProgram}
+              setSelectedProgram={(id: string) => setSelectedProgram(id as InternationalProgramKey)}
               selectedDurations={selectedDurations}
               setSelectedDurations={setSelectedDurations}
             />
@@ -156,7 +160,7 @@ const PricingInterface = () => {
               category="international"
               products={products}
               selectedProgram={selectedProgram}
-              setSelectedProgram={setSelectedProgram}
+              setSelectedProgram={(id: string) => setSelectedProgram(id as InternationalProgramKey)}
               selectedDurations={selectedDurations}
               setSelectedDurations={setSelectedDurations}
             />
@@ -184,7 +188,7 @@ const PricingInterface = () => {
               category="international"
               products={products}
               selectedProgram={selectedProgram}
-              setSelectedProgram={setSelectedProgram}
+              setSelectedProgram={(id: string) => setSelectedProgram(id as InternationalProgramKey)}
               selectedDurations={selectedDurations}
               setSelectedDurations={setSelectedDurations}
             />
@@ -250,9 +254,9 @@ const PricingInterface = () => {
               </div>
             )}
 
-            {["payroll", "ca", "legal"].map((key) => {
+            {(["payroll", "ca", "legal"] as SectionKey[]).map((key) => {
               const addonId = selectedAddons[key];
-              const addon = { ...products.programAddons, ...products.freelancerAddons }[addonId];
+              const addon = { ...products.programAddons, ...products.freelancerAddons }[addonId as string];
               return (
                 <div key={key} className="flex justify-between items-center">
                   <span className="text-white/90">

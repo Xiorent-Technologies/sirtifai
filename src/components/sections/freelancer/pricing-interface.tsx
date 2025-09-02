@@ -20,8 +20,9 @@ import AddonSection from "@/components/common/AddonSection"
 const PricingInterface = () => {
   const router = useRouter()
 
-  const [selectedProgram, setSelectedProgram] = useState("freelancer-basic")
-  const [selectedDurations, setSelectedDurations] = useState({
+  type ProgramKey = "freelancer-basic" | "freelancer-pro" | "freelancer-elite";
+  const [selectedProgram, setSelectedProgram] = useState<ProgramKey>("freelancer-basic")
+  const [selectedDurations, setSelectedDurations] = useState<Record<ProgramKey, number>>({
     "freelancer-basic": 1,
     "freelancer-pro": 1,
     "freelancer-elite": 1,
@@ -32,13 +33,17 @@ const PricingInterface = () => {
     legal: ""
   });
 
-  const [expandedSections, setExpandedSections] = useState({
-    payroll: true,
-    ca: true,
-    legal: true
-  })
+  type SectionKey = "payroll" | "legal" | "tax" | "business";
 
-  const toggleSection = (key: string) =>
+  const [expandedSections, setExpandedSections] = useState<Record<SectionKey, boolean>>({
+    payroll: true,
+
+    legal: true,
+    tax: true,
+    business: true
+  });
+
+  const toggleSection = (key: SectionKey) =>
     setExpandedSections((prev) => ({ ...prev, [key]: !prev[key] }));
 
   const handleAddonSelect = (sectionKey: string, addonId: string) =>
@@ -67,7 +72,7 @@ const PricingInterface = () => {
     const duration = selectedDurations[selectedProgram] || 1;
     const programCost = program ? program.price * duration : 0;
 
-    const allAddons = { ...products.programAddons, ...products.freelancerAddons };
+    const allAddons: { [key: string]: { price: number } } = { ...products.programAddons, ...products.freelancerAddons };
 
     const addonCosts = Object.values(selectedAddons).reduce((sum, addonId) => {
       const addon = allAddons[addonId];
@@ -127,7 +132,7 @@ const PricingInterface = () => {
               category="freelancer"
               products={products}
               selectedProgram={selectedProgram}
-              setSelectedProgram={setSelectedProgram}
+              setSelectedProgram={(id: string) => setSelectedProgram(id as ProgramKey)}
               selectedDurations={selectedDurations}
               setSelectedDurations={setSelectedDurations}
             />
@@ -156,7 +161,7 @@ const PricingInterface = () => {
               category="freelancer"
               products={products}
               selectedProgram={selectedProgram}
-              setSelectedProgram={setSelectedProgram}
+              setSelectedProgram={(id: string) => setSelectedProgram(id as ProgramKey)}
               selectedDurations={selectedDurations}
               setSelectedDurations={setSelectedDurations}
             />
@@ -184,7 +189,7 @@ const PricingInterface = () => {
               category="freelancer"
               products={products}
               selectedProgram={selectedProgram}
-              setSelectedProgram={setSelectedProgram}
+              setSelectedProgram={(id: string) => setSelectedProgram(id as ProgramKey)}
               selectedDurations={selectedDurations}
               setSelectedDurations={setSelectedDurations}
             />
@@ -202,7 +207,7 @@ const PricingInterface = () => {
               addonIds={['payroll-epf']}
               allAddons={products.freelancerAddons}
               expandedSections={expandedSections}
-              toggleSection={toggleSection}
+              toggleSection={(key: string) => toggleSection(key as SectionKey)}
               selectedAddons={selectedAddons}
               onSelect={handleAddonSelect}
             />
@@ -215,7 +220,7 @@ const PricingInterface = () => {
               addonIds={['tax-filing']}
               allAddons={products.freelancerAddons}
               expandedSections={expandedSections}
-              toggleSection={toggleSection}
+              toggleSection={(key: string) => toggleSection(key as SectionKey)}
               selectedAddons={selectedAddons}
               onSelect={handleAddonSelect}
             />
@@ -228,7 +233,7 @@ const PricingInterface = () => {
               addonIds={['legal-support']}
               allAddons={products.freelancerAddons}
               expandedSections={expandedSections}
-              toggleSection={toggleSection}
+              toggleSection={(key: string) => toggleSection(key as SectionKey)}
               selectedAddons={selectedAddons}
               onSelect={handleAddonSelect}
             />
@@ -241,7 +246,7 @@ const PricingInterface = () => {
               addonIds={['business-setup']}
               allAddons={products.freelancerAddons}
               expandedSections={expandedSections}
-              toggleSection={toggleSection}
+              toggleSection={(key: string) => toggleSection(key as SectionKey)}
               selectedAddons={selectedAddons}
               onSelect={handleAddonSelect}
             />

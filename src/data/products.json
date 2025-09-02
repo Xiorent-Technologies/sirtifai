@@ -1,5 +1,5 @@
 {
-    "programs": {
+  "programs": {
     "skill-phase": {
       "id": "skill-phase",
       "name": "Skill Phase",
@@ -239,7 +239,7 @@
       "type": "one-time",
       "sacCode": "999293",
       "priceEnvVar": "NEXT_PUBLIC_FREELANCER_BASIC_PRICE",
-      "price": 49,
+      "price": 15000 ,
       "features": [
         "Access to essential freelancing tools for day-to-day operations",
         "Basic contract and invoice templates",
@@ -254,7 +254,7 @@
       "type": "one-time",
       "sacCode": "999293",
       "priceEnvVar": "NEXT_PUBLIC_FREELANCER_PRO_PRICE",
-      "price": 68,
+      "price": 31860 ,
       "features": [
         "Advanced freelancing tools including time tracking and proposal builder",
         "Premium templates for contracts, proposals, and invoices",
@@ -269,7 +269,7 @@
       "type": "one-time",
       "sacCode": "999293",
       "priceEnvVar": "NEXT_PUBLIC_FREELANCER_ELITE_PRICE",
-      "price": 99,
+      "price": 70800 ,
       "features": [
         "Complete suite including all Pro tools plus financial tracking and CRM integration",
         "Priority support and access to legal & business experts",
@@ -348,15 +348,13 @@
     "type": "one-time",
     "sacCode": "999293",
     "priceEnvVar": "NEXT_PUBLIC_INTERNATIONAL_BASIC_PRICE",
-    "price": 675,
+    "price": 79999,
     "features": [
       "Complete skill development program",
       "Practice phase with real projects",
       "NSQF certification",
       "Basic international resume preparation",
-      "Job application guidance",
-      "Direct job sourcing",
-      "Visa support"
+      "Job application guidance"
     ]
   },
   "international-pro": {
@@ -367,15 +365,14 @@
     "type": "one-time",
     "sacCode": "999293",
     "priceEnvVar": "NEXT_PUBLIC_INTERNATIONAL_PRO_PRICE",
-    "price": 1345,
+    "price": 212999,
     "features": [
       "Everything in Basic plan",
       "Advanced portfolio development",
       "Direct job sourcing with partners",
       "Interview preparation with industry experts",
       "Cultural training for target countries",
-      "Basic visa application guidance",
-      "Complete visa support package"
+      "Basic visa application guidance"
     ]
   },
   "international-elite": {
@@ -386,7 +383,7 @@
     "type": "one-time",
     "sacCode": "999293",
     "priceEnvVar": "NEXT_PUBLIC_INTERNATIONAL_ELITE_PRICE",
-    "price": 2020,
+    "price": 637999,
     "features": [
       "Everything in Pro plan",
       "Premium job sourcing with direct employer connections",
@@ -394,7 +391,9 @@
       "Legal documentation assistance",
       "Relocation support services",
       "Dedicated international placement manager",
-      "6-month post-placement support"
+      "6-month post-placement support",
+      "Visa and Immigration support and Assign RM until they settle in represent country",
+      "4 Months additional Resume Booster with mentor and Workshops "
     ]
   }
   },
