@@ -102,7 +102,7 @@ const RazorpayCheckout: React.FC<RazorpayCheckoutProps> = ({
       const packageData = JSON.parse(localStorage.getItem("selectedPackage") || "{}")
       console.log("Creating order with package data:", packageData)
 
-      const orderResponse = await fetch("/api/create-order", {
+      const orderResponse = await fetch("http://localhost:8000/api/v1/payments/create-order", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
