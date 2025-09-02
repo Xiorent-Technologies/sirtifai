@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation"
 interface RazorpayCheckoutProps {
   selectedProgram: string
   selectedMonths: number
-  selectedAddon?: string
+  selectedAddon?: string[]
   studentData: any
   onSuccess?: (paymentData: any) => void
   onError?: (error: any) => void
