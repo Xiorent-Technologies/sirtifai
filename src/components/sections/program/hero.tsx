@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 const Hero = () => {
@@ -34,15 +35,26 @@ const Hero = () => {
               Join SPP Now
             </h3>
             <div className="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center">
-              <button className="flex items-center justify-between sm:justify-center gap-4 bg-white shadow-[0_4px_4px_rgba(248,177,150,0.10)] p-4 text-[#FC4C03]">
-              International  <ArrowRight />
-              </button>
-              <button className="flex items-center justify-between sm:justify-center gap-4 bg-white shadow-[0_4px_4px_rgba(248,177,150,0.10)] p-4 text-[#FC4C03]">
-                 FREELANCE <ArrowRight />
-              </button>
-              <button className="flex items-center justify-between sm:justify-center gap-4 bg-white shadow-[0_4px_4px_rgba(248,177,150,0.10)] p-4 text-[#FC4C03]">
-                SPP STUDENT <ArrowRight />
-              </button>
+              <Link
+                href="/programs/sirtifai-international"
+                className="flex items-center justify-between sm:justify-center gap-4 bg-white shadow-[0_4px_4px_rgba(248,177,150,0.10)] p-4 text-[#FC4C03]"
+              >
+                International <ArrowRight />
+              </Link>
+
+              <Link
+                href="/programs/freelancer"
+                className="flex items-center justify-between sm:justify-center gap-4 bg-white shadow-[0_4px_4px_rgba(248,177,150,0.10)] p-4 text-[#FC4C03]"
+              >
+                FREELANCER <ArrowRight />
+              </Link>
+
+              <Link
+                href="/programs/program"
+                className="flex items-center justify-between sm:justify-center gap-4 bg-white shadow-[0_4px_4px_rgba(248,177,150,0.10)] p-4 text-[#FC4C03]"
+              >
+                SPP <ArrowRight />
+              </Link>
             </div>
           </div>
         </div>

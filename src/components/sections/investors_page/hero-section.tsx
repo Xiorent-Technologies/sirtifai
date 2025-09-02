@@ -112,15 +112,15 @@ export default function HeroSection() {
                 href="/sirtifai-international"
                 className="text-orange-600 font-medium"
               >
-                SPP Int
+                International
               </a>
               <span className="text-orange-600">|</span>
               <a href="/freelancer" className="text-orange-600 font-medium">
-                SPP Freelance
+                Freelancer
               </a>
               <span className="text-orange-600">|</span>
               <a href="/program" className="text-orange-600 font-medium">
-                SPP Student
+                SPP
               </a>
             </div>
 
