@@ -1,7 +1,22 @@
 "use client";
 import { Button } from "@/components/ui/Button";
+import { motion } from "framer-motion";
 
 export default function Hero() {
+  const container = {
+    hidden: { opacity: 0, y: 24 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut", staggerChildren: 0.12 },
+    },
+  };
+
+  const item = {
+    hidden: { opacity: 0, y: 16 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+  };
+
   return (
     <>
       {/* Desktop & Tablet Version */}
@@ -10,15 +25,25 @@ export default function Hero() {
         style={{ backgroundImage: "url('/assets/contact/mainContact.jpg')" }}
       >
         {/* Gradient Overlay (left to right) */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/75 to-transparent" />
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/75 to-transparent"
+        />
 
         {/* Content */}
-        <div className="relative w-full max-w-5xl mx-auto px-6 text-left">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-snug text-white">
+        <motion.div
+          variants={container}
+          initial="hidden"
+          animate="visible"
+          className="relative w-full max-w-5xl mx-auto px-6 text-left"
+        >
+          <motion.h1 variants={item} className="text-4xl md:text-5xl font-bold mb-4 leading-snug text-white">
             Your Gateway to the <br /> Global IT Industry
-          </h1>
+          </motion.h1>
 
-          <p className="text-lg mb-6 max-w-3xl leading-relaxed text-gray-200">
+          <motion.p variants={item} className="text-lg mb-6 max-w-3xl leading-relaxed text-gray-200">
             "Your Gateway to the Global IT Industry" offers limitless
             opportunities and growth. The IT sector shapes modern business,
             enabling organizations to operate and compete globally. Joining this
@@ -27,22 +52,21 @@ export default function Hero() {
             opens career doors worldwide. With advancements in AI, cloud
             computing, and cybersecurity, the IT sector keeps entrants
             future-ready, connecting talent with global challenges.
-          </p>
+          </motion.p>
 
           {/* Buttons */}
-          {/* Buttons */}
-          <div className="flex flex-col md:flex-row gap-4">
-            <button className="bg-[#FEF7F1] text-[#FE7743] rounded-[16px] px-6 py-3 font-medium hover:bg-[#FDEFE6]">
+          <motion.div variants={container} className="flex flex-col md:flex-row gap-4">
+            <motion.button variants={item} whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }} className="bg-[#FEF7F1] text-[#FE7743] rounded-[16px] px-6 py-3 font-medium hover:bg-[#FDEFE6]">
               Apply Now →
-            </button>
-            <button className="bg-[#FEF7F1] text-[#FE7743] rounded-[16px] px-6 py-3 font-medium hover:bg-[#FDEFE6]">
+            </motion.button>
+            <motion.button variants={item} whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }} className="bg-[#FEF7F1] text-[#FE7743] rounded-[16px] px-6 py-3 font-medium hover:bg-[#FDEFE6]">
               View Programme
-            </button>
-            <button className="bg-[#FEF7F1] text-[#FE7743] rounded-[16px] px-6 py-3 font-medium hover:bg-[#FDEFE6]">
+            </motion.button>
+            <motion.button variants={item} whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }} className="bg-[#FEF7F1] text-[#FE7743] rounded-[16px] px-6 py-3 font-medium hover:bg-[#FDEFE6]">
               Talk to Advisor
-            </button>
-          </div>
-        </div>
+            </motion.button>
+          </motion.div>
+        </motion.div>
       </section>
 
       {/* Mobile Version - Updated to Match Image */}
@@ -54,30 +78,35 @@ export default function Hero() {
           style={{ backgroundImage: "url('/assets/contact/mainContact.jpg')" }}
         >
           {/* Dark Overlay */}
-          <div className="absolute inset-0 bg-black/50" />
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="absolute inset-0 bg-black/50"
+          />
 
           {/* Content */}
-          <div className="relative z-10">
-            <h1 className="text-4xl font-bold mb-12 text-white leading-tight max-w-xs">
+          <motion.div variants={container} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="relative z-10">
+            <motion.h1 variants={item} className="text-4xl font-bold mb-12 text-white leading-tight max-w-xs">
               Your Gateway to the Global IT Industry
-            </h1>
+            </motion.h1>
 
             {/* Buttons Stack - Matching Image Style */}
-            <div className="flex flex-col gap-3">
-              <button className="bg-[#FEF7F1] text-[#FE7743] rounded-full px-6 py-3 font-medium hover:bg-[#FDEFE6] text-left flex items-center justify-between w-fit min-w-[200px]">
+            <motion.div variants={container} className="flex flex-col gap-3">
+              <motion.button variants={item} whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }} className="bg-[#FEF7F1] text-[#FE7743] rounded-full px-6 py-3 font-medium hover:bg-[#FDEFE6] text-left flex items-center justify-between w-fit min-w-[200px]">
                 Apply Now
                 <span className="ml-2">→</span>
-              </button>
-              <button className="bg-[#FEF7F1] text-[#FE7743] rounded-full px-6 py-3 font-medium hover:bg-[#FDEFE6] text-left flex items-center justify-between w-fit min-w-[200px]">
+              </motion.button>
+              <motion.button variants={item} whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }} className="bg-[#FEF7F1] text-[#FE7743] rounded-full px-6 py-3 font-medium hover:bg-[#FDEFE6] text-left flex items-center justify-between w-fit min-w-[200px]">
                 View Programme Matters
                 <span className="ml-2">→</span>
-              </button>
-              <button className="bg-[#FEF7F1] text-[#FE7743] rounded-full px-6 py-3 font-medium hover:bg-[#FDEFE6] text-left flex items-center justify-between w-fit min-w-[200px]">
+              </motion.button>
+              <motion.button variants={item} whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }} className="bg-[#FEF7F1] text-[#FE7743] rounded-full px-6 py-3 font-medium hover:bg-[#FDEFE6] text-left flex items-center justify-between w-fit min-w-[200px]">
                 Talk to Advisor
                 <span className="ml-2">→</span>
-              </button>
-            </div>
-          </div>
+              </motion.button>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
     </>

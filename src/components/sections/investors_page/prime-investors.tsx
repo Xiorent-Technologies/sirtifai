@@ -1,8 +1,21 @@
-import React from "react";
+"use client";
+import React, { useRef } from "react";
 import Image from "next/image";
-import { CheckCircle2 } from "lucide-react";
+import { motion, useInView } from "framer-motion";
+
+const MotionDiv = motion.div as React.ComponentType<any>;
+const MotionImg = motion.img as React.ComponentType<any>;
+const MotionH2 = motion.h2 as React.ComponentType<any>;
+const MotionH3 = motion.h3 as React.ComponentType<any>;
+const MotionP = motion.p as React.ComponentType<any>;
+const MotionSection = motion.section as React.ComponentType<any>;
 
 export default function PrimeInvestor() {
+  const heroRef = useRef<HTMLDivElement>(null);
+  const heroInView = useInView(heroRef as React.RefObject<Element>, {
+    once: true,
+    margin: "-100px",
+  });
   const tick = (
     <svg
       width="20"
@@ -18,7 +31,13 @@ export default function PrimeInvestor() {
     </svg>
   );
   return (
-    <section className="w-full bg-[#FFF9F6] py-16 z-10">
+    <MotionSection
+      ref={heroRef}
+      className="w-full bg-[#FFF9F6] py-16 z-10"
+      initial={{ opacity: 0 }}
+      animate={heroInView ? { opacity: 1 } : { opacity: 0 }}
+      transition={{ duration: 0.8 }}
+    >
       <Image
         src="/assets/investors_page/elipse.png"
         alt="Left Stick"
@@ -26,10 +45,31 @@ export default function PrimeInvestor() {
         height={400}
         className="absolute left-0 bottom-[-545px] z-0 hidden md:block"
       />
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 px-6 items-center">
+      <MotionDiv
+        className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 px-6 items-center"
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={
+          heroInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }
+        }
+        transition={{ duration: 0.8, delay: 0.3 }}
+      >
         {/* Left Side - Image */}
-        <div className="relative">
-          <div className="overflow-hidden rounded-lg shadow-md">
+        <MotionDiv
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={
+            heroInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }
+          }
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="relative"
+        >
+          <MotionDiv
+            className="overflow-hidden rounded-lg shadow-md"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={
+              heroInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }
+            }
+            transition={{ duration: 0.8, delay: 0.3 }}
+          >
             <Image
               src="/assets/investors_page/vakati.jpg"
               alt="Vakati Ravichandra Reddy"
@@ -37,30 +77,55 @@ export default function PrimeInvestor() {
               height={400}
               className="w-full h-auto object-cover"
             />
-            <div className="bg-white p-3 text-sm italic text-gray-800 border-t border-gray-200">
+            <MotionP
+              className="bg-white p-3 text-sm italic text-gray-800 border-t border-gray-200"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={
+                heroInView
+                  ? { opacity: 1, scale: 1 }
+                  : { opacity: 0, scale: 0.9 }
+              }
+              transition={{ duration: 0.8, delay: 0.3 }}
+            >
               - I believe every learner deserves not just skills, but verified
               income and lifelong career security. Sirtifai is the bridge
               between today’s talent and tomorrow’s opportunities.
-            </div>
-          </div>
-        </div>
+            </MotionP>
+          </MotionDiv>
+        </MotionDiv>
 
         {/* Right Side - Text */}
-        <div>
-          <h2 className="text-2xl font-bold text-[#FC4C03] md:text-3xl">
+        <MotionDiv
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={
+            heroInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }
+          }
+          transition={{ duration: 0.8, delay: 0.3 }}
+        >
+          <MotionH2
+            initial={{ opacity: 0, y: 30 }}
+            animate={heroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="text-2xl font-bold text-[#FC4C03] md:text-3xl"
+          >
             Vakati Ravichandra Reddy
-          </h2>
-          <h3 className="mt-1 text-lg font-semibold text-gray-800">
+          </MotionH2>
+          <MotionH3
+            initial={{ opacity: 0, y: 30 }}
+            animate={heroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="mt-1 text-lg font-semibold text-gray-800"
+          >
             Prime Investor & Visionary
-          </h3>
-          <p className="mt-4 text-gray-700 text-sm leading-relaxed font-medium">
+          </MotionH3>
+          <MotionP className="mt-4 text-gray-700 text-sm leading-relaxed font-medium">
             Vakati Ravichandra Reddy is the founding visionary and prime
             investor behind Sirtifai. A serial entrepreneur and global investor,
             he has led diverse ventures across education, technology, finance,
             aerospace, and civic innovation. With his strategic backing,
             Sirtifai is set to become the world’s first true career
             transformation engine.
-          </p>
+          </MotionP>
 
           <ul className="mt-6 space-y-3 text-sm text-gray-700">
             <li className="flex items-start gap-2">
@@ -92,8 +157,8 @@ export default function PrimeInvestor() {
               </span>
             </li>
           </ul>
-        </div>
-      </div>
-    </section>
+        </MotionDiv>
+      </MotionDiv>
+    </MotionSection>
   );
 }

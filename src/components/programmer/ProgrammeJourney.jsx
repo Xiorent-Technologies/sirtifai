@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 export default function ProgrammeJourney() {
   const items = [
@@ -29,26 +30,55 @@ export default function ProgrammeJourney() {
     },
   ];
 
+  const container = {
+    hidden: { opacity: 0, y: 24 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut", staggerChildren: 0.12 },
+    },
+  };
+
+  const item = {
+    hidden: { opacity: 0, y: 16 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+  };
+
   return (
     <section className="py-16 bg-[#FFF9F5]">
       <div className="max-w-6xl mx-auto px-6">
         {/* Heading */}
-        <h2 className="text-4xl font-bold text-center text-gray-900 mb-12">
+        <motion.h2
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4, margin: "-100px 0px -100px 0px" }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="text-4xl font-bold text-center text-gray-900 mb-12"
+       >
           Programme Journey
-        </h2>
+        </motion.h2>
 
         {/* Desktop Cards Grid */}
-        <div className="hidden md:grid grid-cols-2 gap-10">
-          {items.map((item, i) => (
-            <div
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.25, margin: "-120px 0px -120px 0px" }}
+          className="hidden md:grid grid-cols-2 gap-10"
+        >
+          {items.map((itemData, i) => (
+            <motion.div
               key={i}
+              variants={item}
+              whileHover={{ scale: 1.01 }}
+              transition={{ type: "spring", stiffness: 300, damping: 24 }}
               className="flex items-center gap-6 bg-[#FFF9F5] rounded-lg overflow-hidden"
             >
               {/* Left Image */}
               <div className="flex-shrink-0">
                 <Image
-                  src={item.img}
-                  alt={item.title}
+                  src={itemData.img}
+                  alt={itemData.title}
                   width={300}
                   height={200}
                   className="object-cover rounded-t-lg"
@@ -58,34 +88,44 @@ export default function ProgrammeJourney() {
               {/* Right Content */}
               <div className="flex-1">
                 <h3 className="text-sm font-semibold text-[#FE7743] mb-1">
-                  {item.title}
+                  {itemData.title}
                 </h3>
                 <h4 className="text-lg font-bold text-gray-900 mb-1">
-                  {item.desc}
+                  {itemData.desc}
                 </h4>
-                <p className="text-gray-600 text-sm mb-4">{item.detail}</p>
-                <button className="bg-[#FE7743] text-white text-sm font-medium px-5 py-2 rounded-full hover:bg-[#e25c29] transition">
+                <p className="text-gray-600 text-sm mb-4">{itemData.detail}</p>
+                <motion.button
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ type: "spring", stiffness: 320, damping: 24 }}
+                  className="bg-[#FE7743] text-white text-sm font-medium px-5 py-2 rounded-full hover:bg-[#e25c29] transition"
+                >
                   Donate now
-                </button>
+                </motion.button>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* Mobile Cards - Vertical Stack with Alternating Layout */}
-        <div className="md:hidden space-y-6">
-          {items.map((item, i) => (
-            <div
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.25, margin: "-120px 0px -120px 0px" }}
+          className="md:hidden space-y-6"
+        >
+          {items.map((itemData, i) => (
+            <motion.div
               key={i}
-              className={`flex ${
-                i % 2 === 1 ? 'flex-row-reverse' : 'flex-row'
-              } gap-3 items-start`}
+              variants={item}
+              className={`flex ${i % 2 === 1 ? 'flex-row-reverse' : 'flex-row'} gap-3 items-start`}
             >
               {/* Image */}
               <div className="flex-shrink-0 w-32 h-24">
                 <Image
-                  src={item.img}
-                  alt={item.title}
+                  src={itemData.img}
+                  alt={itemData.title}
                   width={128}
                   height={96}
                   className="w-full h-full object-cover rounded-lg"
@@ -95,21 +135,26 @@ export default function ProgrammeJourney() {
               {/* Content */}
               <div className={`flex-1 ${i % 2 === 1 ? 'text-right' : 'text-left'}`}>
                 <h3 className="text-lg font-bold text-[#FE7743] mb-1">
-                  {item.title}
+                  {itemData.title}
                 </h3>
                 <h4 className="text-sm font-semibold text-gray-900 mb-2 leading-tight">
-                  {item.desc}
+                  {itemData.desc}
                 </h4>
                 <p className="text-gray-600 text-xs mb-3 leading-relaxed">
-                  {item.detail}
+                  {itemData.detail}
                 </p>
-                <button className="bg-[#FE7743] text-white text-xs font-medium px-4 py-2 rounded-full hover:bg-[#e25c29] transition-colors">
+                <motion.button
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ type: "spring", stiffness: 320, damping: 24 }}
+                  className="bg-[#FE7743] text-white text-xs font-medium px-4 py-2 rounded-full hover:bg-[#e25c29] transition-colors"
+                >
                   Donate now
-                </button>
+                </motion.button>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

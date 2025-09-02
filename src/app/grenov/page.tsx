@@ -14,15 +14,15 @@ export default function ContactPage() {
   return (
     <div className="bg-[#fff] font-sans min-h-screen overflow-x-hidden">
       <Header />
-      <HeroSection />
-      <AboutGrenoa />
-      <GrenovEcoSystem />
-      <IndustryApplications />
-      <InnovationInAction />
-      <LogoMarquee />
-
-      <CtaBand />
-
+      <div className="">
+        <HeroSection />
+        <AboutGrenoa />
+        <GrenovEcoSystem />
+        <IndustryApplications />
+        <InnovationInAction />
+        <LogoMarquee />
+        <CtaBand />
+      </div>
       <Footer />
     </div>
   );

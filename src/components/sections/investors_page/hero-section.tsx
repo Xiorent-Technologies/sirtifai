@@ -11,6 +11,7 @@ const MotionImg = motion.img as React.ComponentType<any>;
 const MotionH1 = motion.h1 as React.ComponentType<any>;
 const MotionP = motion.p as React.ComponentType<any>;
 const MotionSection = motion.section as React.ComponentType<any>;
+
 export default function HeroSection() {
   const heroRef = useRef<HTMLDivElement>(null);
   const whySertifaiRef = useRef<HTMLDivElement>(null);

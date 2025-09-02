@@ -3,10 +3,39 @@
 import Image from "next/image";
 import { CtaButton } from "../../common/cta-button";
 import { Button } from "@/components/ui/Button";
+import { motion, MotionProps } from "framer-motion";
+
+type DivMotionComponentProps = React.HTMLAttributes<HTMLDivElement> &
+  MotionProps;
+const MotionDiv = motion.div as unknown as React.FC<DivMotionComponentProps>;
+type H1MotionComponentProps = React.HTMLAttributes<HTMLHeadingElement> &
+  MotionProps;
+const MotionH1 = motion.h1 as unknown as React.FC<H1MotionComponentProps>;
+type PMotionComponentProps = React.HTMLAttributes<HTMLParagraphElement> &
+  MotionProps;
+const MotionP = motion.p as unknown as React.FC<PMotionComponentProps>;
 
 export default function HeroSection() {
+  const container = {
+    hidden: { opacity: 0, y: 24 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut", staggerChildren: 0.12 },
+    },
+  };
+
+  const item = {
+    hidden: { opacity: 0, y: 16 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, ease: "easeOut" },
+    },
+  };
+
   return (
-    <main className="h-full bg-orange-50 lg:bg-gradient-to-br from-gray-50 to-white">
+    <main className="h-full bg-orange-50 px-20 lg:bg-gradient-to-br from-gray-50 to-white">
       {/* <div className="mx-auto grid max-w-6xl grid-cols-1 items-stretch gap-8 px-4 md:grid-cols-2 md:gap-10">
         <div className="order-2 flex flex-col justify-start md:order-1 pt-[120px]">
           <h1 className="text-pretty font-sans text-xl font-extrabold leading-tight text-gray-900 sm:text-5xl">
@@ -52,7 +81,17 @@ export default function HeroSection() {
       <div className="container mx-auto px-4 py-8 lg:py-16">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Image Section - appears first on mobile, second on desktop */}
-          <div className="relative flex justify-center lg:justify-end order-1 lg:order-2">
+          <MotionDiv
+            initial={{ opacity: 0, x: 40, scale: 0.98 }}
+            whileInView={{ opacity: 1, x: 0, scale: 1 }}
+            viewport={{
+              once: true,
+              amount: 0.4,
+              margin: "-120px 0px -120px 0px",
+            }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="relative flex justify-center lg:justify-end order-1 lg:order-2"
+          >
             <div className="relative w-full max-w-sm md:max-w-md lg:max-w-lg">
               <Image
                 src="/Grenov_brain.png"
@@ -64,46 +103,101 @@ export default function HeroSection() {
               />
 
               {/* Decorative elements */}
-              <div className="absolute -top-4 -left-4 w-8 h-8 border-l-2 border-t-2 border-orange-200 opacity-60"></div>
-              <div className="absolute -bottom-4 -right-4 w-8 h-8 border-r-2 border-b-2 border-orange-200 opacity-60"></div>
-              <div className="absolute top-1/4 -right-2 w-4 h-4 bg-orange-100 rounded-full opacity-40"></div>
-              <div className="absolute bottom-1/3 -left-2 w-6 h-6 bg-blue-100 rounded-full opacity-30"></div>
+              <MotionDiv
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true, amount: 0.8 }}
+                transition={{ duration: 0.4 }}
+                className="absolute -top-4 -left-4 w-8 h-8 border-l-2 border-t-2 border-orange-200 opacity-60"
+              ></MotionDiv>
+              <MotionDiv
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true, amount: 0.8 }}
+                transition={{ duration: 0.4, delay: 0.1 }}
+                className="absolute -bottom-4 -right-4 w-8 h-8 border-r-2 border-b-2 border-orange-200 opacity-60"
+              ></MotionDiv>
+              <MotionDiv
+                initial={{ scale: 0, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                viewport={{ once: true, amount: 0.8 }}
+                transition={{ duration: 0.35, delay: 0.15 }}
+                className="absolute top-1/4 -right-2 w-4 h-4 bg-orange-100 rounded-full opacity-40"
+              ></MotionDiv>
+              <MotionDiv
+                initial={{ scale: 0, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                viewport={{ once: true, amount: 0.8 }}
+                transition={{ duration: 0.35, delay: 0.2 }}
+                className="absolute bottom-1/3 -left-2 w-6 h-6 bg-blue-100 rounded-full opacity-30"
+              ></MotionDiv>
             </div>
-          </div>
+          </MotionDiv>
 
           {/* Content Section */}
-          <div className="space-y-6 lg:space-y-8 order-2 lg:order-1 text-center lg:text-left">
+          <MotionDiv
+            variants={container}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{
+              once: true,
+              amount: 0.25,
+              margin: "-120px 0px -120px 0px",
+            }}
+            className="space-y-6 lg:space-y-8 order-2 lg:order-1 text-center lg:text-left"
+          >
             <div className="space-y-4">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-balance">
+              <MotionH1
+                variants={item}
+                className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-balance"
+              >
                 <span className="text-orange-500">Grenov</span>
                 <span className="text-gray-900">
                   {" "}
-                  – The Next Frontier in AI-Driven Innovation"
+                  – The Next Frontier in AI-Driven Innovation&quot;
                 </span>
-              </h1>
+              </MotionH1>
 
-              <p className="text-lg md:text-xl text-gray-600 leading-relaxed max-w-lg mx-auto lg:mx-0">
+              <MotionP
+                variants={item}
+                className="text-lg md:text-xl text-gray-600 leading-relaxed max-w-lg mx-auto lg:mx-0"
+              >
                 Empowering industries with advanced automation, intelligence,
                 and connectivity.
-              </p>
+              </MotionP>
             </div>
 
-            <div className="flex gap-12 justify-center lg:justify-start">
-              <Button
-                size="lg"
-                className="bg-orange-500 hover:bg-orange-600 text-white py-2 h-12 rounded-full text-md font-medium lg:text-base"
+            <MotionDiv
+              variants={container}
+              className="flex gap-12 justify-center lg:justify-start"
+            >
+              <MotionDiv
+                variants={item}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.98 }}
               >
-                Discover More
-              </Button>
-              <Button
-                variant="secondary"
-                size="lg"
-                className="bg-gray-800 hover:bg-gray-900 text-white py-2 h-12 rounded-full text-md font-medium lg:text-base"
+                <Button
+                  size="lg"
+                  className="bg-orange-500 hover:bg-orange-600 text-white py-2 h-12 rounded-full text-md font-medium lg:text-base"
+                >
+                  Discover More
+                </Button>
+              </MotionDiv>
+              <MotionDiv
+                variants={item}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.98 }}
               >
-                Get Started
-              </Button>
-            </div>
-          </div>
+                <Button
+                  variant="secondary"
+                  size="lg"
+                  className="bg-gray-800 hover:bg-gray-900 text-white py-2 h-12 rounded-full text-md font-medium lg:text-base"
+                >
+                  Get Started
+                </Button>
+              </MotionDiv>
+            </MotionDiv>
+          </MotionDiv>
         </div>
       </div>
       <div className="hidden lg:block w-[95%] mx-auto">
