@@ -17,32 +17,32 @@ import products from "@/data/products.json"
 import ProgramSelection from "@/components/common/ProgramSelection"
 import AddonSection from "@/components/common/AddonSection"
 
+type SectionKey = "payroll" | "ca" | "legal";
+
+type InternationalProgramKey = "international-basic" | "international-pro" | "international-elite";
+
 const PricingInterface = () => {
   const router = useRouter()
 
-  const [selectedProgram, setSelectedProgram] = useState("skill-phase")
-  const [selectedDurations, setSelectedDurations] = useState({
-    "skill-phase": 6,
-    "practice-basic": 3,
-    "practice-pro": 3,
-    "practice-elite": 3,
-    "progress-basic": 1,
-    "progress-pro": 1,
-    "progress-elite": 1
+  const [selectedProgram, setSelectedProgram] = useState<InternationalProgramKey>("international-basic")
+  const [selectedDurations, setSelectedDurations] = useState<Record<InternationalProgramKey, number>>({
+    "international-basic": 1,
+    "international-pro": 1,
+    "international-elite": 1,
   })
-  const [selectedAddons, setSelectedAddons] = useState<{ [key: string]: string }>({
+  const [selectedAddons, setSelectedAddons] = useState<Record<SectionKey, string>>({
     payroll: "",
     ca: "",
     legal: ""
   });
 
-  const [expandedSections, setExpandedSections] = useState({
+  const [expandedSections, setExpandedSections] = useState<Record<SectionKey, boolean>>({
     payroll: true,
     ca: true,
     legal: true
   })
 
-  const toggleSection = (key: string) =>
+  const toggleSection = (key: SectionKey) =>
     setExpandedSections((prev) => ({ ...prev, [key]: !prev[key] }));
 
   const handleAddonSelect = (sectionKey: string, addonId: string) =>
@@ -56,7 +56,7 @@ const PricingInterface = () => {
 
   const proceedToPurchase = () => {
     const packageData = createStandardizedPackageData(
-      "program",
+      "international",
       selectedProgram,
       Object.values(selectedAddons).filter(id => id !== ""),
       selectedDurations[selectedProgram] || 1
@@ -67,14 +67,14 @@ const PricingInterface = () => {
   }
 
   const calculateTotal = () => {
-    const program = products.programs?.[selectedProgram];
+    const program = products.international?.[selectedProgram];
     const duration = selectedDurations[selectedProgram] || 1;
     const programCost = program ? program.price * duration : 0;
 
     const allAddons = { ...products.programAddons, ...products.freelancerAddons };
 
     const addonCosts = Object.values(selectedAddons).reduce((sum, addonId) => {
-      const addon = allAddons[addonId];
+      const addon = allAddons[addonId as keyof typeof allAddons];
       return sum + (addon ? addon.price : 0);
     }, 0);
 
@@ -113,10 +113,10 @@ const PricingInterface = () => {
           <div className="p-6 border-b">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h3 className="text-xl font-bold">Skill Phase</h3>
-                <div className="text-2xl font-bold text-gray-900 mt-1">
+                <h3 className="text-xl font-bold">International Basic Plan</h3>
+                {/* <div className="text-2xl font-bold text-gray-900 mt-1">
                   ₹7199 <span className="text-sm font-normal text-gray-500">Inclusive GST</span>
-                </div>
+                </div> */}
               </div>
               {/* <div className="flex items-center gap-4">
                 <select className="border rounded px-3 py-2 text-sm">
@@ -127,11 +127,11 @@ const PricingInterface = () => {
             </div>
 
             <ProgramSelection
-              programIds={["skill-phase"]}
-              category="programs"
+              programIds={["international-basic"]}
+              category="international"
               products={products}
               selectedProgram={selectedProgram}
-              setSelectedProgram={setSelectedProgram}
+              setSelectedProgram={(id: string) => setSelectedProgram(id as InternationalProgramKey)}
               selectedDurations={selectedDurations}
               setSelectedDurations={setSelectedDurations}
             />
@@ -141,10 +141,10 @@ const PricingInterface = () => {
           <div className="p-6 border-b">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h3 className="text-xl font-bold">Practice Phase</h3>
-                <div className="text-2xl font-bold text-gray-900 mt-1">
+                <h3 className="text-xl font-bold">International Pro Plan</h3>
+                {/* <div className="text-2xl font-bold text-gray-900 mt-1">
                   ₹7199 <span className="text-sm font-normal text-gray-500">Inclusive GST</span>
-                </div>
+                </div> */}
               </div>
               {/* <div className="flex items-center gap-4">
                 <select className="border rounded px-3 py-2 text-sm">
@@ -156,11 +156,11 @@ const PricingInterface = () => {
             </div>
 
             <ProgramSelection
-              programIds={["practice-basic", "practice-pro", "practice-elite"]}
-              category="programs"
+              programIds={["international-pro"]}
+              category="international"
               products={products}
               selectedProgram={selectedProgram}
-              setSelectedProgram={setSelectedProgram}
+              setSelectedProgram={(id: string) => setSelectedProgram(id as InternationalProgramKey)}
               selectedDurations={selectedDurations}
               setSelectedDurations={setSelectedDurations}
             />
@@ -170,10 +170,10 @@ const PricingInterface = () => {
           <div className="p-6 border-b">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h3 className="text-xl font-bold">Progress Phase</h3>
-                <div className="text-2xl font-bold text-gray-900 mt-1">
+                <h3 className="text-xl font-bold">International Elite Plan</h3>
+                {/* <div className="text-2xl font-bold text-gray-900 mt-1">
                   ₹7199 <span className="text-sm font-normal text-gray-500">Inclusive GST</span>
-                </div>
+                </div> */}
               </div>
               {/* <div className="flex items-center gap-4">
                 <select className="border rounded px-3 py-2 text-sm">
@@ -184,11 +184,11 @@ const PricingInterface = () => {
             </div>
 
             <ProgramSelection
-              programIds={["progress-basic", "progress-pro", "progress-elite"]}
-              category="programs"
+              programIds={["international-elite"]}
+              category="international"
               products={products}
               selectedProgram={selectedProgram}
-              setSelectedProgram={setSelectedProgram}
+              setSelectedProgram={(id: string) => setSelectedProgram(id as InternationalProgramKey)}
               selectedDurations={selectedDurations}
               setSelectedDurations={setSelectedDurations}
             />
@@ -203,8 +203,8 @@ const PricingInterface = () => {
               description="Streamline your payroll operations"
               color="blue"
               sectionKey="payroll"
-              addonIds={['payroll-payroll-epf', 'payroll-tax-filing']}
-              allAddons={products.programAddons}
+              addonIds={['international-global-payroll']}
+              allAddons={products.internationalAddons}
               expandedSections={expandedSections}
               toggleSection={toggleSection}
               selectedAddons={selectedAddons}
@@ -216,8 +216,8 @@ const PricingInterface = () => {
               description="Professional accounting support"
               color="yellow"
               sectionKey="ca"
-              addonIds={['ca-freelancer-basic', 'ca-freelancer-pro', 'ca-freelancer-elite']}
-              allAddons={products.programAddons}
+              addonIds={['international-ca-visa']}
+              allAddons={products.internationalAddons}
               expandedSections={expandedSections}
               toggleSection={toggleSection}
               selectedAddons={selectedAddons}
@@ -229,8 +229,8 @@ const PricingInterface = () => {
               description="Comprehensive legal support"
               color="red"
               sectionKey="legal"
-              addonIds={['legal-legal-support', 'legal-business-setup']}
-              allAddons={products.programAddons}
+              addonIds={['international-legal-pack']}
+              allAddons={products.internationalAddons}
               expandedSections={expandedSections}
               toggleSection={toggleSection}
               selectedAddons={selectedAddons}
@@ -247,16 +247,16 @@ const PricingInterface = () => {
           </h3>
 
           <div className="space-y-3">
-            {selectedProgram && products.programs[selectedProgram] && (
+            {selectedProgram && products.international[selectedProgram] && (
               <div className="flex justify-between items-center">
-                <span className="text-white/90">{products.programs[selectedProgram].name}</span>
+                <span className="text-white/90">{products.international[selectedProgram].name}</span>
                 <span className="font-semibold">₹{costs.programCost.toLocaleString()}</span>
               </div>
             )}
 
-            {["payroll", "ca", "legal"].map((key) => {
+            {(["payroll", "ca", "legal"] as SectionKey[]).map((key) => {
               const addonId = selectedAddons[key];
-              const addon = { ...products.programAddons, ...products.freelancerAddons }[addonId];
+              const addon = { ...products.programAddons, ...products.freelancerAddons }[addonId as string];
               return (
                 <div key={key} className="flex justify-between items-center">
                   <span className="text-white/90">

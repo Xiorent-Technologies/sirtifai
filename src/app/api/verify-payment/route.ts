@@ -54,7 +54,9 @@ export async function POST(request: NextRequest) {
           const host = request.headers.get("host") || request.headers.get("x-forwarded-host")
           const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || (host ? `${protocol}://${host}` : "http://localhost:3000")
 
-          await fetch(`${baseUrl}/api/send-invoice-email`, {
+          await fetch(`http://localhost:8000/api/v1/invoices/send`, {
+
+          // await fetch(`${baseUrl}/api/send-invoice-email`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

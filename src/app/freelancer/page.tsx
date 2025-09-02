@@ -10,7 +10,7 @@ import BonusesSection from "../../components/sections/BonusesSection"
 import FinalCTASection from "../../components/sections/FinalCTASection"
 import LandingFreelancer from "../../components/sections/LandingFreelancer";
 import FreeLancerWhat from "../../components/sections/FreeLancerWhat";
-
+import PricingInterface from "@/components/sections/freelancer/pricing-interface";
 
 export default function FreelancerPage() {
   return (
@@ -18,7 +18,8 @@ export default function FreelancerPage() {
       <Header />
       <LandingFreelancer />
       <FreeLancerWhat />
-      <PricingSection />
+      <PricingInterface />
+      {/* <PricingSection /> */}
       {/* <AddOnsSection /> */}
       <TestimonialSection />
       <WhoIsThisForSection />

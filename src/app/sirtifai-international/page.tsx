@@ -8,6 +8,7 @@ import { RealSuccessStories } from "../../components/sections/RealSuccessStories
 import { OptionalAddOns } from "../../components/sections/OptionalAddOns"
 import { SuccessStoryCTABanner } from "../../components/sections/SuccessStoryCTABanner"
 import { SuccessStoriesSection } from "../../components/sections/SuccessStoriesSection"
+import PricingInterface from "@/components/sections/international/pricing-interface"
 
 export default function SirtifyInternationalPage() {
   return (
@@ -15,11 +16,12 @@ export default function SirtifyInternationalPage() {
       <Header />
       <InternationalHeroSection />
       <GlobalCareerRoadmap />
-      <InternationalPricingPlans />
+      {/* <InternationalPricingPlans /> */}
+      <PricingInterface />
       <ComprehensiveVisaSupport />
       {/* <RealSuccessStories /> */}
       <SuccessStoriesSection />
-      <OptionalAddOns />
+      {/* <OptionalAddOns /> */}
       <SuccessStoryCTABanner />
       <Footer />
     </div>

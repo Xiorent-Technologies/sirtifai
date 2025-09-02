@@ -27,7 +27,7 @@ export const NAVIGATION_ITEMS: NavigationItem[] = [
       { label: "About Us", href: "/about" },
       { label: "Investors", href: "/investors" },
       // { label: "media and campaigns", href: "/media-and-campaign" },
-      { label: "Insurance", href: "/insurance" },
+      // { label: "Insurance", href: "/insurance" },
       { label: "Why Sirtifai", href: "/why-sirtifai" },
 
     ],

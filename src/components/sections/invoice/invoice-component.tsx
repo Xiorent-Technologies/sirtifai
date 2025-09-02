@@ -31,7 +31,10 @@ const InvoiceComponent = () => {
 
     setEmailLoading(true)
     try {
-      const response = await fetch("/api/send-invoice-email", {
+      
+            const response = await fetch("http://localhost:8000/api/v1/invoices/send", {
+
+      // const response = await fetch("/api/send-invoice-email", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

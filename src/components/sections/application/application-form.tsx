@@ -306,9 +306,8 @@ const ApplicationForm = () => {
                   required
                   value={formData.fullName}
                   onChange={(e) => handleInputChange("fullName", e.target.value)}
-                  className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-[#FC4C03] focus:border-transparent ${
-                    errors.fullName ? "border-red-500" : "border-gray-300"
-                  }`}
+                  className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-[#FC4C03] focus:border-transparent ${errors.fullName ? "border-red-500" : "border-gray-300"
+                    }`}
                   placeholder="Daniel Brown"
                 />
                 {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>}
@@ -326,9 +325,8 @@ const ApplicationForm = () => {
                       required
                       value={formData.dateOfBirth.day}
                       onChange={(e) => handleInputChange("dateOfBirth.day", e.target.value)}
-                      className={`px-3 py-2 border rounded-md focus:ring-2 focus:ring-[#FC4C03] focus:border-transparent ${
-                        errors["dateOfBirth.day"] ? "border-red-500" : "border-gray-300"
-                      }`}
+                      className={`w-16 px-3 py-2 border rounded-md focus:ring-2 focus:ring-[#FC4C03] focus:border-transparent ${errors["dateOfBirth.day"] ? "border-red-500" : "border-gray-300"
+                        }`}
                     />
                     {errors["dateOfBirth.day"] && (
                       <p className="text-red-500 text-xs mt-1">{errors["dateOfBirth.day"]}</p>
@@ -341,9 +339,8 @@ const ApplicationForm = () => {
                       required
                       value={formData.dateOfBirth.month}
                       onChange={(e) => handleInputChange("dateOfBirth.month", e.target.value)}
-                      className={`px-3 py-2 border rounded-md focus:ring-2 focus:ring-[#FC4C03] focus:border-transparent ${
-                        errors["dateOfBirth.month"] ? "border-red-500" : "border-gray-300"
-                      }`}
+                      className={`w-16 px-3 py-2 border rounded-md focus:ring-2 focus:ring-[#FC4C03] focus:border-transparent ${errors["dateOfBirth.month"] ? "border-red-500" : "border-gray-300"
+                        }`}
                     />
                     {errors["dateOfBirth.month"] && (
                       <p className="text-red-500 text-xs mt-1">{errors["dateOfBirth.month"]}</p>
@@ -356,9 +353,8 @@ const ApplicationForm = () => {
                       required
                       value={formData.dateOfBirth.year}
                       onChange={(e) => handleInputChange("dateOfBirth.year", e.target.value)}
-                      className={`px-3 py-2 border rounded-md focus:ring-2 focus:ring-[#FC4C03] focus:border-transparent ${
-                        errors["dateOfBirth.year"] ? "border-red-500" : "border-gray-300"
-                      }`}
+                      className={`w-16 px-3 py-2 border rounded-md focus:ring-2 focus:ring-[#FC4C03] focus:border-transparent ${errors["dateOfBirth.year"] ? "border-red-500" : "border-gray-300"
+                        }`}
                     />
                     {errors["dateOfBirth.year"] && (
                       <p className="text-red-500 text-xs mt-1">{errors["dateOfBirth.year"]}</p>
@@ -376,9 +372,8 @@ const ApplicationForm = () => {
                   required
                   value={formData.countryOfCitizenship}
                   onChange={(e) => handleInputChange("countryOfCitizenship", e.target.value)}
-                  className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-[#FC4C03] focus:border-transparent ${
-                    errors.countryOfCitizenship ? "border-red-500" : "border-gray-300"
-                  }`}
+                  className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-[#FC4C03] focus:border-transparent ${errors.countryOfCitizenship ? "border-red-500" : "border-gray-300"
+                    }`}
                   placeholder="India"
                 />
                 {errors.countryOfCitizenship && (
@@ -412,9 +407,8 @@ const ApplicationForm = () => {
                   required
                   value={formData.primaryPhone}
                   onChange={(e) => handleInputChange("primaryPhone", e.target.value)}
-                  className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-[#FC4C03] focus:border-transparent ${
-                    errors.primaryPhone ? "border-red-500" : "border-gray-300"
-                  }`}
+                  className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-[#FC4C03] focus:border-transparent ${errors.primaryPhone ? "border-red-500" : "border-gray-300"
+                    }`}
                   placeholder="+91 7888089345"
                 />
                 {errors.primaryPhone && <p className="text-red-500 text-xs mt-1">{errors.primaryPhone}</p>}
@@ -468,9 +462,8 @@ const ApplicationForm = () => {
                   required
                   value={formData.email}
                   onChange={(e) => handleInputChange("email", e.target.value)}
-                  className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-[#FC4C03] focus:border-transparent ${
-                    errors.email ? "border-red-500" : "border-gray-300"
-                  }`}
+                  className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-[#FC4C03] focus:border-transparent ${errors.email ? "border-red-500" : "border-gray-300"
+                    }`}
                   placeholder="danielbrown@gmail.com"
                 />
                 {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
@@ -485,9 +478,8 @@ const ApplicationForm = () => {
                   required
                   value={formData.residentialAddress}
                   onChange={(e) => handleInputChange("residentialAddress", e.target.value)}
-                  className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-[#FC4C03] focus:border-transparent ${
-                    errors.residentialAddress ? "border-red-500" : "border-gray-300"
-                  }`}
+                  className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-[#FC4C03] focus:border-transparent ${errors.residentialAddress ? "border-red-500" : "border-gray-300"
+                    }`}
                   placeholder="985/bkmini cAsomgs"
                 />
                 {errors.residentialAddress && <p className="text-red-500 text-xs mt-1">{errors.residentialAddress}</p>}
@@ -503,9 +495,8 @@ const ApplicationForm = () => {
                     required
                     value={formData.city}
                     onChange={(e) => handleInputChange("city", e.target.value)}
-                    className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-[#FC4C03] focus:border-transparent ${
-                      errors.city ? "border-red-500" : "border-gray-300"
-                    }`}
+                    className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-[#FC4C03] focus:border-transparent ${errors.city ? "border-red-500" : "border-gray-300"
+                      }`}
                     placeholder="Indore"
                   />
                   {errors.city && <p className="text-red-500 text-xs mt-1">{errors.city}</p>}
@@ -519,9 +510,8 @@ const ApplicationForm = () => {
                     required
                     value={formData.state}
                     onChange={(e) => handleInputChange("state", e.target.value)}
-                    className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-[#FC4C03] focus:border-transparent ${
-                      errors.state ? "border-red-500" : "border-gray-300"
-                    }`}
+                    className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-[#FC4C03] focus:border-transparent ${errors.state ? "border-red-500" : "border-gray-300"
+                      }`}
                     placeholder="Mp"
                   />
                   {errors.state && <p className="text-red-500 text-xs mt-1">{errors.state}</p>}
@@ -535,9 +525,8 @@ const ApplicationForm = () => {
                     required
                     value={formData.zipCode}
                     onChange={(e) => handleInputChange("zipCode", e.target.value)}
-                    className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-[#FC4C03] focus:border-transparent ${
-                      errors.zipCode ? "border-red-500" : "border-gray-300"
-                    }`}
+                    className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-[#FC4C03] focus:border-transparent ${errors.zipCode ? "border-red-500" : "border-gray-300"
+                      }`}
                     placeholder="453000"
                   />
                   {errors.zipCode && <p className="text-red-500 text-xs mt-1">{errors.zipCode}</p>}
@@ -551,9 +540,8 @@ const ApplicationForm = () => {
                     required
                     value={formData.country}
                     onChange={(e) => handleInputChange("country", e.target.value)}
-                    className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-[#FC4C03] focus:border-transparent ${
-                      errors.country ? "border-red-500" : "border-gray-300"
-                    }`}
+                    className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-[#FC4C03] focus:border-transparent ${errors.country ? "border-red-500" : "border-gray-300"
+                      }`}
                     placeholder="India"
                   />
                   {errors.country && <p className="text-red-500 text-xs mt-1">{errors.country}</p>}
@@ -575,9 +563,8 @@ const ApplicationForm = () => {
                   required
                   value={formData.highestQualification}
                   onChange={(e) => handleInputChange("highestQualification", e.target.value)}
-                  className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-[#FC4C03] focus:border-transparent ${
-                    errors.highestQualification ? "border-red-500" : "border-gray-300"
-                  }`}
+                  className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-[#FC4C03] focus:border-transparent ${errors.highestQualification ? "border-red-500" : "border-gray-300"
+                    }`}
                   placeholder="graduate"
                 />
                 {errors.highestQualification && (
@@ -594,9 +581,8 @@ const ApplicationForm = () => {
                   required
                   value={formData.specialization}
                   onChange={(e) => handleInputChange("specialization", e.target.value)}
-                  className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-[#FC4C03] focus:border-transparent ${
-                    errors.specialization ? "border-red-500" : "border-gray-300"
-                  }`}
+                  className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-[#FC4C03] focus:border-transparent ${errors.specialization ? "border-red-500" : "border-gray-300"
+                    }`}
                   placeholder="Science"
                 />
                 {errors.specialization && <p className="text-red-500 text-xs mt-1">{errors.specialization}</p>}
@@ -617,9 +603,8 @@ const ApplicationForm = () => {
                   required
                   value={formData.currentProfession}
                   onChange={(e) => handleInputChange("currentProfession", e.target.value)}
-                  className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-[#FC4C03] focus:border-transparent ${
-                    errors.currentProfession ? "border-red-500" : "border-gray-300"
-                  }`}
+                  className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-[#FC4C03] focus:border-transparent ${errors.currentProfession ? "border-red-500" : "border-gray-300"
+                    }`}
                   placeholder="graduate"
                 />
                 {errors.currentProfession && <p className="text-red-500 text-xs mt-1">{errors.currentProfession}</p>}
@@ -634,9 +619,8 @@ const ApplicationForm = () => {
                   required
                   value={formData.currentOrganization}
                   onChange={(e) => handleInputChange("currentOrganization", e.target.value)}
-                  className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-[#FC4C03] focus:border-transparent ${
-                    errors.currentOrganization ? "border-red-500" : "border-gray-300"
-                  }`}
+                  className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-[#FC4C03] focus:border-transparent ${errors.currentOrganization ? "border-red-500" : "border-gray-300"
+                    }`}
                   placeholder="Science"
                 />
                 {errors.currentOrganization && (
@@ -653,9 +637,8 @@ const ApplicationForm = () => {
                   required
                   value={formData.linkedinProfile}
                   onChange={(e) => handleInputChange("linkedinProfile", e.target.value)}
-                  className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-[#FC4C03] focus:border-transparent ${
-                    errors.linkedinProfile ? "border-red-500" : "border-gray-300"
-                  }`}
+                  className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-[#FC4C03] focus:border-transparent ${errors.linkedinProfile ? "border-red-500" : "border-gray-300"
+                    }`}
                   placeholder="https://linkedin.com/in/yourprofile"
                 />
                 {errors.linkedinProfile && <p className="text-red-500 text-xs mt-1">{errors.linkedinProfile}</p>}
@@ -664,7 +647,7 @@ const ApplicationForm = () => {
           </section>
 
           {/* Program Summary */}
-          <section>
+          {/* <section>
             <h2 className="text-lg font-semibold text-[#FC4C03] mb-4">Select the Program</h2>
             {selectedPackage ? (
               <div className="bg-gray-50 rounded-lg p-4">
@@ -673,33 +656,36 @@ const ApplicationForm = () => {
                     <span className="font-medium">{selectedPackage.productData.name}</span>
                     <span className="text-gray-600">
                       {selectedPackage.type === "freelancer"
-                        ? `${formatPrice(selectedPackage.productData.price)} one-time`
-                        : `${formatPrice(selectedPackage.productData.price)} × ${selectedPackage.productData.duration} months`}
+                        ? `${(selectedPackage.productData.price)} one-time`
+                        : `₹${(selectedPackage.productData.price)} × ${selectedPackage.productData.duration} months`}
                     </span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-gray-600">Program Total:</span>
-                    <span className="font-semibold">{formatPrice(selectedPackage.pricing.programPrice)}</span>
+                    <span className="font-semibold">₹{(selectedPackage.pricing.programPrice)}</span>
                   </div>
-                  {selectedPackage.addonData && (
+                  {Array.isArray(selectedPackage.addonData) && selectedPackage.addonData.length > 0 && (
                     <>
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm">Add-on: {selectedPackage.addonData.name}</span>
-                        <span className="font-semibold">{formatPrice(selectedPackage.addonData.price)}</span>
-                      </div>
+                      {selectedPackage.addonData.map((addon) => (
+                        <div key={addon.id} className="flex justify-between items-center">
+                          <span className="text-sm">Add-on: {addon.name}</span>
+                          <span className="font-semibold">₹{addon.price}</span>
+                        </div>
+                      ))}
                     </>
                   )}
+
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-gray-600">Subtotal:</span>
-                    <span className="font-semibold">{formatPrice(selectedPackage.pricing.subtotal)}</span>
+                    <span className="font-semibold">₹{(selectedPackage.pricing.subtotal)}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-gray-600">Tax (18%):</span>
-                    <span className="font-semibold">{formatPrice(selectedPackage.pricing.gst)}</span>
+                    <span className="font-semibold">{(selectedPackage.pricing.gst)}</span>
                   </div>
                   <div className="flex justify-between items-center font-bold text-[#FC4C03]">
                     <span>Total Amount:</span>
-                    <span>{formatPrice(selectedPackage.pricing.total)}</span>
+                    <span>₹{(selectedPackage.pricing.total)}</span>
                   </div>
                 </div>
               </div>
@@ -708,7 +694,7 @@ const ApplicationForm = () => {
                 <p className="text-yellow-800">No program selected. Please go back to select a program.</p>
               </div>
             )}
-          </section>
+          </section> */}
 
           {/* Identity Document */}
           <section>
@@ -723,9 +709,8 @@ const ApplicationForm = () => {
                   required
                   value={formData.idType}
                   onChange={(e) => handleInputChange("idType", e.target.value)}
-                  className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-[#FC4C03] focus:border-transparent ${
-                    errors.idType ? "border-red-500" : "border-gray-300"
-                  }`}
+                  className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-[#FC4C03] focus:border-transparent ${errors.idType ? "border-red-500" : "border-gray-300"
+                    }`}
                   placeholder="E.g. Passport"
                 />
                 {errors.idType && <p className="text-red-500 text-xs mt-1">{errors.idType}</p>}
@@ -740,9 +725,8 @@ const ApplicationForm = () => {
                   required
                   value={formData.idNumber}
                   onChange={(e) => handleInputChange("idNumber", e.target.value)}
-                  className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-[#FC4C03] focus:border-transparent ${
-                    errors.idNumber ? "border-red-500" : "border-gray-300"
-                  }`}
+                  className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-[#FC4C03] focus:border-transparent ${errors.idNumber ? "border-red-500" : "border-gray-300"
+                    }`}
                   placeholder="777-888-444-11"
                 />
                 {errors.idNumber && <p className="text-red-500 text-xs mt-1">{errors.idNumber}</p>}
@@ -753,9 +737,8 @@ const ApplicationForm = () => {
                   Upload ID Document <span className="text-red-500">*</span>
                 </label>
                 <div
-                  className={`border-2 border-dashed rounded-lg p-4 text-center hover:border-[#FC4C03] transition-colors ${
-                    errors.idDocument ? "border-red-500" : "border-gray-300"
-                  }`}
+                  className={`border-2 border-dashed rounded-lg p-4 text-center hover:border-[#FC4C03] transition-colors ${errors.idDocument ? "border-red-500" : "border-gray-300"
+                    }`}
                 >
                   <Upload className="mx-auto h-8 w-8 text-gray-400" />
                   <div className="mt-2">
@@ -782,9 +765,8 @@ const ApplicationForm = () => {
                   Upload Photo (Passport - Size) <span className="text-red-500">*</span>
                 </label>
                 <div
-                  className={`border-2 border-dashed rounded-lg p-4 text-center hover:border-[#FC4C03] transition-colors ${
-                    errors.studentPhoto ? "border-red-500" : "border-gray-300"
-                  }`}
+                  className={`border-2 border-dashed rounded-lg p-4 text-center hover:border-[#FC4C03] transition-colors ${errors.studentPhoto ? "border-red-500" : "border-gray-300"
+                    }`}
                 >
                   <Upload className="mx-auto h-8 w-8 text-gray-400" />
                   <div className="mt-2">
@@ -886,35 +868,40 @@ const ApplicationForm = () => {
                         ? `${selectedPackage.productData.name}:`
                         : `${selectedPackage.productData.name} (${selectedPackage.productData.duration} months):`}
                     </span>
-                    <span className="font-semibold">{formatPrice(selectedPackage.pricing.programPrice)}</span>
+                    <span className="font-semibold">{(selectedPackage.pricing.programPrice)}</span>
                   </div>
 
-                  {selectedPackage.addonData && (
-                    <div className="flex justify-between items-center">
-                      <span className="text-gray-700">Add on ({selectedPackage.addonData.name}):</span>
-                      <span className="font-semibold">{formatPrice(selectedPackage.addonData.price)}</span>
-                    </div>
+                  {Array.isArray(selectedPackage.addonData) && selectedPackage.addonData.length > 0 && (
+                    <>
+                      {selectedPackage.addonData.map((addon) => (
+                        <div key={addon.id} className="flex justify-between items-center">
+                          <span className="text-sm">Add-on: {addon.name}</span>
+                          <span className="font-semibold">₹{addon.price}</span>
+                        </div>
+                      ))}
+                    </>
                   )}
 
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-700">Subtotal:</span>
-                    <span className="font-semibold">{formatPrice(selectedPackage.pricing.subtotal)}</span>
-                  </div>
 
-                  <div className="flex justify-between items-center">
+                  {/* <div className="flex justify-between items-center">
+                    <span className="text-gray-700">Subtotal:</span>
+                    <span className="font-semibold">{(selectedPackage.pricing.subtotal)}</span>
+                  </div> */}
+
+                  {/* <div className="flex justify-between items-center">
                     <span className="text-gray-700">Tax (18%):</span>
-                    <span className="font-semibold">{formatPrice(selectedPackage.pricing.gst)}</span>
-                  </div>
+                    <span className="font-semibold">{(selectedPackage.pricing.gst)}</span>
+                  </div> */}
 
                   <hr className="my-4" />
 
                   <div className="flex justify-between items-center text-lg font-bold">
                     <span>Total Amount</span>
-                    <span className="text-[#FC4C03]">{formatPrice(selectedPackage.pricing.total)}</span>
+                    <span className="text-[#FC4C03]">{(selectedPackage.pricing.total)}</span>
                   </div>
                 </div>
 
-                <RazorpayCheckout
+                {/* <RazorpayCheckout
                   selectedProgram={selectedPackage.selectedProduct}
                   selectedMonths={selectedPackage.productData.duration || 1}
                   selectedAddon={selectedPackage.selectedAddon || undefined}
@@ -922,7 +909,7 @@ const ApplicationForm = () => {
                   onSuccess={handlePaymentSuccess}
                   onError={handlePaymentError}
                   validateForm={validateForm}
-                />
+                /> */}
               </div>
             </section>
           )}
