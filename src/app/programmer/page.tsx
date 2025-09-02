@@ -1,4 +1,4 @@
-import {Header} from "@/components/layout/Header";
+import { Header } from "@/components/layout/Header";
 import Hero from "@/components/programmer/Hero";
 import WhyProgramme from "@/components/programmer/WhyProgramme";
 import ProgrammeBenefits from "@/components/programmer/ProgrammeBenefits";
@@ -12,7 +12,7 @@ import { Footer } from "@/components/layout/Footer";
 export default function Home() {
   return (
     <>
-    <Header/>
+      <Header />
       <Hero />
       <WhyProgramme />
       <ProgrammeBenefits />
