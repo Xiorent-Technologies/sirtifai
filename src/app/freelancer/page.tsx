@@ -11,12 +11,14 @@ import FinalCTASection from "../../components/sections/FinalCTASection"
 import LandingFreelancer from "../../components/sections/LandingFreelancer";
 import FreeLancerWhat from "../../components/sections/FreeLancerWhat";
 import PricingInterface from "@/components/sections/freelancer/pricing-interface";
+import FreelncerHeroSection from "@/components/sections/freelancerHeroSection";
 
 export default function FreelancerPage() {
   return (
     <div className="bg-[#FEF7F1] font-sans min-h-screen overflow-x-hidden">
       <Header />
-      <LandingFreelancer />
+      <FreelncerHeroSection />
+      {/* <LandingFreelancer /> */}
       <FreeLancerWhat />
       <PricingInterface />
       {/* <PricingSection /> */}
