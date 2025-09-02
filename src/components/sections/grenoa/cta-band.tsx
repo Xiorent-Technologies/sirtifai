@@ -1,25 +1,29 @@
-import { CtaButton } from "../../common/cta-button"
-
 export default function CtaBand() {
   return (
-    <section className="bg-orange-500">
-      <div className="mx-auto flex max-w-6xl flex-col items-start gap-4 px-4 py-10 sm:items-center sm:justify-between sm:py-12 md:flex-row">
-        <div className="max-w-2xl">
-          <h3 className="text-pretty font-sans text-xl font-bold text-white sm:text-2xl">
-            Start your journey today and build a successful career.
-          </h3>
-          <p className="mt-2 text-sm leading-6 text-orange-50">
-            Our expert advisors are here to guide you in selecting the perfect plan—whether local or global—to align
-            with your professional aspirations.
-          </p>
-        </div>
-
-        <div className="shrink-0">
-          <CtaButton href="#volunteer" variant="solid" className="bg-white text-orange-600 hover:bg-orange-50 rounded-4xl ">
-            <p className="text-2xl">Volunteer Today</p>
-          </CtaButton>
+    <section>
+      <div className="bg-gradient-to-r from-orange-400 to-orange-500 px-4 py-12 md:py-16 lg:py-20">
+        <div className="w-[80%] flex flex-wrap justify-between gap-5 mx-auto items-center">
+          {/* left */}
+          <div>
+            <h2 className="text-3xl text-white font-extrabold">
+              Grenov: Reimagine the Futrue
+            </h2>
+            <p className="text-white text-lg w-[80%]">
+              “Grenov, part of Sirtifai, advances AI, augmented reality, and
+              robotics to redefine the future.”
+            </p>
+          </div>
+          {/* Right */}
+          <div className="flex gap-6">
+            <button className="bg-gray-900 text-white px-5 py-3 rounded-full shadow hover:bg-gray-800 transition">
+              Partner With Grenov
+            </button>
+            <button className="bg-white text-gray-900 px-5 py-3 rounded-full shadow hover:bg-gray-100 transition">
+              Explore the Sirtital Ecosystem
+            </button>
+          </div>
         </div>
       </div>
     </section>
-  )
+  );
 }

@@ -1,44 +1,72 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import Marquee from "react-fast-marquee"
+import Image from "next/image";
 
-type Logo = { alt: string; src: string }
+type Logo = { alt: string; src: string; title: string };
 
 const DEFAULT_LOGOS: Logo[] = [
-  { alt: "coinmarketcap", src: "/logos/coinmarketcap.png" },
-  { alt: "coingecko", src: "/logos/coingecko.png" },
-  { alt: "cryptocompare", src: "/logos/cryptocompare.png" },
-  { alt: "coinpaprika", src: "/logos/coinpaprika.png" },
-  { alt: "nomics", src: "/logos/nomics.png" },
-  { alt: "messari", src: "/logos/messari.png" },
-  { alt: "livecoinwatch", src: "/logos/livecoinwatch.png" },
-]
+  {
+    alt: "coinmarketcap",
+    src: "/assets/Logos/coinmarketcamp.svg",
+    title: "coinmarketcamp",
+  },
+  {
+    alt: "coinpaprika",
+    src: "/assets/Logos/coinpaprika.svg",
+    title: "coinpaprika",
+  },
+  { alt: "nomics", src: "/assets/Logos/nomics.svg", title: "nomics" },
+  { alt: "messari", src: "/assets/Logos/messari.svg", title: "messari" },
+  {
+    alt: "livecoinwatch",
+    src: "/assets/Logos/livecoinwatch.svg",
+    title: "livecoinwatch",
+  },
+  {
+    alt: "coingeeco",
+    src: "/assets/Logos/coingeeco.svg",
+    title: "coingeeco",
+  },
+  {
+    alt: "cryptocompare",
+    src: "/assets/Logos/cryptocompare.svg",
+    title: "cryptocompare",
+  },
+  {
+    alt: "coinmarketcap",
+    src: "/assets/Logos/coinmarketcap_2.svg",
+    title: "coinmarketcap",
+  },
+];
 
-export default function LogoMarquee({ logos = DEFAULT_LOGOS }: { logos?: Logo[] }) {
+export default function LogoMarquee({
+  logos = DEFAULT_LOGOS,
+}: {
+  logos?: Logo[];
+}) {
   return (
     <section id="partners" className="w-full py-16">
       <div className="mx-auto max-w-6xl px-6">
-
-        <Marquee
-          gradient={false}
-          speed={50}
-          pauseOnHover={true}
-          className="flex items-center gap-12"
-        >
+        <div className="flex justify-between flex-col gap-12 lg:flex-row lg:gap-0">
           {logos.map((logo, idx) => (
-            <div key={logo.alt + idx} className="mx-6 flex items-center justify-center">
-              <Image
-                src={logo.src}
-                alt={`${logo.alt} logo`}
-                width={140}
-                height={50}
-                className="h-12 w-auto object-contain"
-              />
+            <div
+              key={logo.alt + idx}
+              className="mx-6 flex items-center justify-center"
+            >
+              <div className="flex flex-col justify-center items-center py-1">
+                <Image
+                  src={logo.src}
+                  alt={`${logo.alt} logo`}
+                  width={150}
+                  height={150}
+                  className="h-22 w-auto object-contain"
+                />
+                <h2 className="text-md font-semibold">{logo.title}</h2>
+              </div>
             </div>
           ))}
-        </Marquee>
+        </div>
       </div>
     </section>
-  )
+  );
 }

@@ -7,6 +7,7 @@ import AboutGrenoa from "@/components/sections/grenoa/about-grenoa";
 import IndustryApplications from "@/components/sections/grenoa/industry-applications";
 import InnovationInAction from "@/components/sections/grenoa/innovation-in-action";
 import LogoMarquee from "@/components/sections/grenoa/logo-marquee";
+import GrenovEcoSystem from "@/components/sections/grenoa/grenovEcoSystem";
 // import VisionMissionSection from "@/components/sections/drop_i_india/vision-mission";
 
 export default function ContactPage() {
@@ -15,13 +16,13 @@ export default function ContactPage() {
       <Header />
       <HeroSection />
       <AboutGrenoa />
+      <GrenovEcoSystem />
       <IndustryApplications />
       <InnovationInAction />
       <LogoMarquee />
 
-      
       <CtaBand />
-      
+
       <Footer />
     </div>
   );
