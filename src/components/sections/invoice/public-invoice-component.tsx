@@ -5,26 +5,33 @@ import { Button } from "../../ui/Button"
 import { Download, Printer, Mail } from "lucide-react"
 import { getProductById } from "../../../lib/products"
 
+interface AddonData {
+  id: string
+  name: string
+  price: number
+}
+
 interface ApiResponse {
   invoice: {
     id: string
     invoiceNumber: string
     createdAt: string
     programName: string
+    programUnitPrice: number
+    programUnitPriceExclusiveGST: number
     programPrice: number
     programPriceINR: number
+    programPriceExclusiveGST: number
     programDuration: number
-    addonName?: string
-    addonPrice?: number
+    selectedAddonNames?: string
+    addonsData?: AddonData[]
     addonPriceINR?: number
-    subtotal: number
+    addonPriceExclusiveGST?: number
     subtotalINR: number
+    subtotalExclusiveGST: number
     gstRate: number
-    gstAmount: number
     gstAmountINR: number
-    total: number
     totalINR: number
-    exchangeRate: number
     paymentStatus: string
     paymentMethod: string
     paymentDate: string
@@ -88,7 +95,8 @@ export function PublicInvoiceComponent({ invoiceId }: PublicInvoiceComponentProp
   useEffect(() => {
     const fetchInvoice = async () => {
       try {
-        const response = await fetch(`/api/invoice/${invoiceId}`)
+        const backend_url = process.env.BACKEND_URL || "http://localhost:8000"
+        const response = await fetch(`${backend_url}/api/v1/invoices/${invoiceId}`)
         if (!response.ok) {
           throw new Error("Invoice not found")
         }
@@ -125,27 +133,15 @@ export function PublicInvoiceComponent({ invoiceId }: PublicInvoiceComponentProp
 
     setEmailLoading(true)
     try {
-      
-            const response = await fetch('http://localhost:3000/api/v1/invoices/send', {
-
-      // const response = await fetch("/api/send-invoice-email", {
+      const backend_url = process.env.BACKEND_URL || "http://localhost:8000"
+      const response = await fetch(`${backend_url}/api/v1/invoices/send`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           studentEmail: emailAddress,
-          studentName: invoiceData?.student.fullName || "Customer",
-          invoiceData: {
-            invoiceNumber: invoiceData?.invoice.invoiceNumber,
-            programName: invoiceData?.invoice.programName,
-            duration: invoiceData?.invoice.programDuration,
-            addonName: invoiceData?.invoice.addonName,
-            total: invoiceData?.invoice.total,
-            paymentStatus: invoiceData?.invoice.paymentStatus,
-            paymentDate: new Date(invoiceData?.invoice.paymentDate || ""),
-            invoiceLink: invoiceId,
-          },
+          invoiceLink: invoiceId,
         }),
       })
 
@@ -192,15 +188,27 @@ export function PublicInvoiceComponent({ invoiceId }: PublicInvoiceComponentProp
 
   const { invoice, student } = invoiceData
 
-  const isFreelancerPackage = () => {
-    return invoice.type === "freelancer" || invoice.programName.toLowerCase().includes("freelancer")
-  }
+  const isFreelancerPackageOrInternational = () => {
+    return (
+      invoice.type === "freelancer" ||
+      invoice.programName.toLowerCase().includes("freelancer") ||
+      invoice.type === "international" || 
+      invoice.programName.toLowerCase().includes("international")
+    );
+  };
 
   const getDurationText = () => {
-    if (isFreelancerPackage()) {
+    if (isFreelancerPackageOrInternational()) {
       return "One-time"
     }
     return invoice.programDuration > 1 ? `${invoice.programDuration} Months` : `${invoice.programDuration} Month`
+  }
+
+  const getQtyFromDuration = () => {
+    if (isFreelancerPackageOrInternational()) {
+      return 1
+    }
+    return invoice.programDuration
   }
 
   const getServiceDetails = (programName: string) => {
@@ -212,39 +220,18 @@ export function PublicInvoiceComponent({ invoiceId }: PublicInvoiceComponentProp
         sacCode: programProduct.sacCode,
       }
     }
-
-    const isFreelancerPackageLocal = isFreelancerPackage()
-    if (isFreelancerPackageLocal) {
-      if (programName.toLowerCase().includes("basic")) {
-        return {
-          title: "Freelancer Basic Package",
-          description: "Essential freelancing tools and basic templates",
-          sacCode: "999293",
-        }
-      } else if (programName.toLowerCase().includes("pro")) {
-        return {
-          title: "Freelancer Pro Package",
-          description: "Advanced freelancing tools, premium templates, client management pro, marketing resources",
-          sacCode: "999293",
-        }
-      } else if (programName.toLowerCase().includes("elite")) {
-        return {
-          title: "Freelancer Elite Package",
-          description: "Complete freelancing suite with advanced tools and premium support",
-          sacCode: "999293",
-        }
-      }
-    }
+    // Fallback dummy data
     return {
-      title: "SPP - International Edition Pro",
-      description:
-        "Training & Certification Recorded + Live Classes, Projects, AI Tools, NSQF Global Certification, Career Mapping",
+      title: programName,
+      description: "Training & Certification - Recorded + Live Classes, Projects, AI Tools, NSQF Global Certification, Career Mapping",
       sacCode: "999293",
     }
   }
 
   const getAddonDetails = (addonName: string) => {
+    console.log("Fetching addon details for:", addonName)
     const addonProduct = getProductById(addonName.toLowerCase().replace(/\s+/g, "-"))
+    console.log("addonProduct:", addonProduct)
     if (addonProduct) {
       return {
         title: addonProduct.name,
@@ -252,205 +239,194 @@ export function PublicInvoiceComponent({ invoiceId }: PublicInvoiceComponentProp
         sacCode: addonProduct.sacCode,
       }
     }
-
-    if (addonName.toLowerCase().includes("payroll")) {
-      return {
-        title: "Payroll + EPF Services",
-        description: "Complete payroll management, EPF compliance, tax calculations, automated payments",
-        sacCode: "998596",
-      }
-    }
+    // Fallback dummy data
     return {
-      title: "Career Placement & Visa Guidance Services",
+      title: addonName,
       description: "Employer Connect, Visa Sponsorship Support, Resume & Interview Prep, Lifetime Re-Entry",
       sacCode: "998596",
     }
   }
 
   const serviceDetails = getServiceDetails(invoice.programName)
-  const addonDetails = invoice.addonName ? getAddonDetails(invoice.addonName) : null
-
   const cgstAmount = invoice.gstAmountINR / 2
   const sgstAmount = invoice.gstAmountINR / 2
 
+  // Calculate individual addon prices (exclusive of GST)
+  const getAddonPriceExclusiveGST = (addonPrice: number) => {
+    const gstMultiplier = 1 + (invoice.gstRate / 100)
+    return Math.round(addonPrice / gstMultiplier)
+  }
+
   return (
     <div className="min-h-screen bg-white">
-      <div className="max-w-4xl mx-auto p-8">
+      <div className="max-w-5xl mx-auto p-8">
         <div className="border-2 border-black">
           <div className="bg-white p-6">
-            <div className="text-center mb-6">
-              <h1 className="text-2xl font-bold text-black">SIRTIFAI – TAX INVOICE</h1>
-            </div>
-
-            <div className="grid grid-cols-2 gap-8 mb-6">
-              <div className="text-sm">
-                <p className="font-semibold mb-2">Registered Office:</p>
+            {/* Header */}
+            <div className="flex items-start justify-between mb-6">
+              <div className="flex items-center">
+                <div className="w-16 h-16 mr-4">
+                  <img src="/assets/logo.png" alt="SIRTIFAI Logo" />
+                </div>
+                <h1 className="text-3xl font-bold text-orange-500">SIRTIFAI - TAX INVOICE</h1>
+              </div>
+              <div className="text-right text-sm">
+                <p className="font-semibold">Registered Office:</p>
                 <p>123 Tech Park, Whitefield</p>
                 <p>Bangalore, Karnataka 560066</p>
-                <p className="mt-2">
-                  <strong>CIN:</strong> U72900KA2020PTC123456
-                </p>
-                <p>
-                  <strong>GSTIN:</strong> 29AABCS1234A1Z5
-                </p>
-                <p>
-                  <strong>Email:</strong> accounts@sirtifai.com
-                </p>
-                <p>
-                  <strong>Phone:</strong> +91-9876543210
-                </p>
-                <p>
-                  <strong>Website:</strong> www.sirtifai.com
-                </p>
+                <p className="mt-2"><strong>CIN:</strong> U72900KA2020PTC123456</p>
+                <p><strong>GSTIN:</strong> 29AABCS1234A1Z5</p>
+                <p><strong>Email:</strong> accounts@sirtifai.com</p>
+                <p><strong>Phone:</strong> +91-9876543210</p>
+                <p><strong>Website:</strong> www.sirtifai.com</p>
               </div>
+            </div>
 
-              <div className="text-sm">
-                <div className="grid grid-cols-2 gap-4">
+            {/* First Row - Invoice Details and Bill To */}
+            <div className="grid grid-cols-2 gap-8 mb-6">
+              {/* Left Column - Invoice Details */}
+              <div className="border border-black p-4 space-y-3 text-sm">
+                <div className="grid grid-cols-1 gap-4">
                   <div>
-                    <p>
-                      <strong>Invoice No:</strong>
-                    </p>
+                    <p className="font-semibold">Invoice No:</p>
                     <p>{invoice.invoiceNumber}</p>
                   </div>
                   <div>
-                    <p>
-                      <strong>Due Date:</strong>
-                    </p>
-                    <p>
-                      {new Date(new Date(invoice.paymentDate).getTime() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString(
-                        "en-GB",
-                      )}
-                    </p>
-                  </div>
-                  <div>
-                    <p>
-                      <strong>State Code:</strong>
-                    </p>
-                    <p>29</p>
-                  </div>
-                  <div>
-                    <p>
-                      <strong>Invoice Date:</strong>
-                    </p>
+                    <p className="font-semibold">Invoice Date:</p>
                     <p>{new Date(invoice.createdAt).toLocaleDateString("en-GB")}</p>
                   </div>
-                  <div className="col-span-2">
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <p className="font-semibold">Due Date:</p>
                     <p>
-                      <strong>Place of Supply:</strong>
+                      {new Date(new Date(invoice.paymentDate).getTime() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString("en-GB")}
                     </p>
+                  </div>
+                  <div>
+                    <p className="font-semibold">Place of Supply:</p>
                     <p>Karnataka</p>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <div className="mb-6">
-              <div className="bg-gray-100 p-4 border border-black">
+              {/* Right Column - Bill To */}
+              <div className="border border-black p-4 bg-gray-50">
                 <h3 className="font-bold mb-3">Bill To:</h3>
-                <div className="grid grid-cols-2 gap-8 text-sm">
-                  <div>
-                    <p>
-                      <strong>Name:</strong> {student.fullName}
-                    </p>
-                    <p>
-                      <strong>City:</strong> {student.city}
-                    </p>
-                    <p>
-                      <strong>PIN:</strong> {student.zipCode}
-                    </p>
-                    <p>
-                      <strong>Mobile:</strong> {student.primaryPhone}
-                    </p>
+                <div className="grid grid-cols-2 gap-4 text-sm">
+                  <div className="space-y-1">
+                    <div>
+                      <span className="font-semibold">Name:</span>
+                      <p>{student.fullName}</p>
+                    </div>
+                    <div>
+                      <span className="font-semibold">City:</span>
+                      <p>{student.city}</p>
+                    </div>
+                    <div>
+                      <span className="font-semibold">PIN:</span>
+                      <p>{student.zipCode}</p>
+                    </div>
                   </div>
-                  <div>
-                    <p>
-                      <strong>Address:</strong> {student.residentialAddress}
-                    </p>
-                    <p>
-                      <strong>State:</strong> {student.state}
-                    </p>
-                    <p>
-                      <strong>Email:</strong> {student.email}
-                    </p>
+                  <div className="space-y-1">
+                    <div>
+                      <span className="font-semibold">Address:</span>
+                      <p>{student.residentialAddress}</p>
+                    </div>
+                    <div>
+                      <span className="font-semibold">State:</span>
+                      <p>{student.state}</p>
+                    </div>
+                    <div>
+                      <span className="font-semibold">Email:</span>
+                      <p>{student.email}</p>
+                    </div>
+                    <div>
+                      <span className="font-semibold">Mobile:</span>
+                      <p>{student.primaryPhone}</p>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
 
+            {/* Second Row - Products Table */}
             <div className="mb-6">
               <table className="w-full border-collapse border border-black text-sm">
                 <thead>
                   <tr className="bg-gray-100">
-                    <th className="border border-black p-2 text-left">Sr. No.</th>
+                    <th className="border border-black p-2 text-left w-12">Sr. No.</th>
                     <th className="border border-black p-2 text-left">Description of Service</th>
-                    <th className="border border-black p-2 text-left">SAC Code</th>
-                    <th className="border border-black p-2 text-left">Duration</th>
-                    <th className="border border-black p-2 text-left">Qty</th>
-                    <th className="border border-black p-2 text-right">Unit Price (₹)</th>
-                    <th className="border border-black p-2 text-right">Taxable Value (₹)</th>
+                    <th className="border border-black p-2 text-left w-20">SAC Code</th>
+                    <th className="border border-black p-2 text-left w-20">Duration</th>
+                    <th className="border border-black p-2 text-left w-16">Qty</th>
+                    <th className="border border-black p-2 text-right w-24">Unit Price (₹)</th>
+                    <th className="border border-black p-2 text-right w-24">Total Value (₹)</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td className="border border-black p-2">1</td>
+                    <td className="border border-black p-2 text-center">1</td>
                     <td className="border border-black p-2">
                       <div>
                         <p className="font-semibold">{serviceDetails.title}</p>
-                        <p className="text-xs">{serviceDetails.description}</p>
+                        <p className="text-xs text-gray-600">{serviceDetails.description}</p>
                       </div>
                     </td>
-                    <td className="border border-black p-2">{serviceDetails.sacCode}</td>
-                    <td className="border border-black p-2">{getDurationText()}</td>
-                    <td className="border border-black p-2">1</td>
+                    <td className="border border-black p-2 text-center">{serviceDetails.sacCode}</td>
+                    <td className="border border-black p-2 text-center">{getDurationText()}</td>
+                    <td className="border border-black p-2 text-center">{getQtyFromDuration()}</td>
                     <td className="border border-black p-2 text-right">
-                      {(invoice.programPriceINR || 0).toLocaleString()}.00
+                      {(invoice.programUnitPriceExclusiveGST || 0).toLocaleString()}.00
                     </td>
                     <td className="border border-black p-2 text-right">
-                      {(invoice.programPriceINR || 0).toLocaleString()}.00
+                      {(invoice.programPriceExclusiveGST || 0).toLocaleString()}.00
                     </td>
                   </tr>
-                  {invoice.addonName && addonDetails && (
-                    <tr>
-                      <td className="border border-black p-2">2</td>
-                      <td className="border border-black p-2">
-                        <div>
-                          <p className="font-semibold">{addonDetails.title}</p>
-                          <p className="text-xs">{addonDetails.description}</p>
-                        </div>
-                      </td>
-                      <td className="border border-black p-2">{addonDetails.sacCode}</td>
-                      <td className="border border-black p-2">One-time</td>
-                      <td className="border border-black p-2">1</td>
-                      <td className="border border-black p-2 text-right">
-                        {invoice.addonPriceINR && invoice.addonPriceINR > 0
-                          ? `${invoice.addonPriceINR.toLocaleString()}.00`
-                          : "Included"}
-                      </td>
-                      <td className="border border-black p-2 text-right">
-                        {(invoice.addonPriceINR || 0).toLocaleString()}.00
-                      </td>
-                    </tr>
-                  )}
+                  {invoice.addonsData && invoice.addonsData.length > 0 && 
+                    invoice.addonsData.map((addon, index) => {
+                      const addonDetails = getAddonDetails(addon.id)
+                      const addonPriceExclusive = getAddonPriceExclusiveGST(addon.price)
+                      
+                      return (
+                        <tr key={addon.id}>
+                          <td className="border border-black p-2 text-center">{index + 2}</td>
+                          <td className="border border-black p-2">
+                            <div>
+                              <p className="font-semibold">{addonDetails.title}</p>
+                              <p className="text-xs text-gray-600">{addonDetails.description}</p>
+                            </div>
+                          </td>
+                          <td className="border border-black p-2 text-center">{addonDetails.sacCode}</td>
+                          <td className="border border-black p-2 text-center">One-time</td>
+                          <td className="border border-black p-2 text-center">1</td>
+                          <td className="border border-black p-2 text-right">
+                            {addonPriceExclusive > 0 ? `${addonPriceExclusive.toLocaleString()}.00` : "Included"}
+                          </td>
+                          <td className="border border-black p-2 text-right">
+                            {addonPriceExclusive.toLocaleString()}.00
+                          </td>
+                        </tr>
+                      )
+                    })
+                  }
                 </tbody>
               </table>
             </div>
 
+            {/* Third Row - Tax Details */}
             <div className="grid grid-cols-2 gap-8 mb-6">
-              <div></div>
-              <div className="text-sm">
-                <table className="w-full border-collapse border border-black">
+              {/* Left - Tax Type */}
+              <div>
+                <table className="w-full border-collapse border border-black text-sm">
+                  <thead>
+                    <tr className="bg-gray-100">
+                      <th className="border border-black p-2 text-left">Tax Type</th>
+                      <th className="border border-black p-2 text-center">Rate</th>
+                      <th className="border border-black p-2 text-right">Amount (₹)</th>
+                    </tr>
+                  </thead>
                   <tbody>
-                    <tr>
-                      <td className="border border-black p-2 font-semibold">Total Taxable Value:</td>
-                      <td className="border border-black p-2 text-right">
-                        ₹ {(invoice.subtotalINR || 0).toLocaleString()}.00
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-black p-2">Tax Type</td>
-                      <td className="border border-black p-2 text-center">Rate</td>
-                      <td className="border border-black p-2 text-right">Amount (₹)</td>
-                    </tr>
                     <tr>
                       <td className="border border-black p-2">CGST</td>
                       <td className="border border-black p-2 text-center">9%</td>
@@ -465,63 +441,64 @@ export function PublicInvoiceComponent({ invoiceId }: PublicInvoiceComponentProp
                         {Math.round(sgstAmount).toLocaleString()}.00
                       </td>
                     </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Right - Totals */}
+              <div>
+                <table className="w-full border-collapse border border-black text-sm">
+                  <tbody>
                     <tr>
-                      <td className="border border-black p-2">IGST</td>
-                      <td className="border border-black p-2 text-center">18%</td>
-                      <td className="border border-black p-2 text-right">N/A</td>
-                    </tr>
-                    <tr className="bg-gray-100">
-                      <td className="border border-black p-2 font-bold">Total GST:</td>
-                      <td className="border border-black p-2 text-center font-bold">*</td>
-                      <td className="border border-black p-2 text-right font-bold">
-                        {invoice.gstAmountINR.toLocaleString()}.00
+                      <td className="border border-black p-2 font-semibold">Total Value:</td>
+                      <td className="border border-black p-2 text-right">
+                        ₹ {(invoice.subtotalExclusiveGST || 0).toLocaleString()}.00
                       </td>
                     </tr>
-                    <tr className="bg-gray-200">
+                    <tr>
+                      <td className="border border-black p-2 font-semibold">GST(18%):</td>
+                      <td className="border border-black p-2 text-right">
+                        ₹ {Math.round(invoice.gstAmountINR).toLocaleString()}.00
+                      </td>
+                    </tr>
+                    <tr className="bg-gray-100">
                       <td className="border border-black p-2 font-bold">Total Invoice Value (INR):</td>
-                      <td className="border border-black p-2"></td>
                       <td className="border border-black p-2 text-right font-bold">
-                        ₹{invoice.totalINR.toLocaleString()}.00
+                        ₹ {invoice.totalINR.toLocaleString()}.00
                       </td>
                     </tr>
                   </tbody>
                 </table>
-                <p className="mt-2 text-xs">
+                {/* <p className="mt-2 text-xs">
                   <strong>In Words:</strong> {numberToWords(invoice.totalINR)} Only
-                </p>
+                </p> */}
               </div>
             </div>
 
+            {/* Fourth Row - Payment Details and Terms */}
             <div className="grid grid-cols-2 gap-8 mb-6">
+              {/* Payment Details */}
               <div className="text-sm">
                 <h3 className="font-bold mb-2">Payment Details:</h3>
-                <p>
-                  <strong>Bank Name:</strong> HDFC Bank
-                </p>
-                <p>
-                  <strong>Account Name:</strong> Sirtifai Technologies Pvt Ltd
-                </p>
-                <p>
-                  <strong>A/c No.:</strong> 50100123456789
-                </p>
-                <p>
-                  <strong>IFSC Code:</strong> HDFC0001234
-                </p>
-                <p>
-                  <strong>UPI:</strong> accounts@sirtifai@hdfc
-                </p>
+                <p><strong>Bank Name:</strong> HDFC Bank</p>
+                <p><strong>Account Name:</strong> Sirtifai Technologies Pvt Ltd</p>
+                <p><strong>A/c No.:</strong> 50100123456789</p>
+                <p><strong>IFSC Code:</strong> HDFC0001234</p>
+                <p><strong>UPI:</strong> accounts@sirtifai@hdfc</p>
               </div>
+
+              {/* Notes & Terms and Authorized Signatory */}
               <div className="text-sm">
                 <h3 className="font-bold mb-2">Notes & Terms:</h3>
-                <p>This invoice is valid only upon receipt of payment.</p>
-              </div>
-            </div>
-
-            <div className="flex justify-end mb-6">
-              <div className="text-center">
-                <div className="w-48 h-16 mb-2"></div>
-                <div className="border-t border-black pt-2">
-                  <p className="text-sm font-semibold">Authorized Signatory</p>
+                <p className="mb-8">This invoice is valid only upon receipt of payment.</p>
+                
+                <div className="text-right">
+                  <div className="inline-block">
+                    <div className="w-32 h-16 mb-2"></div>
+                    <div className="border-t border-black pt-1">
+                      <p className="font-semibold text-center">Authorized Signatory</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

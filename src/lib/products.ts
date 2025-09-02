@@ -85,7 +85,7 @@ export const getProgressPhaseProducts = (): Product[] => {
 }
 
 export interface StandardizedPackageData {
-  type: "program" | "freelancer" | "international"
+  type: "programs" | "freelancer" | "international"
   selectedProduct: string
   selectedAddon: string[] | null   // <-- array of addon IDs or null
   productData: {
@@ -116,7 +116,7 @@ export interface StandardizedPackageData {
 
 
 export const createStandardizedPackageData = (
-  type: "program" | "freelancer" | "international",
+  type: "programs" | "freelancer" | "international",
   productId: string,
   addonIds: string[] = [],
   duration = 1,
@@ -134,7 +134,7 @@ export const createStandardizedPackageData = (
   const productPrice = getProductPrice(product)
   const addonPrice = addons.reduce((sum, addon) => sum + getProductPrice(addon), 0)
 
-  const programPrice = type === "program" ? productPrice * duration : productPrice
+  const programPrice = type === "programs" ? productPrice * duration : productPrice
   const subtotal = programPrice + addonPrice
   const gst = 0
   const total = subtotal + gst
@@ -147,8 +147,8 @@ export const createStandardizedPackageData = (
       id: product.id,
       name: product.name,
       price: productPrice,
-      duration: type === "program" ? duration : undefined,
-      category: product.category.includes("program") ? product.category.replace("program-", "") : undefined,
+      duration: type === "programs" ? duration : undefined,
+      category: product.category.includes("programs") ? product.category.replace("program-", "") : undefined,
       tier: product.name.toLowerCase().includes("basic")
         ? "basic"
         : product.name.toLowerCase().includes("pro")

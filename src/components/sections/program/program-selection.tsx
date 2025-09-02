@@ -56,7 +56,7 @@ const PricingInterface = () => {
 
   const proceedToPurchase = () => {
     const packageData = createStandardizedPackageData(
-      "program",
+      "programs",
       selectedProgram,
       Object.values(selectedAddons).filter(id => id !== ""),
       selectedDurations[selectedProgram] || 1

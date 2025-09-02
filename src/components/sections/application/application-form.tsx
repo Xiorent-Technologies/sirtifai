@@ -901,7 +901,7 @@ const ApplicationForm = () => {
                   </div>
                 </div>
 
-                {/* <RazorpayCheckout
+                <RazorpayCheckout
                   selectedProgram={selectedPackage.selectedProduct}
                   selectedMonths={selectedPackage.productData.duration || 1}
                   selectedAddon={selectedPackage.selectedAddon || undefined}
@@ -909,7 +909,7 @@ const ApplicationForm = () => {
                   onSuccess={handlePaymentSuccess}
                   onError={handlePaymentError}
                   validateForm={validateForm}
-                /> */}
+                />
               </div>
             </section>
           )}
