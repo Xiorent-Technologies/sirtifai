@@ -44,7 +44,7 @@ export default function ImpactActions() {
             Donate Now
           </button>
           <button className="w-full sm:w-auto inline-flex justify-center items-center rounded-full bg-[#284050] hover:bg-[#284050] text-white font-medium text-sm md:text-base px-4 md:px-10 py-2 md:py-4 shadow-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40">
-            Schedule A Free Call
+            Partner with Us
           </button>
         </div>
       </div>

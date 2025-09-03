@@ -65,9 +65,10 @@ export const HowToFileClaimSection = () => {
               title: "Documentation Submission",
               desc: "Upload all required documentation to support your claim. Our system will guide you through the specific documents needed based on your claim type.",
               info: [
-                "Your SPP ID and program details",
-                "Date and nature of the issue",
-                "Brief description of your claim",
+                "Proof of completed work (for payment claims)",
+                "Communication records with clients/employers",
+                "Any relevant contracts or agreements",
+                "Additional documentation specific to your claim"
               ],
             },
             {

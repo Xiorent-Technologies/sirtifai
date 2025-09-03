@@ -68,8 +68,7 @@ export const ContactSupportSection = () => {
               animate={heroInView ? { opacity: 0.9, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.6, delay: 1.0 }}
             >
-              Have a question about programmes, payments, certifications, or career support? Our dedicated team is ready
-              to help you through WhatsApp, Email, or Phone.
+              Have a question about our programmes, payments, certifications, or career support? Our  dedicated team is here to assist you via WhatsApp, Email, or Phone.
             </MotionP>
 
             {/* Contact Options (list style like design) */}

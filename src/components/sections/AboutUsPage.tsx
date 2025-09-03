@@ -481,7 +481,7 @@ export const AboutUsPage = () => {
                   animate={howDifferentInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                   transition={{ duration: 0.4, delay: 1.2 }}
                 >
-                  Verified Payroll (DEEL™)
+                  Verified Payroll (Peairlo™)
                 </MotionH3>
     </div>
               <div className="h-px w-full bg-black my-4 sm:my-5" />
