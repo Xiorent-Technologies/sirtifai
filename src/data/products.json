@@ -123,7 +123,7 @@
     "type": "monthly",
     "sacCode": "998596",
     "priceEnvVar": "NEXT_PUBLIC_PAYROLL_EPF_PRICE",
-    "price": 47.2,
+    "price": 31999,
     "features": [
       "Payroll processing and salary disbursal",
       "EPF compliance and monthly filings",
@@ -139,7 +139,7 @@
     "type": "monthly",
     "sacCode": "998596",
     "priceEnvVar": "NEXT_PUBLIC_TAX_FILING_SUPPORT_PRICE",
-    "price": 35,
+    "price": 60199,
     "features": [
       "Personal and business tax filing assistance",
       "Support with ITR forms and documentation",
@@ -444,6 +444,4 @@
     ]
   }
 }
-
-
 }
