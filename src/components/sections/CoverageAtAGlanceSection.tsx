@@ -132,8 +132,7 @@ export const CoverageAtAGlanceSection = () => {
               transition={{ duration: 0.5, delay: 1.8 }}
             >
               <button className="bg-orange-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-orange-600 transition-colors">
-                Learn More
-              </button>
+View Detailed Coverage              </button>
             </MotionDiv>
           </MotionDiv>
 
@@ -157,7 +156,7 @@ export const CoverageAtAGlanceSection = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: 1.0 }}
             >
-              <span className="px-3 py-1 text-sm bg-gray-100 text-gray-800 rounded-md">Up to ₹60,000/month</span>
+              <span className="px-3 py-1 text-sm bg-gray-100 text-gray-800 rounded-md">Up to ₹80,000/month</span>
             </MotionDiv>
 
             {/* Icon */}
@@ -187,14 +186,14 @@ export const CoverageAtAGlanceSection = () => {
               {[
                 {
                   icon: FileCheck,
-                  title: "Visa & Documentation Support",
-                  desc: "Assistance with visa applications and document processing",
+                  title: "Global Placement Assurance",
+                  desc: "Compensation if placement doesn't materialize",
                 },
-                { icon: Truck, title: "Travel & Relocation", desc: "Coverage for travel expenses and relocation costs" },
+                { icon: Truck, title: "Visa Process Coverage", desc: "Financial protection during visa application" },
                 {
                   icon: HeartPulse,
-                  title: "Comprehensive Health Coverage",
-                  desc: "International health insurance with global coverage",
+                  title: "Relocation Support",
+                  desc: "Coverage for initial relocation expenses",
                 },
               ].map((item, index) => (
                 <MotionLi
@@ -225,7 +224,7 @@ export const CoverageAtAGlanceSection = () => {
               transition={{ duration: 0.5, delay: 2.0 }}
             >
               <button className="bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 transition-colors">
-                Learn More
+                View Detailed Coverage
               </button>
             </MotionDiv>
           </MotionDiv>

@@ -111,8 +111,7 @@ export const InsuranceHeroSection = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.2 }}
           >
-            Comprehensive insurance coverage for freelancers, students, and professionals. Protect your income,
-            career growth, and future opportunities with our tailored insurance solutions.
+            We understand the importance of security in your career journey. Our comprehensive insurance coverage ensures your skills, earnings, and career progression are protected at every step.
           </MotionP>
 
           {/* CTA Buttons */}
@@ -123,10 +122,10 @@ export const InsuranceHeroSection = () => {
             transition={{ duration: 0.8, delay: 1.4 }}
           >
             <MotionButton className="double-border-btn">
-              Get Insurance Quote
+              Check Your Coverage
             </MotionButton>
             <MotionButton className="double-border-btn bg-white text-[#1f2937] border-2 border-[#1f2937] hover:bg-[#1f2937] hover:text-white">
-              Learn More
+              File A Claim
             </MotionButton>
           </MotionDiv>
         </div>
