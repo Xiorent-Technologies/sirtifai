@@ -15,38 +15,38 @@ const WhatYouGetSection: React.FC = () => {
     {
       icon: FaCalendarAlt,
       iconColor: 'text-orange-500',
-      title: 'Paid Weekly With Benefits Pay',
-      description: 'Regular payment cycles with bonuses'
+      title: 'Real Projects with Monthly Pay',
+      description: 'Work on actual client projects with guaranteed monthly payments.'
     },
     {
       icon: FaLaptop,
       iconColor: 'text-orange-500',
-      title: 'Remote Flexibility on Every Task',
-      description: 'Work from anywhere, anytime'
+      title: 'Mentor Feedback on Every Task',
+      description: 'Get professional guidance to improve your skills with each project.'
     },
     {
       icon: FaCertificate,
       iconColor: 'text-red-500',
-      title: 'Legal Certificate When Hired',
-      description: 'Recognized professional credentials'
+      title: 'Legal Contracts (Elite only)',
+      description: 'Professional legal protection for your freelance work.'
     },
     {
       icon: FaComments,
       iconColor: 'text-purple-500',
-      title: 'Support & Communication',
-      description: 'Always available assistance'
+      title: 'Career & Client Growth',
+      description: 'Build long-term relationships with clients and expand your network.'
     },
     {
       icon: FaBook,
       iconColor: 'text-orange-500',
-      title: 'Detailed Training Access',
-      description: 'Comprehensive learning materials'
+      title: 'Verified Portfolio Access',
+      description: 'Showcase your verified work experience to future clients'
     },
     {
       icon: FaChartLine,
       iconColor: 'text-pink-500',
-      title: 'Professional Growth Paths',
-      description: 'Career advancement opportunities'
+      title: 'AI Resume & Profile Setup',
+      description: 'Get professional help setting up your freelance profile.'
     }
   ];
   return (
