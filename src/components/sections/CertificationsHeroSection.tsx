@@ -65,30 +65,30 @@ export const CertificationsHeroSection = () => {
               <span className="text-lg font-semibold text-gray-900">Join Now :</span>
               <div className="flex items-center gap-4">
                 <MotionA
-                  href="#"
+                  href="/sirtifai-international"
                   className="text-orange-500 font-semibold hover:text-orange-600 transition-colors"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  SPP Int
+                  International
                 </MotionA>
                 <span className="text-gray-400">|</span>
                 <MotionA
-                  href="#"
+                  href="/freelancer"
                   className="text-orange-500 font-semibold hover:text-orange-600 transition-colors"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  SPP Freelance
+                  Freelancer
                 </MotionA>
                 <span className="text-gray-400">|</span>
                 <MotionA
-                  href="#"
+                  href="/program"
                   className="text-orange-500 font-semibold hover:text-orange-600 transition-colors"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  SPP Student
+                  SPP
                 </MotionA>
               </div>
             </MotionDiv>

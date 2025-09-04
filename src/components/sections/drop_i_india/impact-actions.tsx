@@ -2,7 +2,8 @@
 
 import { motion } from "framer-motion"
 import type { MotionProps } from "framer-motion"
-import React from "react"
+import React, { useState } from "react"
+import DonateModal from "./DonateModal"
 
 // Typed motion components
 const MotionDiv = motion.div as unknown as React.FC<React.HTMLAttributes<HTMLDivElement> & MotionProps>
@@ -26,6 +27,8 @@ const itemVariants = {
 }
 
 export default function ImpactActions() {
+    const [isDonateModalOpen, setDonateModalOpen] = useState(false)
+
   return (
     <section className="relative mx-auto px-4 pb-12 sm:pb-16">
       {/* Background Image (optional) */}
@@ -82,11 +85,12 @@ export default function ImpactActions() {
 
         {/* Buttons */}
         <MotionDiv variants={itemVariants} className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
-          <MotionButton
+           <MotionButton
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
             transition={{ type: "spring", stiffness: 320, damping: 24 }}
-            className="w-full sm:w-auto inline-flex justify-center items-center rounded-full bg-[#FE7743] hover:bg-[#FE7743] text-white font-medium text-sm md:text-base px-4 md:px-10 py-2 md:py-4 shadow-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+            onClick={() => setDonateModalOpen(true)}
+            className="w-full sm:w-auto inline-flex justify-center items-center rounded-full bg-[#FE7743] hover:bg-[#FE7743] text-white font-medium text-sm md:text-base px-4 md:px-10 py-2 md:py-4 shadow-sm transition-colors"
           >
             Donate Now
 
@@ -101,6 +105,8 @@ export default function ImpactActions() {
           </MotionButton>
         </MotionDiv>
       </MotionDiv>
+            <DonateModal isOpen={isDonateModalOpen} onClose={() => setDonateModalOpen(false)} />
+
 
     </section>
 

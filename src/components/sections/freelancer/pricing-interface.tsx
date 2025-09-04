@@ -238,7 +238,7 @@ const PricingInterface = () => {
               onSelect={handleAddonSelect}
             />
 
-            <AddonSection
+            {/* <AddonSection
               title="Business Setup"
               description="Comprehensive business setup support"
               color="orange"
@@ -249,7 +249,7 @@ const PricingInterface = () => {
               toggleSection={(key: string) => toggleSection(key as SectionKey)}
               selectedAddons={selectedAddons}
               onSelect={handleAddonSelect}
-            />
+            /> */}
           </div>
         </div>
 

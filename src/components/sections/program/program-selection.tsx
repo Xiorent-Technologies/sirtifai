@@ -212,11 +212,11 @@ const PricingInterface = () => {
             />
 
             <AddonSection
-              title="CA Services"
+              title="Tax and Legal"
               description="Professional accounting support"
               color="yellow"
               sectionKey="ca"
-              addonIds={['ca-freelancer-basic', 'ca-freelancer-pro', 'ca-freelancer-elite']}
+              addonIds={['ca-proprietor', 'ca-public-and-private-limited', 'ca-individuals']}
               allAddons={products.programAddons}
               expandedSections={expandedSections}
               toggleSection={toggleSection}

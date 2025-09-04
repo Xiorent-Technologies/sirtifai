@@ -1,5 +1,5 @@
 import Image from "next/image";
-
+import Link from "next/link";
 export const FaqHero = () => {
   const ctas = [
     {
@@ -50,21 +50,35 @@ export const FaqHero = () => {
 
       <div className="w-full relative z-[2] lg:w-[50%] lg:h-full flex justify-end items-end mt-6 lg:mt-0">
         <div className="w-full bg-[#000]/[12%] flex justify-start items-center gap-2 p-2 sm:gap-2.5 sm:p-2.5 rounded-md overflow-x-auto scrollbar-thin scrollbar-thumb-[#FE7743]/40">
-          <p className="leading-[140%] text-[#FE7743] font-medium text-[1.1rem] sm:text-[1.5rem] font-inter whitespace-nowrap">
-            Join Now :
-          </p>
-          <p className="text-white font-semibold leading-[100%] text-[0.95rem] sm:text-[1rem] md:text-[1.25rem] whitespace-nowrap">
-            SPP Int
-          </p>
-          <span className="text-white">|</span>
-          <p className="text-white font-semibold leading-[100%] text-[0.95rem] sm:text-[1rem] md:text-[1.25rem] whitespace-nowrap">
-            SPP Freelance
-          </p>
-          <span className="text-white">|</span>
-          <p className="text-white font-semibold leading-[100%] text-[0.95rem] sm:text-[1rem] md:text-[1.25rem] whitespace-nowrap">
-            SPP Student
-          </p>
-        </div>
+  <p className="leading-[140%] text-[#FE7743] font-medium text-[1.1rem] sm:text-[1.5rem] font-inter whitespace-nowrap">
+    Join Now :
+  </p>
+
+  <Link
+    href="/sirtifai-international"
+    className="text-white font-semibold leading-[100%] text-[0.95rem] sm:text-[1rem] md:text-[1.25rem] whitespace-nowrap"
+  >
+    International
+  </Link>
+
+  <span className="text-white">|</span>
+
+  <Link
+    href="/freelancer"
+    className="text-white font-semibold leading-[100%] text-[0.95rem] sm:text-[1rem] md:text-[1.25rem] whitespace-nowrap"
+  >
+    Freelancer
+  </Link>
+
+  <span className="text-white">|</span>
+
+  <Link
+    href="/program"
+    className="text-white font-semibold leading-[100%] text-[0.95rem] sm:text-[1rem] md:text-[1.25rem] whitespace-nowrap"
+  >
+    SPP
+  </Link>
+</div>
       </div>
     </section>
   );

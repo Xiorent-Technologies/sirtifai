@@ -12,6 +12,7 @@ import LandingFreelancer from "../../components/sections/LandingFreelancer";
 import FreeLancerWhat from "../../components/sections/FreeLancerWhat";
 import PricingInterface from "@/components/sections/freelancer/pricing-interface";
 import FreelncerHeroSection from "@/components/sections/freelancerHeroSection";
+import { SuccessStoriesSection } from "../../components/sections/SuccessStoriesSection"
 
 export default function FreelancerPage() {
   return (
@@ -26,7 +27,8 @@ export default function FreelancerPage() {
       <TestimonialSection />
       <WhoIsThisForSection />
       <WhatYouGetSection />
-      <TestimonialsSection />
+      {/* <TestimonialsSection /> */}
+      <SuccessStoriesSection />
       <BonusesSection />
       <FinalCTASection />
       <Footer />

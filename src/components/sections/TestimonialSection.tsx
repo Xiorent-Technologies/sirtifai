@@ -23,24 +23,20 @@ const Check: React.FC<{ className?: string }> = ({ className = "" }) => (
 
 const features = [
   {
-    icon: <FaWallet className="text-[#FF5C35]"/>,
+    icon: <FaWallet className="text-[#FF5C35]" />,
     title: 'Receive every task payment',
-    text: 'Get paid for each completed task'
   },
   {
-    icon: <FaMoneyBillTransfer className="text-[#FF5C35]"/>,
+    icon: <FaMoneyBillTransfer className="text-[#FF5C35]" />,
     title: 'All payment methods supported',
-    text: 'UPI, Bank transfer, wallet and more'
   },
   {
-    icon: <FaShieldAlt className="text-[#FF5C35]"/>,
+    icon: <FaShieldAlt className="text-[#FF5C35]" />,
     title: 'Secure payment protection',
-    text: 'Your earnings are safe and guaranteed'
   },
   {
-    icon: <MdAccessTimeFilled className="text-[#FF5C35]"/>,
+    icon: <MdAccessTimeFilled className="text-[#FF5C35]" />,
     title: 'Transparent payment processing',
-    text: 'No hidden fees, no surprises'
   },
 ];
 
@@ -63,16 +59,16 @@ const TestimonialSection: React.FC = () => {
 
         {/* Content */}
         <div className="max-w-xl mx-auto lg:mx-0">
-          <div className="relative w-[60%] lg:w-full ">
+          <div className="relative w-[60%] lg:w-full">
             <h2 className="text-[2rem] md:text-4xl font-bold text-slate-900 leading-snug">
               Get Paid Professionally, Like a Full-Time Employee
             </h2>
-            <img
+            {/* <img
               src={vectorPath}
               alt=""
               aria-hidden="true"
               className="pointer-events-none select-none absolute -top-15 -left-20 ml-60 mt-12 w-14 h-14"
-            />
+            /> */}
           </div>
           <p className="mt-5 text-sm md:text-base text-slate-600 hidden lg:flex">
             Your income goes through Deel™, giving you:
@@ -83,14 +79,14 @@ const TestimonialSection: React.FC = () => {
                 <div className="bg-[#FF5C351A] rounded-full w-[40px] h-[40px] flex justify-center items-center">
                   {f.icon}
                 </div>
-                <div className="flex flex-col gap-.5">
-                  <h3 className="text-[#1A1A1A] text-[1.125rem] font-semibold">Receive every task payment</h3>
-                  <p className="text-[#4B5563] text-[1rem] font-normal">Get paid for each completed task</p>
+                <div className="flex flex-col gap-0.5">
+                  <h3 className="text-[#1A1A1A] text-[1.125rem] font-semibold">{f.title}</h3>
+                  {/* Removed text rendering as per your request */}
                 </div>
               </li>
             ))}
           </ul>
-          <p className="hidden lg:flex mt-8 italic font-medium text-slate-800 leading-relaxed">
+          <p className="hidden text-xl  lg:flex mt-8 italic font-bold text-slate-800 leading-relaxed">
             &ldquo;This isn&apos;t freelancing with guesswork—it&apos;s verified, traceable, and legal.&rdquo;
           </p>
         </div>
