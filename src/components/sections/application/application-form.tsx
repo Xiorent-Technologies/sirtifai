@@ -868,7 +868,7 @@ const ApplicationForm = () => {
                         ? `${selectedPackage.productData.name}:`
                         : `${selectedPackage.productData.name} (${selectedPackage.productData.duration} months):`}
                     </span>
-                    <span className="font-semibold">{(selectedPackage.pricing.programPrice)}</span>
+                    <span className="font-semibold">₹{(selectedPackage.pricing.programPrice)}</span>
                   </div>
 
                   {Array.isArray(selectedPackage.addonData) && selectedPackage.addonData.length > 0 && (
@@ -897,7 +897,7 @@ const ApplicationForm = () => {
 
                   <div className="flex justify-between items-center text-lg font-bold">
                     <span>Total Amount</span>
-                    <span className="text-[#FC4C03]">{(selectedPackage.pricing.total)}</span>
+                    <span className="text-[#FC4C03]">₹{(selectedPackage.pricing.total)}</span>
                   </div>
                 </div>
 

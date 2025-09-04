@@ -57,8 +57,9 @@ const ProgramSelection: React.FC<ProgramSelectionProps> = ({
           if (!program) return null;
 
           const isMonthly = program.type === "monthly";
-          const duration = selectedDurations[programId] || (isMonthly ? 6 : 3);
+          const duration = selectedDurations[programId] || (isMonthly ? 6 : 1); // default 1 for non-monthly
           const price = isMonthly ? program.price * duration : program.price;
+
 
           const durationOptions = isMonthly
             ? (() => {
@@ -83,25 +84,30 @@ const ProgramSelection: React.FC<ProgramSelectionProps> = ({
                 <div className="text-xs text-gray-500 mt-1">{program.description}</div>
               </div>
 
-              {/* Duration dropdown */}
-              <div className="flex items-center">
-                <select
-                  className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 bg-white"
-                  value={duration}
-                  onChange={(e) =>
-                    setSelectedDurations((prev) => ({
-                      ...prev,
-                      [programId]: parseInt(e.target.value),
-                    }))
-                  }
-                >
-                  {durationOptions.map((month) => (
-                    <option key={month} value={month}>
-                      {month} Month{month > 1 ? "s" : ""}
-                    </option>
-                  ))}
-                </select>
-              </div>
+              {/* Duration dropdown (only if monthly) */}
+<div className="flex items-center">
+  {isMonthly ? (
+    <select
+      className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 bg-white"
+      value={duration}
+      onChange={(e) =>
+        setSelectedDurations((prev) => ({
+          ...prev,
+          [programId]: parseInt(e.target.value),
+        }))
+      }
+    >
+      {durationOptions.map((month) => (
+        <option key={month} value={month}>
+          {month} Month{month > 1 ? "s" : ""}
+        </option>
+      ))}
+    </select>
+  ) : (
+    <span className="text-gray-600 text-sm">One Time Payment</span>
+  )}
+</div>
+
 
               {/* Price */}
               <div className="flex items-center font-bold text-gray-900">
@@ -207,33 +213,35 @@ const ProgramSelection: React.FC<ProgramSelectionProps> = ({
               </div>
 
               {/* Mobile Duration and Price Row */}
-              <div className="grid grid-cols-1 gap-5 mb-4">
-                <div>
-                  {/* <label className="block text-sm font-medium text-gray-700 mb-2">Duration</label> */}
-                  <select
-                    className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 bg-white"
-                    value={duration}
-                    onChange={(e) =>
-                      setSelectedDurations((prev) => ({
-                        ...prev,
-                        [programId]: parseInt(e.target.value),
-                      }))
-                    }
-                  >
-                    {durationOptions.map((month) => (
-                      <option key={month} value={month}>
-                        {month} Month{month > 1 ? "s" : ""}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Price</label>
-                  <div className="font-bold text-gray-900 text-lg py-2">
-                    ₹{price.toLocaleString()}
-                  </div>
-                </div>
-              </div>
+<div className="grid grid-cols-1 gap-5 mb-4">
+  {isMonthly && (
+    <div>
+      <select
+        className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 bg-white"
+        value={duration}
+        onChange={(e) =>
+          setSelectedDurations((prev) => ({
+            ...prev,
+            [programId]: parseInt(e.target.value),
+          }))
+        }
+      >
+        {durationOptions.map((month) => (
+          <option key={month} value={month}>
+            {month} Month{month > 1 ? "s" : ""}
+          </option>
+        ))}
+      </select>
+    </div>
+  )}
+  <div>
+    <label className="block text-sm font-medium text-gray-700 mb-2">Price</label>
+    <div className="font-bold text-gray-900 text-lg py-2">
+      ₹{price.toLocaleString()}
+    </div>
+  </div>
+</div>
+
 
               {/* Mobile Features */}
               <div>
