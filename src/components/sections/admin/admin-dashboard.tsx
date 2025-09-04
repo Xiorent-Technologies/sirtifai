@@ -12,8 +12,10 @@ import {
   FileText,
   ImageIcon,
   ExternalLink,
+  ChevronLeft,
+  ChevronRight,
+  RotateCcw,
 } from "lucide-react"
-import { getProgramDetails, getAddonDetails } from "../../../../lib/program-mapping"
 
 interface StudentRecord {
   id: string
@@ -23,6 +25,7 @@ interface StudentRecord {
   secondaryPhone?: string
   dateOfBirth: string
   countryOfCitizenship: string
+  referralCode?: string
   residentialAddress: string
   city: string
   state: string
@@ -35,34 +38,53 @@ interface StudentRecord {
   linkedinProfile?: string
   idType: string
   idNumber: string
-  selectedProgram: string
+  idDocument?: {
+    name: string
+    type: string
+    base64: string
+  }
+  studentPhoto?: {
+    name: string
+    type: string
+    base64: string
+  }
+  programType: string
+  programName: string
   programDuration: number
-  programPrice: number
-  selectedAddon?: string
-  addonPrice?: number
-  totalAmount: number
-  paymentId?: string
+  programPriceINR: number
+  selectedAddons?: string[]
+  addonPriceINR?: number
+  invoiceNumber?: string
+  subtotalINR: number
+  gstRate: number
+  totalINR: number
   paymentStatus: string
   razorpayOrderId?: string
-  razorpayPaymentId?: string
   invoiceLink?: string
-  createdAt: string
-  updatedAt: string
-  referralCode?: string
   whatsappNotifications: boolean
   agreedToTerms: boolean
   certifiedInformation: boolean
-  photo?: string | { type: string; data: number[] } // Hexadecimal format or Buffer object
-  idDocument?: string | { type: string; data: number[] } // Hexadecimal format or Buffer object
-  photoBase64?: string // Legacy base64 format
-  idDocumentBase64?: string // Legacy base64 format
-  photoUrl?: string
-  idDocumentUrl?: string
+  status: string
+  registrationSource?: string
+  createdAt: string
+}
+
+interface PaginationData {
+  total: number
+  totalPages: number
+  page: number
+  limit: number
 }
 
 const AdminDashboard = () => {
   const [students, setStudents] = useState<StudentRecord[]>([])
   const [filteredStudents, setFilteredStudents] = useState<StudentRecord[]>([])
+  const [pagination, setPagination] = useState<PaginationData>({
+    total: 0,
+    totalPages: 0,
+    page: 1,
+    limit: 20
+  })
   const [searchTerm, setSearchTerm] = useState("")
   const [statusFilter, setStatusFilter] = useState("all")
   const [programFilter, setProgramFilter] = useState("all")
@@ -73,31 +95,33 @@ const AdminDashboard = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
 
-  useEffect(() => {
-    const fetchStudents = async () => {
-      try {
-        setLoading(true)
-        const response = await fetch("/api/admin/students")
-        const data = await response.json()
-
-        if (data.success) {
-          setStudents(data.data)
-          setFilteredStudents(data.data)
-        } else {
-          setError("Failed to fetch student data")
-        }
-      } catch (error) {
-        console.error("Error fetching students:", error)
-        setError("Error loading student data")
-      } finally {
-        setLoading(false)
+  const fetchStudents = async (page = 1, limit = 20) => {
+    try {
+      setLoading(true)
+      const response = await fetch(`http://localhost:8000/api/v1/admin/?page=${page}&limit=${limit}`)
+      console.log("Fetched students data:", response)
+      const data = await response.json()
+      console.log("Fetched students data:", data)
+      if (data.success) {
+        setStudents(data.data)
+        setFilteredStudents(data.data)
+        setPagination(data.pagination)
+      } else {
+        setError("Failed to fetch student data")
       }
+    } catch (error) {
+      console.error("Error fetching students:", error)
+      setError("Error loading student data")
+    } finally {
+      setLoading(false)
     }
+  }
 
+  useEffect(() => {
     fetchStudents()
   }, [])
 
-  // Filter students based on search and filters
+  // Filter students based on search and filters (client-side filtering on current page)
   useEffect(() => {
     let filtered = students
 
@@ -107,7 +131,8 @@ const AdminDashboard = () => {
         (student) =>
           student.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
           student.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          student.razorpayPaymentId?.toLowerCase().includes(searchTerm.toLowerCase()),
+          student.razorpayOrderId?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          student.invoiceNumber?.toLowerCase().includes(searchTerm.toLowerCase()),
       )
     }
 
@@ -118,11 +143,21 @@ const AdminDashboard = () => {
 
     // Program filter
     if (programFilter !== "all") {
-      filtered = filtered.filter((student) => student.selectedProgram === programFilter)
+      filtered = filtered.filter((student) => student.programType === programFilter)
     }
 
     setFilteredStudents(filtered)
   }, [searchTerm, statusFilter, programFilter, students])
+
+  const handlePageChange = (newPage: number) => {
+    if (newPage >= 1 && newPage <= pagination.totalPages) {
+      fetchStudents(newPage, pagination.limit)
+    }
+  }
+
+  const handleLimitChange = (newLimit: number) => {
+    fetchStudents(1, newLimit)
+  }
 
   const handleViewDetails = (student: StudentRecord) => {
     setSelectedStudent(student)
@@ -145,96 +180,20 @@ const AdminDashboard = () => {
     }
   }
 
-  const hexToBase64 = (hexString: string): string => {
-    try {
-      // Remove \x prefixes and convert hex pairs to binary
-      const cleanHex = hexString.replace(/\\x/g, "")
-      const binaryString =
-        cleanHex
-          .match(/.{2}/g)
-          ?.map((hex) => String.fromCharCode(Number.parseInt(hex, 16)))
-          .join("") || ""
-
-      // Convert binary to base64
-      return btoa(binaryString)
-    } catch (error) {
-      console.error("Error converting hex to base64:", error)
-      return ""
-    }
-  }
-
-  const bufferToBase64 = (buffer: { type: string; data: number[] }): string => {
-    try {
-      return Buffer.from(buffer.data).toString("base64")
-    } catch (error) {
-      console.error("Error converting buffer to base64:", error)
-      return ""
-    }
-  }
-
-  const getPhotoData = (student: StudentRecord): string | null => {
-    if (student.photo) {
-      // If photo is a Buffer object, convert to base64
-      if (typeof student.photo === "object" && student.photo.type === "Buffer") {
-        return bufferToBase64(student.photo)
-      }
-      // If photo is already a string (legacy hex format), convert from hex
-      if (typeof student.photo === "string") {
-        return hexToBase64(student.photo)
-      }
-    }
-    if (student.photoBase64) {
-      return student.photoBase64
-    }
-    if (student.photoUrl) {
-      return student.photoUrl.replace(/^data:[^;]+;base64,/, "")
-    }
-    return null
-  }
-
-  const getDocumentData = (student: StudentRecord): string | null => {
-    if (student.idDocument) {
-      // If idDocument is a Buffer object, convert to base64
-      if (typeof student.idDocument === "object" && student.idDocument.type === "Buffer") {
-        return bufferToBase64(student.idDocument)
-      }
-      // If idDocument is already a string (legacy hex format), convert from hex
-      if (typeof student.idDocument === "string") {
-        return hexToBase64(student.idDocument)
-      }
-    }
-    if (student.idDocumentBase64) {
-      return student.idDocumentBase64
-    }
-    if (student.idDocumentUrl) {
-      return student.idDocumentUrl.replace(/^data:[^;]+;base64,/, "")
-    }
-    return null
-  }
-
-  const hasPhoto = (student: StudentRecord): boolean => {
-    return !!(student.photo || student.photoBase64 || student.photoUrl)
-  }
-
-  const hasDocument = (student: StudentRecord): boolean => {
-    return !!(student.idDocument || student.idDocumentBase64 || student.idDocumentUrl)
-  }
-
   const handleDownloadDocument = (student: StudentRecord) => {
-    const documentData = getDocumentData(student)
-    if (documentData) {
-      const byteCharacters = atob(documentData)
+    if (student.idDocument?.base64) {
+      const byteCharacters = atob(student.idDocument.base64)
       const byteNumbers = new Array(byteCharacters.length)
       for (let i = 0; i < byteCharacters.length; i++) {
         byteNumbers[i] = byteCharacters.charCodeAt(i)
       }
       const byteArray = new Uint8Array(byteNumbers)
-      const blob = new Blob([byteArray], { type: "application/pdf" })
+      const blob = new Blob([byteArray], { type: student.idDocument.type || "application/pdf" })
 
       const url = window.URL.createObjectURL(blob)
       const a = document.createElement("a")
       a.href = url
-      a.download = `${student.fullName}_ID_Document.pdf`
+      a.download = student.idDocument.name || `${student.fullName}_ID_Document.pdf`
       a.click()
       window.URL.revokeObjectURL(url)
     }
@@ -243,15 +202,21 @@ const AdminDashboard = () => {
   const handleExportData = () => {
     const csvContent = [
       [
+        "Invoice Number",
         "Name",
         "Email",
         "Phone",
-        "Program",
+        "Program Type",
+        "Program Name",
         "Duration",
-        "Amount",
-        "Add-on",
-        "Payment Date",
-        "Status",
+        "Program Price",
+        "Add-ons",
+        "Add-on Price",
+        "Subtotal",
+        "GST Rate",
+        "Total Amount",
+        "Payment Status",
+        "Registration Date",
         "City",
         "State",
         "Qualification",
@@ -265,40 +230,45 @@ const AdminDashboard = () => {
         "WhatsApp",
         "LinkedIn",
         "Referral Code",
-        "Invoice Link", // Added invoice link to export
+        "Invoice Link",
+        "Status",
+        "Registration Source"
       ],
-      ...filteredStudents.map((student) => {
-        const programDetails = getProgramDetails(student.selectedProgram)
-        const addonDetails = student.selectedAddon ? getAddonDetails(student.selectedAddon) : null
-
-        return [
-          student.fullName,
-          student.email,
-          student.primaryPhone,
-          programDetails?.name || student.selectedProgram,
-          `${student.programDuration} months`,
-          student.totalAmount,
-          addonDetails?.name || student.selectedAddon || "None",
-          new Date(student.createdAt).toLocaleDateString(),
-          student.paymentStatus,
-          student.city,
-          student.state,
-          student.highestQualification,
-          student.currentOrganization || "N/A",
-          student.idType,
-          student.idNumber,
-          new Date(student.dateOfBirth).toLocaleDateString(),
-          student.countryOfCitizenship,
-          student.residentialAddress,
-          student.zipCode,
-          student.whatsappNotifications ? "Yes" : "No",
-          student.linkedinProfile || "N/A",
-          student.referralCode || "N/A",
-          student.invoiceLink ? `${window.location.origin}/invoice/${student.invoiceLink}` : "N/A", // Added full invoice URL
-        ]
-      }),
+      ...filteredStudents.map((student) => [
+        student.invoiceNumber || "N/A",
+        student.fullName,
+        student.email,
+        student.primaryPhone,
+        student.programType,
+        student.programName,
+        `${student.programDuration} months`,
+        `₹${student.programPriceINR.toLocaleString()}`,
+        student.selectedAddons?.join(", ") || "None",
+        student.addonPriceINR ? `₹${student.addonPriceINR.toLocaleString()}` : "₹0",
+        `₹${student.subtotalINR.toLocaleString()}`,
+        `${student.gstRate}%`,
+        `₹${student.totalINR.toLocaleString()}`,
+        student.paymentStatus,
+        new Date(student.createdAt).toLocaleDateString(),
+        student.city,
+        student.state,
+        student.highestQualification,
+        student.currentOrganization || "N/A",
+        student.idType,
+        student.idNumber,
+        new Date(student.dateOfBirth).toLocaleDateString(),
+        student.countryOfCitizenship,
+        student.residentialAddress,
+        student.zipCode,
+        student.whatsappNotifications ? "Yes" : "No",
+        student.linkedinProfile || "N/A",
+        student.referralCode || "N/A",
+        student.invoiceLink ? `${window.location.origin}/invoice/${student.invoiceLink}` : "N/A",
+        student.status,
+        student.registrationSource || "N/A"
+      ]),
     ]
-      .map((row) => row.join(","))
+      .map((row) => row.map(cell => `"${cell}"`).join(","))
       .join("\n")
 
     const blob = new Blob([csvContent], { type: "text/csv" })
@@ -320,12 +290,7 @@ const AdminDashboard = () => {
       failed: "bg-red-100 text-red-800",
     }
 
-    const displayStatus =
-      status === "COMPLETED"
-        ? "Completed"
-        : status === "PROCESSING"
-          ? "Processing"
-          : status.charAt(0).toUpperCase() + status.slice(1)
+    const displayStatus = status.charAt(0).toUpperCase() + status.slice(1).toLowerCase()
 
     return (
       <span
@@ -336,13 +301,14 @@ const AdminDashboard = () => {
     )
   }
 
-  const totalRevenue = (students || [])
+  // Calculate stats from all students (would need separate API call for accurate totals)
+  const totalRevenue = students
     .filter((s) => s.paymentStatus === "completed" || s.paymentStatus === "COMPLETED")
-    .reduce((sum, s) => sum + s.totalAmount, 0)
-  const completedPayments = (students || []).filter(
+    .reduce((sum, s) => sum + s.totalINR, 0)
+  const completedPayments = students.filter(
     (s) => s.paymentStatus === "completed" || s.paymentStatus === "COMPLETED",
   ).length
-  const pendingPayments = (students || []).filter(
+  const pendingPayments = students.filter(
     (s) => s.paymentStatus === "pending" || s.paymentStatus === "PROCESSING",
   ).length
 
@@ -369,10 +335,11 @@ const AdminDashboard = () => {
             <div className="text-center">
               <p className="text-red-600 text-lg">{error}</p>
               <button
-                onClick={() => window.location.reload()}
-                className="mt-4 px-4 py-2 bg-[#FC4C03] text-white rounded-lg hover:bg-[#e63d00]"
+                onClick={() => fetchStudents(pagination.page, pagination.limit)}
+                className="mt-4 px-4 py-2 bg-[#FC4C03] text-white rounded-lg hover:bg-[#e63d00] flex items-center space-x-2 mx-auto"
               >
-                Retry
+                <RotateCcw className="w-4 h-4" />
+                <span>Retry</span>
               </button>
             </div>
           </div>
@@ -393,7 +360,7 @@ const AdminDashboard = () => {
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600">Total Students</p>
-                <p className="text-2xl font-bold text-gray-900">{(students || []).length}</p>
+                <p className="text-2xl font-bold text-gray-900">{pagination.total}</p>
               </div>
             </div>
           </div>
@@ -416,7 +383,7 @@ const AdminDashboard = () => {
                 <Calendar className="w-6 h-6 text-yellow-600" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Processing Payments</p> {/* Updated label */}
+                <p className="text-sm font-medium text-gray-600">Processing Payments</p>
                 <p className="text-2xl font-bold text-gray-900">{pendingPayments}</p>
               </div>
             </div>
@@ -428,7 +395,7 @@ const AdminDashboard = () => {
                 <TrendingUp className="w-6 h-6 text-[#FC4C03]" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Total Revenue</p>
+                <p className="text-sm font-medium text-gray-600">Current Page Revenue</p>
                 <p className="text-2xl font-bold text-gray-900">₹{totalRevenue.toLocaleString()}</p>
               </div>
             </div>
@@ -456,10 +423,10 @@ const AdminDashboard = () => {
                 className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FC4C03] focus:border-transparent"
               >
                 <option value="all">All Status</option>
-                <option value="COMPLETED">Completed</option> {/* Updated to use enum values */}
+                <option value="COMPLETED">Completed</option>
                 <option value="PROCESSING">Processing</option>
                 <option value="completed">Completed (Legacy)</option>
-                <option value="pending">Pending (Legacy)</option>
+                <option value="pending">Pending</option>
                 <option value="failed">Failed</option>
               </select>
 
@@ -470,12 +437,19 @@ const AdminDashboard = () => {
               >
                 <option value="all">All Programs</option>
                 <option value="skill">Skill Phase</option>
-                <option value="practice-basic">Practice Phase - Basic</option>
-                <option value="practice-pro">Practice Phase - Pro</option>
-                <option value="practice-elite">Practice Phase - Elite</option>
-                <option value="progress-basic">Progress Phase - Basic</option>
-                <option value="progress-pro">Progress Phase - Pro</option>
-                <option value="progress-elite">Progress Phase - Elite</option>
+                <option value="practice">Practice Phase</option>
+                <option value="progress">Progress Phase</option>
+              </select>
+
+              <select
+                value={pagination.limit}
+                onChange={(e) => handleLimitChange(Number(e.target.value))}
+                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FC4C03] focus:border-transparent"
+              >
+                <option value={10}>10 per page</option>
+                <option value={20}>20 per page</option>
+                <option value={50}>50 per page</option>
+                <option value={100}>100 per page</option>
               </select>
             </div>
 
@@ -508,7 +482,7 @@ const AdminDashboard = () => {
                     Registration Date
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Payment Status {/* Updated column header */}
+                    Payment Status
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Documents
@@ -519,81 +493,79 @@ const AdminDashboard = () => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {filteredStudents.map((student) => {
-                  const programDetails = getProgramDetails(student.selectedProgram)
-                  const addonDetails = student.selectedAddon ? getAddonDetails(student.selectedAddon) : null
-
-                  return (
-                    <tr key={student.id} className="hover:bg-gray-50">
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div>
-                          <div className="text-sm font-medium text-gray-900">{student.fullName}</div>
-                          <div className="text-sm text-gray-500">{student.email}</div>
-                          <div className="text-sm text-gray-500">{student.primaryPhone}</div>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">{programDetails?.name || student.selectedProgram}</div>
-                        <div className="text-sm text-gray-500">{student.programDuration} months</div>
-                        {student.selectedAddon && (
-                          <div className="text-sm text-blue-600">+ {addonDetails?.name || student.selectedAddon}</div>
+                {filteredStudents.map((student) => (
+                  <tr key={student.id} className="hover:bg-gray-50">
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div>
+                        <div className="text-sm font-medium text-gray-900">{student.fullName}</div>
+                        <div className="text-sm text-gray-500">{student.email}</div>
+                        <div className="text-sm text-gray-500">{student.primaryPhone}</div>
+                        {student.invoiceNumber && (
+                          <div className="text-xs text-blue-600 font-mono">#{student.invoiceNumber}</div>
                         )}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        ₹{student.totalAmount.toLocaleString()}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {new Date(student.createdAt).toLocaleDateString()}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">{getStatusBadge(student.paymentStatus)}</td>{" "}
-                      {/* Shows payment status with proper styling */}
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="flex space-x-2">
-                          {hasPhoto(student) && (
-                            <button
-                              onClick={() => handleViewPhoto(student)}
-                              className="text-blue-600 hover:text-blue-800"
-                              title="View Photo"
-                            >
-                              <ImageIcon className="w-4 h-4" />
-                            </button>
-                          )}
-                          {hasDocument(student) && (
-                            <button
-                              onClick={() => handleViewDocument(student)}
-                              className="text-green-600 hover:text-green-800"
-                              title="View ID Document"
-                            >
-                              <FileText className="w-4 h-4" />
-                            </button>
-                          )}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <div className="flex space-x-2">
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm text-gray-900">{student.programName}</div>
+                      <div className="text-sm text-gray-500">{student.programDuration} months</div>
+                      {student.selectedAddons && student.selectedAddons.length > 0 && (
+                        
+                        <div className="text-sm text-blue-600">+ {student.selectedAddons.join(", ")}</div>
+                      )}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm text-gray-900">₹{student.totalINR.toLocaleString()}</div>
+                      <div className="text-xs text-gray-500">GST: {student.gstRate}%</div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {new Date(student.createdAt).toLocaleDateString()}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">{getStatusBadge(student.paymentStatus)}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="flex space-x-2">
+                        {student.studentPhoto && (
                           <button
-                            onClick={() => handleViewDetails(student)}
-                            className="flex items-center space-x-1 text-[#FC4C03] hover:text-[#e63d00]"
+                            onClick={() => handleViewPhoto(student)}
+                            className="text-blue-600 hover:text-blue-800"
+                            title="View Photo"
                           >
-                            <Eye className="w-4 h-4" />
-                            <span>View</span>
+                            <ImageIcon className="w-4 h-4" />
                           </button>
-                          {student.invoiceLink &&
-                            (student.paymentStatus === "completed" || student.paymentStatus === "COMPLETED") && (
-                              <button
-                                onClick={() => handleViewInvoice(student)}
-                                className="flex items-center space-x-1 text-green-600 hover:text-green-800"
-                                title="View Invoice"
-                              >
-                                <ExternalLink className="w-4 h-4" />
-                                <span>Invoice</span>
-                              </button>
-                            )}
-                        </div>
-                      </td>
-                    </tr>
-                  )
-                })}
+                        )}
+                        {student.idDocument && (
+                          <button
+                            onClick={() => handleViewDocument(student)}
+                            className="text-green-600 hover:text-green-800"
+                            title="View ID Document"
+                          >
+                            <FileText className="w-4 h-4" />
+                          </button>
+                        )}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                      <div className="flex space-x-2">
+                        <button
+                          onClick={() => handleViewDetails(student)}
+                          className="flex items-center space-x-1 text-[#FC4C03] hover:text-[#e63d00]"
+                        >
+                          <Eye className="w-4 h-4" />
+                          <span>View</span>
+                        </button>
+                        {student.invoiceLink && (
+                          <button
+                            onClick={() => handleViewInvoice(student)}
+                            className="flex items-center space-x-1 text-green-600 hover:text-green-800"
+                            title="View Invoice"
+                          >
+                            <ExternalLink className="w-4 h-4" />
+                            <span>Invoice</span>
+                          </button>
+                        )}
+                      </div>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
@@ -603,6 +575,64 @@ const AdminDashboard = () => {
               <p className="text-gray-500">No students found matching your criteria.</p>
             </div>
           )}
+        </div>
+
+        {/* Pagination */}
+        <div className="bg-white rounded-lg shadow p-4 mt-6">
+          <div className="flex items-center justify-between">
+            <div className="text-sm text-gray-700">
+              Showing {((pagination.page - 1) * pagination.limit) + 1} to{" "}
+              {Math.min(pagination.page * pagination.limit, pagination.total)} of{" "}
+              {pagination.total} results
+            </div>
+            
+            <div className="flex items-center space-x-2">
+              <button
+                onClick={() => handlePageChange(pagination.page - 1)}
+                disabled={pagination.page <= 1}
+                className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              
+              <div className="flex space-x-1">
+                {Array.from({ length: Math.min(5, pagination.totalPages) }, (_, i) => {
+                  let pageNum;
+                  if (pagination.totalPages <= 5) {
+                    pageNum = i + 1;
+                  } else if (pagination.page <= 3) {
+                    pageNum = i + 1;
+                  } else if (pagination.page >= pagination.totalPages - 2) {
+                    pageNum = pagination.totalPages - 4 + i;
+                  } else {
+                    pageNum = pagination.page - 2 + i;
+                  }
+                  
+                  return (
+                    <button
+                      key={pageNum}
+                      onClick={() => handlePageChange(pageNum)}
+                      className={`px-3 py-1 border rounded ${
+                        pagination.page === pageNum
+                          ? "bg-[#FC4C03] text-white border-[#FC4C03]"
+                          : "border-gray-300 hover:bg-gray-50"
+                      }`}
+                    >
+                      {pageNum}
+                    </button>
+                  );
+                })}
+              </div>
+              
+              <button
+                onClick={() => handlePageChange(pagination.page + 1)}
+                disabled={pagination.page >= pagination.totalPages}
+                className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
         </div>
 
         {/* Student Details Modal */}
@@ -747,7 +777,7 @@ const AdminDashboard = () => {
                         <p className="text-gray-900">{selectedStudent.idNumber}</p>
                       </div>
                       <div className="flex space-x-2 mt-2">
-                        {hasPhoto(selectedStudent) && (
+                        {selectedStudent.studentPhoto && (
                           <button
                             onClick={() => handleViewPhoto(selectedStudent)}
                             className="flex items-center space-x-1 px-3 py-1 bg-blue-100 text-blue-700 rounded text-sm hover:bg-blue-200"
@@ -756,7 +786,7 @@ const AdminDashboard = () => {
                             <span>View Photo</span>
                           </button>
                         )}
-                        {hasDocument(selectedStudent) && (
+                        {selectedStudent.idDocument && (
                           <>
                             <button
                               onClick={() => handleViewDocument(selectedStudent)}
@@ -783,10 +813,12 @@ const AdminDashboard = () => {
                     <h3 className="text-lg font-semibold text-gray-900 mb-4">Program Information</h3>
                     <div className="space-y-3">
                       <div>
-                        <label className="text-sm font-medium text-gray-600">Selected Program</label>
-                        <p className="text-gray-900">
-                          {getProgramDetails(selectedStudent.selectedProgram)?.name || selectedStudent.selectedProgram}
-                        </p>
+                        <label className="text-sm font-medium text-gray-600">Program Type</label>
+                        <p className="text-gray-900">{selectedStudent.programType}</p>
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium text-gray-600">Program Name</label>
+                        <p className="text-gray-900">{selectedStudent.programName}</p>
                       </div>
                       <div>
                         <label className="text-sm font-medium text-gray-600">Duration</label>
@@ -794,25 +826,33 @@ const AdminDashboard = () => {
                       </div>
                       <div>
                         <label className="text-sm font-medium text-gray-600">Program Price</label>
-                        <p className="text-gray-900">₹{selectedStudent.programPrice.toLocaleString()}</p>
+                        <p className="text-gray-900">₹{selectedStudent.programPriceINR.toLocaleString()}</p>
                       </div>
-                      {selectedStudent.selectedAddon && (
+                      {selectedStudent.selectedAddons && selectedStudent.selectedAddons.length > 0 && (
                         <>
                           <div>
-                            <label className="text-sm font-medium text-gray-600">Add-on</label>
-                            <p className="text-gray-900">
-                              {getAddonDetails(selectedStudent.selectedAddon)?.name || selectedStudent.selectedAddon}
-                            </p>
+                            <label className="text-sm font-medium text-gray-600">Add-ons</label>
+                            <p className="text-gray-900">{selectedStudent.selectedAddons.join(", ")}</p>
                           </div>
-                          <div>
-                            <label className="text-sm font-medium text-gray-600">Add-on Price</label>
-                            <p className="text-gray-900">₹{selectedStudent.addonPrice?.toLocaleString()}</p>
-                          </div>
+                          {selectedStudent.addonPriceINR && (
+                            <div>
+                              <label className="text-sm font-medium text-gray-600">Add-on Price</label>
+                              <p className="text-gray-900">₹{selectedStudent.addonPriceINR.toLocaleString()}</p>
+                            </div>
+                          )}
                         </>
                       )}
                       <div>
+                        <label className="text-sm font-medium text-gray-600">Subtotal</label>
+                        <p className="text-gray-900">₹{selectedStudent.subtotalINR.toLocaleString()}</p>
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium text-gray-600">GST Rate</label>
+                        <p className="text-gray-900">{selectedStudent.gstRate}%</p>
+                      </div>
+                      <div>
                         <label className="text-sm font-medium text-gray-600">Total Amount</label>
-                        <p className="text-gray-900 font-semibold">₹{selectedStudent.totalAmount.toLocaleString()}</p>
+                        <p className="text-gray-900 font-semibold">₹{selectedStudent.totalINR.toLocaleString()}</p>
                       </div>
                     </div>
                   </div>
@@ -821,6 +861,12 @@ const AdminDashboard = () => {
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900 mb-4">Payment Information</h3>
                     <div className="space-y-3">
+                      {selectedStudent.invoiceNumber && (
+                        <div>
+                          <label className="text-sm font-medium text-gray-600">Invoice Number</label>
+                          <p className="text-gray-900 font-mono text-sm">#{selectedStudent.invoiceNumber}</p>
+                        </div>
+                      )}
                       <div>
                         <label className="text-sm font-medium text-gray-600">Payment Status</label>
                         <div className="mt-1">{getStatusBadge(selectedStudent.paymentStatus)}</div>
@@ -829,12 +875,6 @@ const AdminDashboard = () => {
                         <div>
                           <label className="text-sm font-medium text-gray-600">Razorpay Order ID</label>
                           <p className="text-gray-900 font-mono text-sm">{selectedStudent.razorpayOrderId}</p>
-                        </div>
-                      )}
-                      {selectedStudent.razorpayPaymentId && (
-                        <div>
-                          <label className="text-sm font-medium text-gray-600">Razorpay Payment ID</label>
-                          <p className="text-gray-900 font-mono text-sm">{selectedStudent.razorpayPaymentId}</p>
                         </div>
                       )}
                       {selectedStudent.invoiceLink && (
@@ -855,12 +895,18 @@ const AdminDashboard = () => {
                         </div>
                       )}
                       <div>
+                        <label className="text-sm font-medium text-gray-600">Status</label>
+                        <p className="text-gray-900">{selectedStudent.status}</p>
+                      </div>
+                      {selectedStudent.registrationSource && (
+                        <div>
+                          <label className="text-sm font-medium text-gray-600">Registration Source</label>
+                          <p className="text-gray-900">{selectedStudent.registrationSource}</p>
+                        </div>
+                      )}
+                      <div>
                         <label className="text-sm font-medium text-gray-600">Registration Date</label>
                         <p className="text-gray-900">{new Date(selectedStudent.createdAt).toLocaleString()}</p>
-                      </div>
-                      <div>
-                        <label className="text-sm font-medium text-gray-600">Last Updated</label>
-                        <p className="text-gray-900">{new Date(selectedStudent.updatedAt).toLocaleString()}</p>
                       </div>
                       <div>
                         <label className="text-sm font-medium text-gray-600">Terms Agreed</label>
@@ -887,7 +933,8 @@ const AdminDashboard = () => {
           </div>
         )}
 
-        {showPhotoModal && selectedStudent && hasPhoto(selectedStudent) && (
+        {/* Photo Modal */}
+        {showPhotoModal && selectedStudent && selectedStudent.studentPhoto && (
           <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50">
             <div className="bg-white rounded-lg max-w-2xl w-full">
               <div className="p-6">
@@ -901,7 +948,7 @@ const AdminDashboard = () => {
                 </div>
                 <div className="flex justify-center">
                   <img
-                    src={`data:image/jpeg;base64,${getPhotoData(selectedStudent)}`}
+                    src={`${selectedStudent.studentPhoto.base64}`}
                     alt="Student Photo"
                     className="max-w-full max-h-96 object-contain rounded-lg"
                   />
@@ -911,20 +958,21 @@ const AdminDashboard = () => {
           </div>
         )}
 
-        {showDocumentModal && selectedStudent && hasDocument(selectedStudent) && (
+        {/* Document Modal */}
+        {showDocumentModal && selectedStudent && selectedStudent.idDocument && (
           <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50">
             <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh]">
               <div className="p-6">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-lg font-semibold text-gray-900">ID Document - {selectedStudent.fullName}</h3>
                   <div className="flex space-x-2">
-                    <button
+                    {/* <button
                       onClick={() => handleDownloadDocument(selectedStudent)}
                       className="flex items-center space-x-1 px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
                     >
                       <Download className="w-4 h-4" />
                       <span>Download</span>
-                    </button>
+                    </button> */}
                     <button onClick={() => setShowDocumentModal(false)} className="text-gray-400 hover:text-gray-600">
                       <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -934,7 +982,7 @@ const AdminDashboard = () => {
                 </div>
                 <div className="flex justify-center">
                   <iframe
-                    src={`data:application/pdf;base64,${getDocumentData(selectedStudent)}`}
+                    src={`${selectedStudent.idDocument.base64}`}
                     className="w-full h-96 border rounded-lg"
                     title="ID Document"
                   />
