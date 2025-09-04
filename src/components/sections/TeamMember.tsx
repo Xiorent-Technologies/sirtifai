@@ -18,6 +18,15 @@ const MotionImg = motion.img as React.ComponentType<any>
 
 const teamMembers = [
   {
+    id: 3,
+    name: "Dharmesh Gajera",
+    title: "Director & Chief Executive Officer (CEO)",
+    image: "/assets/about/ceo.jpeg",
+    bio: "Dharmesh Gajera is an accomplished business leader with over a decade of expertise in sales, marketing, public relations, digital marketing, operations, and management. He has a proven track record of driving sustainable business growth, leading high-impact campaigns, and optimizing organizational processes. Recognized for his ability to blend strategic vision with executional excellence, Dharmesh excels at building strong teams and creating scalable systems that align with long-term organizational goals.",
+    linkedin: "linkedin.com/in/dharmesh-patel-5b156625b",
+    departmentOversight: "As Director & CEO, Dharmesh spearheads the sales, marketing, PR, digital outreach, operations, and business development functions. He plays a pivotal role in shaping the company's strategic direction, corporate governance, and global expansion roadmap, particularly across high-growth markets such as the UAE and Singapore. His leadership ensures ethical, growth-oriented, and customer-centric operations, while continuously fostering innovation and competitive advantage in the global marketplace."
+  },
+  {
     id: 1,
     name: "Jay Barochiya",
     title: "Chief Technology Officer (CTO)",
@@ -35,15 +44,7 @@ const teamMembers = [
     linkedin: "linkedin.com/in/nikunj-viradiya-a40273b3",
     departmentOversight: "As CLO, Nikunj oversees the corporate learning, training, and skill development functions. He integrates IT expertise with learning strategy, ensuring that technical and business teams remain future-ready. His role emphasizes the creation of digital learning systems, upskilling programs, and knowledge-sharing platforms, while also driving innovation in employee development, leadership training, and organizational learning culture."
   },
-  {
-    id: 3,
-    name: "Dharmesh Gajera",
-    title: "Director & Chief Sales Officer (CSO)",
-    image: "/assets/about/ceo.jpeg",
-    bio: "Dharmesh Gajera is an accomplished business leader with over a decade of expertise in sales, marketing, public relations, digital marketing, operations, and management. He has a proven track record of driving sustainable business growth, leading high-impact campaigns, and optimizing organizational processes. Recognized for his ability to blend strategic vision with executional excellence, Dharmesh excels at building strong teams and creating scalable systems that align with long-term organizational goals.",
-    linkedin: "linkedin.com/in/dharmesh-patel-5b156625b",
-    departmentOversight: "As Director & CSO, Dharmesh spearheads the sales, marketing, PR, digital outreach, operations, and business development functions. He plays a pivotal role in shaping the company's strategic direction, corporate governance, and global expansion roadmap, particularly across high-growth markets such as the UAE and Singapore. His leadership ensures ethical, growth-oriented, and customer-centric operations, while continuously fostering innovation and competitive advantage in the global marketplace."
-  }
+  
 ]
 
 export default function TeamMemberCarousel() {

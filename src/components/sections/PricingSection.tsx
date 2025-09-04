@@ -62,7 +62,7 @@ const PricingSection: React.FC = () => {
   }
 
   const handleBuyNow = () => {
-    const packageData = createStandardizedPackageData("freelancer", selectedPlan, selectedAddOn || null)
+    const packageData = createStandardizedPackageData("freelancer", selectedPlan, selectedAddOn ? [selectedAddOn] : [])
 
     localStorage.setItem("selectedPackage", JSON.stringify(packageData))
     router.push("/application")

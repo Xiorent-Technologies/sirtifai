@@ -1,112 +1,140 @@
+"use client";
+
 import React from "react";
+import { motion, MotionProps } from "framer-motion";
+
+// Typed Motion components
+type DivMotionComponentProps = React.HTMLAttributes<HTMLDivElement> & MotionProps;
+const MotionDiv = motion.div as unknown as React.FC<DivMotionComponentProps>;
+
+type H2MotionComponentProps = React.HTMLAttributes<HTMLHeadingElement> & MotionProps;
+const MotionH2 = motion.h2 as unknown as React.FC<H2MotionComponentProps>;
+
+type PMotionComponentProps = React.HTMLAttributes<HTMLParagraphElement> & MotionProps;
+const MotionP = motion.p as unknown as React.FC<PMotionComponentProps>;
+
+type UlMotionComponentProps = React.HTMLAttributes<HTMLUListElement> & MotionProps;
+const MotionUl = motion.ul as unknown as React.FC<UlMotionComponentProps>;
+
+type LiMotionComponentProps = React.LiHTMLAttributes<HTMLLIElement> & MotionProps;
+const MotionLi = motion.li as unknown as React.FC<LiMotionComponentProps>;
+
+type ImgMotionComponentProps = React.ImgHTMLAttributes<HTMLImageElement> & MotionProps;
+const MotionImg = motion.img as unknown as React.FC<ImgMotionComponentProps>;
+
+const container = {
+  hidden: { opacity: 0, y: 24 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut", staggerChildren: 0.12 },
+  },
+};
+
+const item = {
+  hidden: { opacity: 0, y: 16 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+};
 
 export default function grenovOverview() {
   return (
-    <section className="max-w-6xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-2 gap-10 items-start font-sans text-gray-900">
-      {/* LEFT SECTION */}
-      <div className="space-y-6">
-        <div>
-          <h3 className="text-[#ff6a00] uppercase tracking-widest font-semibold text-sm">
-            About grenov
-          </h3>
-          <p className="mt-2 text-gray-800 leading-relaxed text-xl max-w-prose">
-            grenov is Sirtifai’s advanced innovation wing, designed to push boundaries in AI, AR, robotics,and next-gen digital ecosystems.          </p>
-        </div>
+    <main className="h-full bg-gradient-to-br from-gray-50 to-white px-4 sm:px-6 lg:px-20">
+      <div className="container mx-auto px-4 py-8 lg:py-16">
+        <MotionDiv
+          variants={container}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.25, margin: "-120px 0px -120px 0px" }}
+          className="flex justify-between flex-wrap gap-8 sm:gap-10 p-3 lg:gap-0"
+        >
+          {/* left */}
+          <div className="w-full lg:w-1/2">
+            {/* About Grenov */}
+            <MotionP
+              variants={item}
+              className="text-center text-orange-600 font-sans text-[18px] sm:text-[21px] font-semibold tracking-widest mb-2 lg:text-start"
+            >
+              ABOUT GRENOV
+            </MotionP>
+            <MotionP
+              variants={item}
+              className="w-full sm:w-[95%] lg:w-[82%] text-[22px] sm:text-[28px] lg:text-[32px] text-center lg:text-start mx-auto lg:mx-0"
+            >
+              Grenov is Sirtifai’s advanced innovation wing, designed to push
+              boundaries in AI, AR, robotics, and next-gen digital ecosystems.
+            </MotionP>
 
-        <div className="mt-4">
-          {/* large AI head image (provided) */}
-          <img
-            src="/assets/grenov/futuristic_ai_face.png"
-            alt="Futuristic AI face"
-            className="w-[80%] object-contain rounded-md shadow-lg"
-          />
-        </div>
-      </div>
+            {/* Image */}
+            <MotionImg
+              variants={item}
+              src="/assets/grenov/futuristic_ai_face.png"
+              alt="AI Face"
+              className="w-full max-w-[500px] h-auto rounded-lg mx-auto lg:mx-0"
+            />
+          </div>
+          {/* Right */}
+          <div className="w-full lg:w-1/2 flex flex-col">
+            {/* Vision & Mission */}
+            <MotionDiv
+              variants={container}
+              className="flex flex-wrap justify-center gap-6 sm:gap-8 lg:gap-0"
+            >
+              <MotionDiv variants={item} className="flex flex-col items-center md:items-start">
+                <img
+                  src="/assets/grenov/Frame_3.svg"
+                  alt="Vision"
+                  className="mb-2 object-contain"
+                />
+                <p className="text-sm sm:text-[15px] text-gray-700 text-center md:text-left max-w-xs">
+                  Vision: <br /> Building a future where humans and AI
+                  collaborate for progress, efficiency, and creativity.
+                </p>
+              </MotionDiv>
+              <MotionDiv variants={item} className="flex flex-col items-center md:items-start lg:flex-col-reverse lg:mr-[-0rem]">
+                <img
+                  src="/assets/grenov/Frame_4.svg"
+                  alt="Mission"
+                  className="object-contain"
+                />
+                <p className="text-sm sm:text-[15px] text-gray-700 text-center md:text-left max-w-xs lg:mb-5">
+                  Mission: <br /> To integrate intelligence seamlessly into
+                  every sector of society.
+                </p>
+              </MotionDiv>
+            </MotionDiv>
 
-      {/* RIGHT SECTION */}
-      <div className="flex flex-col justify-start space-y-8">
-        {/* Top: two oval images with short captions (stacked) */}
-<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Mission: Image first, then text */}
-          <div className="flex flex-col items-center text-center gap-3">
-            <div className="w-40 h-56 rounded-3xl overflow-hidden bg-gray-50 shadow-sm">
-              <img
-                src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80"
-                alt="Mission visual"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="text-sm max-w-xs">
-              <p className="font-semibold text-gray-800">Mission:</p>
-              <p className="text-gray-700 leading-tight">
-                To integrate intelligence seamlessly into every sector of society.
-              </p>
+            {/* Core Capabilities */}
+            <div className="mt-8 ml-0 lg:ml-12">
+              <MotionH2
+                variants={item}
+                className="text-orange-500 font-extrabold uppercase tracking-widest text-2xl sm:text-3xl lg:text-[40px] text-center leading-relaxed  lg:text-start mb-3"
+              >
+                Core Capabilities
+              </MotionH2>
+              <MotionUl variants={container} className="list-disc ml-3 pl-5 space-y-3 sm:space-y-4 text-sm sm:text-base leading-relaxed">
+                <MotionLi variants={item} className="text-sm sm:text-md">
+                  <span className="font-bold text-base sm:text-lg">AI & Automation</span> –
+                  Smart solutions tailored to industries.
+                </MotionLi>
+                <MotionLi variants={item} className="text-sm sm:text-md">
+                  <span className="font-bold text-base sm:text-lg">AR & Immersive Tech</span>{" "}
+                  – Bridging physical and digital experiences.
+                </MotionLi>
+                <MotionLi variants={item} className="text-sm sm:text-md">
+                  <span className="font-bold text-base sm:text-lg">Data Intelligence</span> –
+                  Harnessing big data for predictive insights.
+                </MotionLi>
+                <MotionLi variants={item} className="text-sm sm:text-md">
+                  <span className="font-bold text-base sm:text-lg">
+                    Enterprise Integration
+                  </span>{" "}
+                  – Cloud-ready, secure, and scalable systems.
+                </MotionLi>
+              </MotionUl>
             </div>
           </div>
-
-          {/* Vision: Text first, then image */}
-          <div className="flex flex-col items-center text-center gap-3">
-            <div className="text-sm max-w-xs">
-              <p className="font-semibold text-gray-800">Vision:</p>
-              <p className="text-gray-700 leading-tight">
-                Building a future where humans and AI collaborate for progress,
-                efficiency, and creativity.
-              </p>
-            </div>
-            <div className="w-40 h-56 rounded-3xl overflow-hidden bg-gray-50 shadow-sm">
-              <img
-                src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=400&q=80"
-                alt="Vision visual"
-                className="w-full h-full object-cover"
-              />
-            </div>
-          </div>
-        </div>
-
-
-
-
-        {/* Core Capabilities */}
-        <div>
-          <h3 className="text-[#ff6a00] uppercase tracking-widest font-bold text-2xl mb-4">
-            Core Capabilities
-          </h3>
-
-          <ul className="space-y-4 text-gray-800 text-xl">
-            <li className="flex items-start gap-3">
-              {/* <span className="mt-1 text-black text-lg">•</span> */}
-              <p className="leading-tight">
-                <span className="font-bold">AI & Automation –</span> Smart
-                solutions tailored to industries.
-              </p>
-            </li>
-
-            <li className="flex items-start gap-3">
-              {/* <span className="mt-1 text-black text-lg">•</span> */}
-              <p className="leading-tight">
-                <span className="font-bold">AR & Immersive Tech –</span>{" "}
-                Bridging physical and digital experiences.
-              </p>
-            </li>
-
-            <li className="flex items-start gap-3">
-              {/* <span className="mt-1 text-black text-lg">•</span> */}
-              <p className="leading-tight">
-                <span className="font-bold">Data Intelligence –</span>{" "}
-                Harnessing big data for predictive insights.
-              </p>
-            </li>
-
-            <li className="flex items-start gap-3">
-              {/* <span className="mt-1 text-black text-lg">•</span> */}
-              <p className="leading-tight">
-                <span className="font-bold">Enterprise Integration –</span>{" "}
-                Cloud-ready, secure, and scalable systems.
-              </p>
-            </li>
-          </ul>
-        </div>
+        </MotionDiv>
       </div>
-    </section>
+    </main>
   );
 }

@@ -233,7 +233,7 @@ export const AboutUsPage = () => {
               animate={whySertifaiInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               transition={{ duration: 0.8, delay: 0.6 }}
             >
-              Why Sertifai
+              Why Sirtifai
             </MotionH2>
             <MotionP
               className="text-gray-600 mb-4 text-sm sm:text-base leading-relaxed"

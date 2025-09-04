@@ -1,8 +1,9 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
-import { ChevronDown } from "lucide-react"
+import { useState, useEffect } from "react"
+import { ChevronDown, Plus } from "lucide-react"
 import { useRouter } from "next/navigation"
+
 import {
   getProgramAddons,
   getSkillPhaseProducts,
@@ -11,458 +12,283 @@ import {
   createStandardizedPackageData,
   getProductPrice,
 } from "../../../lib/products"
-import { calculatePricing } from "../../../lib/pricing"
 
-interface ProgramOption {
-  id: string
-  name: string
-  price: number
-  features: string[]
-  category: "skill" | "practice" | "progress"
-  tier?: "basic" | "pro" | "elite"
-}
+import products from "@/data/products.json"
+import ProgramSelection from "@/components/common/ProgramSelection"
+import AddonSection from "@/components/common/AddonSection"
 
-interface AddOn {
-  id: string
-  name: string
-  price: number
-  description: string
-  features: string[]
-}
-
-const ProgramSelection = () => {
+const PricingInterface = () => {
   const router = useRouter()
-  const [selectedProgram, setSelectedProgram] = useState<string>("skill-phase")
-  const [programDurations, setProgramDurations] = useState<Record<string, number>>({
-    "skill-phase": 3,
+
+  const [selectedProgram, setSelectedProgram] = useState("skill-phase")
+  const [selectedDurations, setSelectedDurations] = useState<{ [key: string]: number }>({
+    "skill-phase": 6,
     "practice-basic": 3,
     "practice-pro": 3,
     "practice-elite": 3,
     "progress-basic": 1,
     "progress-pro": 1,
-    "progress-elite": 1,
+    "progress-elite": 1
   })
-  const [selectedAddOn, setSelectedAddOn] = useState<string>("")
-  const [openDropdown, setOpenDropdown] = useState<string>("")
-  const [calculatedPricing, setCalculatedPricing] = useState<any>(null)
-  const [showAddOnSuggestion, setShowAddOnSuggestion] = useState(false)
-  const dropdownRef = useRef<HTMLDivElement>(null)
+  const [selectedAddons, setSelectedAddons] = useState<{ [key: string]: string }>({
+    payroll: "",
+    ca: "",
+    legal: ""
+  });
 
-  const skillPhaseProducts = getSkillPhaseProducts()
-  const practicePhaseProducts = getPracticePhaseProducts()
-  const progressPhaseProducts = getProgressPhaseProducts()
-  const addonProducts = getProgramAddons()
+  const [expandedSections, setExpandedSections] = useState<{ [key: string]: boolean }>({
+    payroll: true,
+    ca: true,
+    legal: true
+  })
 
-  const selectedProgramData = [...skillPhaseProducts, ...practicePhaseProducts, ...progressPhaseProducts].find(
-    (p) => p.id === selectedProgram,
-  )
-  const selectedAddOnData = addonProducts.find((a) => a.id === selectedAddOn)
-  const currentDuration = programDurations[selectedProgram] || 3
+  const toggleSection = (key: string) =>
+    setExpandedSections((prev) => ({ ...prev, [key]: !prev[key] }));
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setOpenDropdown("")
-      }
-    }
-
-    document.addEventListener("mousedown", handleClickOutside)
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
-    }
-  }, [])
-
-  useEffect(() => {
-    if (selectedProgramData) {
-      const pricing = calculatePricing(selectedProgram, selectedAddOn || null, currentDuration)
-      setCalculatedPricing(pricing)
-    }
-  }, [selectedProgram, currentDuration, selectedAddOn, selectedProgramData, selectedAddOnData])
-
-  const getDurationOptions = (programId: string) => {
-    const product = [...skillPhaseProducts, ...practicePhaseProducts, ...progressPhaseProducts].find(
-      (p) => p.id === programId,
-    )
-    if (!product) return []
-
-    if (programId.startsWith("progress-")) {
-      return Array.from({ length: 12 }, (_, i) => i + 1)
-    }
-    return [3, 6]
-  }
-
-  const handleDurationChange = (programId: string, duration: number) => {
-    setProgramDurations((prev) => ({
-      ...prev,
-      [programId]: duration,
-    }))
-    setOpenDropdown("")
-  }
-
-  const handleDropdownToggle = (programId: string) => {
-    setOpenDropdown(openDropdown === programId ? "" : programId)
-  }
-
-  const handleAddOnSelect = (addOnId: string) => {
-    setSelectedAddOn(selectedAddOn === addOnId ? "" : addOnId)
-  }
+  const handleAddonSelect = (sectionKey: string, addonId: string) =>
+    setSelectedAddons((prev) => ({ ...prev, [sectionKey]: addonId }));
 
   const handleBuyNow = () => {
-    if (!selectedAddOn) {
-      setShowAddOnSuggestion(true)
-      return
-    }
-
     proceedToPurchase()
   }
 
+  const selectedAddonIds = Object.values(selectedAddons).filter(id => id);
+
   const proceedToPurchase = () => {
     const packageData = createStandardizedPackageData(
-      "program",
+      "programs",
       selectedProgram,
-      selectedAddOn || null,
-      currentDuration,
-    )
+      Object.values(selectedAddons).filter(id => id !== ""),
+      selectedDurations[selectedProgram] || 1
+    );
 
     localStorage.setItem("selectedPackage", JSON.stringify(packageData))
     router.push("/application")
   }
 
-  const continueWithoutAddOn = () => {
-    setShowAddOnSuggestion(false)
-    proceedToPurchase()
-  }
+  const calculateTotal = () => {
+    const program = products.programs?.[selectedProgram as keyof typeof products.programs];
+    const duration = selectedDurations[selectedProgram] || 1;
+    const programCost = program ? program.price * duration : 0;
+
+    const allAddons = { ...products.programAddons, ...products.freelancerAddons };
+
+    const addonCosts = Object.values(selectedAddons).reduce((sum, addonId) => {
+      const addon = allAddons[addonId as keyof typeof allAddons];
+      return sum + (addon ? addon.price : 0);
+    }, 0);
+
+    const subtotal = programCost + addonCosts;
+
+    return {
+      programCost,
+      addonCosts,
+      subtotal,
+      tax: 0,
+      total: subtotal
+    };
+  };
+
+  const costs = calculateTotal()
 
   return (
-    <section className="min-h-screen w-screen bg-[#FEF7F1] py-8 md:py-16">
-      <div className="max-w-7xl mx-auto px-4" ref={dropdownRef}>
-        <div className="text-center mb-12">
-          <h1 className="text-[30px] md:text-[60px] font-[600] text-black capitalize">Select the Program</h1>
-          <p className="text-[#4B5563] text-base max-w-[538px] mx-auto mt-4">
-            Choose your learning path and customize your experience with add-on services.
-          </p>
+    <div className="min-h-screen bg-gray-50 py-8">
+      <div className="max-w-6xl mx-auto px-4">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Simple, Transparent Pricing</h1>
+          <p className="text-gray-600">One-time payment for lifetime access to our comprehensive program, with on-going support.</p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Program Selection */}
-          <div className="space-y-6">
-            {/* Skill Phase */}
-            <div className="bg-white rounded-lg border border-gray-200">
-              <div className="p-4 border-b border-gray-200">
-                <h3 className="text-lg font-semibold text-gray-900">Skill Phase</h3>
-              </div>
-              <div className="p-4">
-                {skillPhaseProducts.map((program) => (
-                  <label key={program.id} className="flex items-center space-x-3 cursor-pointer">
-                    <input
-                      type="radio"
-                      name="program"
-                      value={program.id}
-                      checked={selectedProgram === program.id}
-                      onChange={(e) => setSelectedProgram(e.target.value)}
-                      className="w-4 h-4 text-[#FC4C03] border-gray-300 focus:ring-[#FC4C03]"
-                    />
-                    <div className="flex-1">
-                      <div className="flex items-center justify-between">
-                        <span className="font-medium text-gray-900">${getProductPrice(program)} per month</span>
-                        <div className="relative">
-                          <button
-                            onClick={() => handleDropdownToggle(program.id)}
-                            className="flex items-center space-x-2 px-3 py-1 border border-gray-300 rounded-md text-sm"
-                          >
-                            <span>{programDurations[program.id]} Months</span>
-                            <ChevronDown className="w-4 h-4" />
-                          </button>
-                          {openDropdown === program.id && (
-                            <div className="absolute right-0 mt-1 bg-white border border-gray-300 rounded-md shadow-lg z-10 min-w-[120px]">
-                              {getDurationOptions(program.id).map((duration) => (
-                                <button
-                                  key={duration}
-                                  onClick={() => handleDurationChange(program.id, duration)}
-                                  className="block w-full px-4 py-2 text-left hover:bg-gray-50 text-sm"
-                                >
-                                  {duration} Months
-                                </button>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  </label>
-                ))}
-              </div>
-            </div>
-
-            {/* Practice Phase */}
-            <div className="bg-white rounded-lg border border-gray-200">
-              <div className="p-4 border-b border-gray-200">
-                <h3 className="text-lg font-semibold text-gray-900">Practice Phase (Your Selected Plan)</h3>
-              </div>
-              <div className="space-y-3 p-4">
-                {practicePhaseProducts.map((program) => (
-                  <label
-                    key={program.id}
-                    className="flex items-center space-x-3 cursor-pointer p-3 rounded-lg hover:bg-gray-50"
-                  >
-                    <input
-                      type="radio"
-                      name="program"
-                      value={program.id}
-                      checked={selectedProgram === program.id}
-                      onChange={(e) => setSelectedProgram(e.target.value)}
-                      className="w-4 h-4 text-[#FC4C03] border-gray-300 focus:ring-[#FC4C03]"
-                    />
-                    <div className="flex-1">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <span className="font-medium text-gray-900 capitalize">
-                            {program.name.replace("Practice Phase - ", "")}:
-                          </span>
-                          <span className="text-[#FC4C03] font-semibold">${getProductPrice(program)} per month</span>
-                        </div>
-                        <div className="relative">
-                          <button
-                            onClick={() => handleDropdownToggle(program.id)}
-                            className="flex items-center space-x-2 px-3 py-1 border border-gray-300 rounded-md text-sm"
-                          >
-                            <span>{programDurations[program.id]} Months</span>
-                            <ChevronDown className="w-4 h-4" />
-                          </button>
-                          {openDropdown === program.id && (
-                            <div className="absolute right-0 mt-1 bg-white border border-gray-300 rounded-md shadow-lg z-10 min-w-[120px]">
-                              {getDurationOptions(program.id).map((duration) => (
-                                <button
-                                  key={duration}
-                                  onClick={() => handleDurationChange(program.id, duration)}
-                                  className="block w-full px-4 py-2 text-left hover:bg-gray-50 text-sm"
-                                >
-                                  {duration} Months
-                                </button>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  </label>
-                ))}
-              </div>
-            </div>
-
-            {/* Progress Phase */}
-            <div className="bg-white rounded-lg border border-gray-200">
-              <div className="p-4 border-b border-gray-200">
-                <h3 className="text-lg font-semibold text-gray-900">Progress Phase</h3>
-              </div>
-              <div className="space-y-3 p-4">
-                {progressPhaseProducts.map((program) => (
-                  <label
-                    key={program.id}
-                    className="flex items-center space-x-3 cursor-pointer p-3 rounded-lg hover:bg-gray-50"
-                  >
-                    <input
-                      type="radio"
-                      name="program"
-                      value={program.id}
-                      checked={selectedProgram === program.id}
-                      onChange={(e) => setSelectedProgram(e.target.value)}
-                      className="w-4 h-4 text-[#FC4C03] border-gray-300 focus:ring-[#FC4C03]"
-                    />
-                    <div className="flex-1">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <span className="font-medium text-gray-900 capitalize">
-                            {program.name.replace("Progress Phase - ", "")}:
-                          </span>
-                          <span className="text-[#FC4C03] font-semibold">${getProductPrice(program)} per month</span>
-                        </div>
-                        <div className="relative">
-                          <button
-                            onClick={() => handleDropdownToggle(program.id)}
-                            className="flex items-center space-x-2 px-3 py-1 border border-gray-300 rounded-md text-sm"
-                          >
-                            <span>{programDurations[program.id]} Months</span>
-                            <ChevronDown className="w-4 h-4" />
-                          </button>
-                          {openDropdown === program.id && (
-                            <div className="absolute right-0 mt-1 bg-white border border-gray-300 rounded-md shadow-lg z-10 min-w-[120px] max-h-48 overflow-y-auto">
-                              {getDurationOptions(program.id).map((duration) => (
-                                <button
-                                  key={duration}
-                                  onClick={() => handleDurationChange(program.id, duration)}
-                                  className="block w-full px-4 py-2 text-left hover:bg-gray-50 text-sm"
-                                >
-                                  {duration} Months
-                                </button>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  </label>
-                ))}
-              </div>
-            </div>
-
-            {/* Add-ons */}
-            <div className="bg-white rounded-lg border border-gray-200">
-              <div className="p-4 border-b border-gray-200">
-                <h3 className="text-lg font-semibold text-gray-900">Add-on Services</h3>
-                <p className="text-sm text-gray-600 mt-1">Select one add-on service to enhance your experience</p>
-              </div>
-              <div className="space-y-4 p-4">
-                {addonProducts.map((addOn) => (
-                  <div key={addOn.id} className="border border-gray-200 rounded-lg p-4">
-                    <label className="flex items-start space-x-3 cursor-pointer">
-                      <input
-                        type="radio"
-                        name="addon"
-                        checked={selectedAddOn === addOn.id}
-                        onChange={() => handleAddOnSelect(addOn.id)}
-                        className="w-4 h-4 text-[#FC4C03] border-gray-300 focus:ring-[#FC4C03] mt-1"
-                      />
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between mb-2">
-                          <h4 className="font-semibold text-gray-900">{addOn.name}</h4>
-                          <span className="text-[#FC4C03] font-bold">${addOn.price.toLocaleString()}</span>
-                        </div>
-                        <p className="text-sm text-gray-600 mb-3">{addOn.description}</p>
-                        <div className="space-y-1">
-                          {addOn.features.map((feature, index) => (
-                            <div key={index} className="flex items-center space-x-2">
-                              <span className="text-green-500 text-xs">✓</span>
-                              <span className="text-xs text-gray-700">{feature}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </label>
-                  </div>
-                ))}
-              </div>
-            </div>
+        <div className="bg-white rounded-lg shadow-sm border">
+          {/* Select Program Header */}
+          <div className="flex items-center justify-between p-6 border-b bg-gray-50">
+            <h2 className="text-lg font-semibold">Select the Program</h2>
+            <button className="bg-orange-500 text-white px-4 py-2 rounded-md text-sm font-medium">
+              + Add Ons
+            </button>
           </div>
 
-          {/* Program Details & Summary */}
-          <div className="space-y-6">
-            {/* Selected Program Details */}
-            {selectedProgramData && (
-              <div className="bg-white rounded-lg border border-gray-200 p-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">{selectedProgramData.name}</h3>
-                <div className="space-y-3">
-                  {selectedProgramData.features.map((feature, index) => (
-                    <div key={index} className="flex items-center space-x-2">
-                      <span className="text-green-500">✅</span>
-                      <span className="text-gray-700">{feature}</span>
-                    </div>
-                  ))}
+          {/* Skill Phase */}
+          <div className="p-6 border-b">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h3 className="text-xl font-bold">Skill Phase</h3>
+                <div className="text-2xl font-bold text-gray-900 mt-1">
+                  ₹7199 <span className="text-sm font-normal text-gray-500">Inclusive GST</span>
                 </div>
               </div>
-            )}
-
-            {/* Selected Add-on Details */}
-            {selectedAddOnData && (
-              <div className="bg-white rounded-lg border border-gray-200 p-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">{selectedAddOnData.name}</h3>
-                <p className="text-gray-600 mb-4">{selectedAddOnData.description}</p>
-                <div className="space-y-2">
-                  {selectedAddOnData.features.map((feature, index) => (
-                    <div key={index} className="flex items-center space-x-2">
-                      <span className="text-green-500">✅</span>
-                      <span className="text-gray-700">{feature}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Package Summary */}
-            <div className="bg-white rounded-lg border-2 border-[#FC4C03] p-6">
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">Package Summary</h3>
-
-              {calculatedPricing && (
-                <div className="space-y-3 mb-6">
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-700">
-                      {selectedProgramData?.name} ({currentDuration} months):
-                    </span>
-                    <span className="font-semibold">${calculatedPricing.programPrice.toLocaleString()}</span>
-                  </div>
-
-                  {selectedAddOnData && (
-                    <div className="flex justify-between items-center">
-                      <span className="text-gray-700">Add on ({selectedAddOnData.name}):</span>
-                      <span className="font-semibold">${calculatedPricing.addonPrice.toLocaleString()}</span>
-                    </div>
-                  )}
-
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-700">Subtotal:</span>
-                    <span className="font-semibold">${calculatedPricing.subtotal.toLocaleString()}</span>
-                  </div>
-
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-700">Tax (18%):</span>
-                    <span className="font-semibold">${calculatedPricing.gst.toLocaleString()}</span>
-                  </div>
-
-                  <hr className="my-4" />
-
-                  <div className="flex justify-between items-center text-lg font-bold">
-                    <span>Total</span>
-                    <span className="text-[#FC4C03]">${calculatedPricing.total.toLocaleString()}</span>
-                  </div>
-                </div>
-              )}
-
-              <div className="text-xs text-gray-500 mb-4">
-                ADD Declaration: I hereby declare that the information provided above is true and correct to the best of
-                my knowledge and belief. I understand that any false statement may result in the cancellation of my
-                request.
-              </div>
-
-              <button
-                onClick={handleBuyNow}
-                className="w-full bg-[#FC4C03] text-white font-semibold py-3 px-6 rounded-lg hover:bg-[#e63d00] transition-colors"
-              >
-                Buy Now
-              </button>
+              {/* <div className="flex items-center gap-4">
+                <select className="border rounded px-3 py-2 text-sm">
+                  <option>1 Month</option>
+                </select>
+                <ChevronDown className="w-4 h-4 text-gray-400" />
+              </div> */}
             </div>
+
+            <ProgramSelection
+              programIds={["skill-phase"]}
+              category="programs"
+              products={products}
+              selectedProgram={selectedProgram}
+              setSelectedProgram={setSelectedProgram}
+              selectedDurations={selectedDurations}
+              setSelectedDurations={setSelectedDurations}
+            />
+          </div>
+
+          {/* Practice Phase */}
+          <div className="p-6 border-b">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h3 className="text-xl font-bold">Practice Phase</h3>
+                <div className="text-2xl font-bold text-gray-900 mt-1">
+                  ₹7199 <span className="text-sm font-normal text-gray-500">Inclusive GST</span>
+                </div>
+              </div>
+              {/* <div className="flex items-center gap-4">
+                <select className="border rounded px-3 py-2 text-sm">
+                  <option>3 Months</option>
+                  <option>6 Months</option>
+                </select>
+                <ChevronDown className="w-4 h-4 text-gray-400" />
+              </div> */}
+            </div>
+
+            <ProgramSelection
+              programIds={["practice-basic", "practice-pro", "practice-elite"]}
+              category="programs"
+              products={products}
+              selectedProgram={selectedProgram}
+              setSelectedProgram={setSelectedProgram}
+              selectedDurations={selectedDurations}
+              setSelectedDurations={setSelectedDurations}
+            />
+          </div>
+
+          {/* Progress Phase */}
+          <div className="p-6 border-b">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h3 className="text-xl font-bold">Progress Phase</h3>
+                <div className="text-2xl font-bold text-gray-900 mt-1">
+                  ₹7199 <span className="text-sm font-normal text-gray-500">Inclusive GST</span>
+                </div>
+              </div>
+              {/* <div className="flex items-center gap-4">
+                <select className="border rounded px-3 py-2 text-sm">
+                  <option>1 Month</option>
+                </select>
+                <ChevronDown className="w-4 h-4 text-gray-400" />
+              </div> */}
+            </div>
+
+            <ProgramSelection
+              programIds={["progress-basic", "progress-pro", "progress-elite"]}
+              category="programs"
+              products={products}
+              selectedProgram={selectedProgram}
+              setSelectedProgram={setSelectedProgram}
+              selectedDurations={selectedDurations}
+              setSelectedDurations={setSelectedDurations}
+            />
+          </div>
+
+          {/* Add-On Services */}
+          <div className="p-6">
+            <h3 className="text-xl font-bold mb-6">Add-On Services</h3>
+
+            <AddonSection
+              title="Payroll Services"
+              description="Streamline your payroll operations"
+              color="blue"
+              sectionKey="payroll"
+              addonIds={['payroll-payroll-epf', 'payroll-tax-filing']}
+              allAddons={products.programAddons}
+              expandedSections={expandedSections}
+              toggleSection={toggleSection}
+              selectedAddons={selectedAddons}
+              onSelect={handleAddonSelect}
+            />
+
+            <AddonSection
+              title="CA Services"
+              description="Professional accounting support"
+              color="yellow"
+              sectionKey="ca"
+              addonIds={['ca-freelancer-basic', 'ca-freelancer-pro', 'ca-freelancer-elite']}
+              allAddons={products.programAddons}
+              expandedSections={expandedSections}
+              toggleSection={toggleSection}
+              selectedAddons={selectedAddons}
+              onSelect={handleAddonSelect}
+            />
+
+            <AddonSection
+              title="Legal Services"
+              description="Comprehensive legal support"
+              color="red"
+              sectionKey="legal"
+              addonIds={['legal-legal-support', 'legal-business-setup']}
+              allAddons={products.programAddons}
+              expandedSections={expandedSections}
+              toggleSection={toggleSection}
+              selectedAddons={selectedAddons}
+              onSelect={handleAddonSelect}
+            />
           </div>
         </div>
 
-        {/* Add-on suggestion modal */}
-        {showAddOnSuggestion && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-6 max-w-md mx-4">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Enhance Your Experience!</h3>
-              <p className="text-gray-600 mb-6">
-                We noticed you haven't selected any add-on services. Our add-ons can significantly enhance your learning
-                experience with professional support, legal assistance, and career services. Would you like to review
-                them?
-              </p>
-              <div className="flex space-x-3">
-                <button
-                  onClick={() => setShowAddOnSuggestion(false)}
-                  className="flex-1 px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
-                >
-                  Let me choose
-                </button>
-                <button
-                  onClick={continueWithoutAddOn}
-                  className="flex-1 px-4 py-2 bg-[#FC4C03] text-white rounded-md hover:bg-[#e63d00]"
-                >
-                  Continue without add-on
-                </button>
+        {/* Program Summary */}
+        <div className="mt-8 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg p-6">
+          <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+            Your Program Summary
+            <Plus className="w-5 h-5" />
+          </h3>
+
+          <div className="space-y-3">
+            {selectedProgram && products.programs[selectedProgram as keyof typeof products.programs] && (
+              <div className="flex justify-between items-center">
+                <span className="text-white/90">{products.programs[selectedProgram as keyof typeof products.programs].name}</span>
+                <span className="font-semibold">₹{costs.programCost.toLocaleString()}</span>
               </div>
+            )}
+
+            {["payroll", "ca", "legal"].map((key) => {
+              const addonId = selectedAddons[key];
+              const addon = { ...products.programAddons, ...products.freelancerAddons }[addonId as keyof typeof products.programAddons];
+              return (
+                <div key={key} className="flex justify-between items-center">
+                  <span className="text-white/90">
+                    Add-on {key.charAt(0).toUpperCase() + key.slice(1)} Services (Optional)
+                  </span>
+                  <span className="font-semibold">₹{addon ? addon.price.toLocaleString() : "0"}</span>
+                </div>
+              );
+            })}
+
+            <hr className="border-white/30 my-4" />
+
+            <div className="flex justify-between items-center font-bold text-xl">
+              <span>Total</span>
+              <span>₹{costs.total.toLocaleString()}</span>
             </div>
           </div>
-        )}
+
+          <div className="mt-6 text-sm text-white/80 leading-relaxed">
+            This module provides hands-on training in web design, covering HTML, CSS, JavaScript, and responsive design techniques. Students will learn to create professional websites from scratch using modern tools and frameworks. Join now!
+          </div>
+
+          <button
+            onClick={handleBuyNow}
+            className="w-full bg-white text-orange-600 font-bold py-3 px-6 rounded-lg hover:bg-gray-100 transition-colors mt-6 text-lg"
+          >
+            Buy Now
+          </button>
+        </div>
       </div>
-    </section>
+    </div>
   )
 }
 
-export default ProgramSelection
+export default PricingInterface

@@ -31,7 +31,8 @@ const InvoiceComponent = () => {
 
     setEmailLoading(true)
     try {
-      const response = await fetch("/api/send-invoice-email", {
+      const backend_url = process.env.BACKEND_URL || "http://localhost:8000"
+      const response = await fetch(`${backend_url}/api/v1/invoices/send`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

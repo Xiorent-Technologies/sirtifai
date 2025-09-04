@@ -53,8 +53,10 @@ export async function POST(request: NextRequest) {
           const protocol = request.headers.get("x-forwarded-proto") || "https"
           const host = request.headers.get("host") || request.headers.get("x-forwarded-host")
           const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || (host ? `${protocol}://${host}` : "http://localhost:3000")
+          const backend_url = process.env.BACKEND_URL || "http://localhost:8000"
+          await fetch(`${backend_url}/api/v1/invoices/send`, {
 
-          await fetch(`${baseUrl}/api/send-invoice-email`, {
+          // await fetch(`${baseUrl}/api/send-invoice-email`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

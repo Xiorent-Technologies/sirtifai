@@ -1,5 +1,29 @@
-import Image from "next/image"
-import { CtaButton } from "../../common/cta-button"
+"use client"
+
+import { motion } from "framer-motion"
+import type { MotionProps } from "framer-motion"
+import React from "react"
+
+// Typed motion components
+const MotionDiv = motion.div as unknown as React.FC<React.HTMLAttributes<HTMLDivElement> & MotionProps>
+const MotionH2 = motion.h2 as unknown as React.FC<React.HTMLAttributes<HTMLHeadingElement> & MotionProps>
+const MotionP = motion.p as unknown as React.FC<React.HTMLAttributes<HTMLParagraphElement> & MotionProps>
+const MotionButton = motion.button as unknown as React.FC<React.ButtonHTMLAttributes<HTMLButtonElement> & MotionProps>
+
+// Variants
+const containerVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut", staggerChildren: 0.12 },
+  },
+}
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 14 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: "easeOut" } },
+}
 
 export default function ImpactActions() {
   return (
@@ -16,16 +40,34 @@ export default function ImpactActions() {
   </div> */}
 
       {/* Quote Box */}
-      <div className="mx-auto w-full sm:w-[70%] rounded-md bg-[#FEF7F1] py-4 sm:py-6 shadow-2xl relative z-10 px-3 sm:px-0">
-        <h2 className="text-center font-sans text-base sm:text-4xl font-extrabold tracking-wide text-[#FE7743]">
+      <MotionDiv
+        initial={{ opacity: 0, y: 16, scale: 0.98 }}
+        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+        viewport={{ once: true, amount: 0.4, margin: "-100px 0px -100px 0px" }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className="mx-auto w-full sm:w-[70%] rounded-md bg-[#FEF7F1] py-4 sm:py-6 shadow-2xl relative z-10 px-3 sm:px-0"
+     >
+        <MotionH2
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.6 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
+          className="text-center font-sans text-base sm:text-4xl font-extrabold tracking-wide text-[#FE7743]"
+        >
           “Every Drop Counts. Make Yours Matter.”
-        </h2>
-      </div>
+        </MotionH2>
+      </MotionDiv>
 
       {/* Description + Buttons */}
-      <div className="max-w-2xl mx-auto px-2 sm:px-4 pb-12 pt-10 sm:pt-20 relative z-10">
+      <MotionDiv
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.25, margin: "-120px 0px -120px 0px" }}
+        className="max-w-2xl mx-auto px-2 sm:px-4 pb-12 pt-10 sm:pt-20 relative z-10"
+      >
         <div className="space-y-4 text-gray-700">
-          <p className="text-sm sm:text-lg leading-5 sm:leading-6 text-center">
+          <MotionP variants={itemVariants} className="text-sm sm:text-lg leading-5 sm:leading-6 text-center">
             “Every Drop Counts. Make Yours Matter.” is a powerful reminder that even the smallest
             actions can create meaningful impact. Just like a single drop of water contributes
             to filling an ocean, every individual effort—whether it’s donating, volunteering, or
@@ -35,19 +77,31 @@ export default function ImpactActions() {
             recognize the value of their role and to use it for something bigger than themselves.
             Ultimately, it means that no effort is too small, and when we choose to make our
             “drop” count, we help shape a better, brighter future.
-          </p>
+          </MotionP>
         </div>
 
         {/* Buttons */}
-        <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
-          <button className="w-full sm:w-auto inline-flex justify-center items-center rounded-full bg-[#FE7743] hover:bg-[#FE7743] text-white font-medium text-sm md:text-base px-4 md:px-10 py-2 md:py-4 shadow-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40">
+        <MotionDiv variants={itemVariants} className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <MotionButton
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.98 }}
+            transition={{ type: "spring", stiffness: 320, damping: 24 }}
+            className="w-full sm:w-auto inline-flex justify-center items-center rounded-full bg-[#FE7743] hover:bg-[#FE7743] text-white font-medium text-sm md:text-base px-4 md:px-10 py-2 md:py-4 shadow-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+          >
             Donate Now
-          </button>
-          <button className="w-full sm:w-auto inline-flex justify-center items-center rounded-full bg-[#284050] hover:bg-[#284050] text-white font-medium text-sm md:text-base px-4 md:px-10 py-2 md:py-4 shadow-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40">
-            Partner with Us
-          </button>
-        </div>
-      </div>
+
+          </MotionButton>
+          <MotionButton
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.98 }}
+            transition={{ type: "spring", stiffness: 320, damping: 24 }}
+            className="w-full sm:w-auto inline-flex justify-center items-center rounded-full bg-[#284050] hover:bg-[#284050] text-white font-medium text-sm md:text-base px-4 md:px-10 py-2 md:py-4 shadow-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+          >
+            Schedule A Free Call
+          </MotionButton>
+        </MotionDiv>
+      </MotionDiv>
+
     </section>
 
   )

@@ -224,13 +224,13 @@ export const PhoneSupportSection = () => {
               <div className="text-gray-800 text-[13.5px] sm:text-[15px] md:text-xl lg:text-[1.55rem] leading-relaxed max-w-xl w-full">
                 <span className="font-semibold block mb-1">Content:</span>
                 <ul className="list-disc pl-5 space-y-1.5 marker:text-gray-600">
-                  <MotionLi
+                  {/* <MotionLi
                     initial={{ opacity: 0, x: -10 }}
                     animate={sectionInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }}
                     transition={{ duration: 0.4, delay: 1.4 }}
                   >
                     <span className="font-semibold">Number:</span> 91-xxxxxxxxxxx
-                  </MotionLi>
+                  </MotionLi> */}
                   <MotionLi
                     initial={{ opacity: 0, x: -10 }}
                     animate={sectionInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }}
@@ -252,7 +252,7 @@ export const PhoneSupportSection = () => {
             </MotionDiv>
 
             {/* Call Button aligned right (mobile too) */}
-            <MotionDiv
+            {/* <MotionDiv
               className="mt-8 flex w-full"
               initial={{ opacity: 0, y: 20 }}
               animate={sectionInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -270,7 +270,7 @@ export const PhoneSupportSection = () => {
                   <Phone size={14} className="text-gray-700" />
                 </span>
               </MotionA>
-            </MotionDiv>
+            </MotionDiv> */}
           </MotionDiv>
         </div>
       </div>

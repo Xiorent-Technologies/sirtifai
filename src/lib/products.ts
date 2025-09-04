@@ -21,6 +21,8 @@ export interface ProductsData {
   programAddons: Record<string, Product>
   freelancer: Record<string, Product>
   freelancerAddons: Record<string, Product>
+  international: Record<string, Product>
+  internationalAddons: Record<string, Product>
 }
 
 export const PRODUCTS: ProductsData = productsData as ProductsData
@@ -32,6 +34,8 @@ export const getAllProducts = (): Product[] => {
     ...Object.values(PRODUCTS.programAddons),
     ...Object.values(PRODUCTS.freelancer),
     ...Object.values(PRODUCTS.freelancerAddons),
+    ...Object.values(PRODUCTS.international),
+    ...Object.values(PRODUCTS.internationalAddons),
   ]
 }
 
@@ -81,9 +85,9 @@ export const getProgressPhaseProducts = (): Product[] => {
 }
 
 export interface StandardizedPackageData {
-  type: "program" | "freelancer" | "international"
+  type: "programs" | "freelancer" | "international"
   selectedProduct: string
-  selectedAddon: string | null
+  selectedAddon: string[] | null   // <-- array of addon IDs or null
   productData: {
     id: string
     name: string
@@ -99,7 +103,7 @@ export interface StandardizedPackageData {
     price: number
     description: string
     features: string[]
-  } | null
+  }[] | null  // <-- array of addon objects or null
   pricing: {
     programPrice: number
     addonPrice: number
@@ -109,37 +113,42 @@ export interface StandardizedPackageData {
   }
 }
 
+
+
 export const createStandardizedPackageData = (
-  type: "program" | "freelancer",
+  type: "programs" | "freelancer" | "international",
   productId: string,
-  addonId: string | null = null,
+  addonIds: string[] = [],
   duration = 1,
 ): StandardizedPackageData => {
   const product = getProductById(productId)
-  const addon = addonId ? getProductById(addonId) : null
 
   if (!product) {
     throw new Error(`Product with id ${productId} not found`)
   }
 
-  const productPrice = getProductPrice(product)
-  const addonPrice = addon ? getProductPrice(addon) : 0
+  const addons = addonIds
+    .map(id => getProductById(id))
+    .filter(Boolean) as Product[] // assuming Product type
 
-  const programPrice = type === "program" ? productPrice * duration : productPrice
+  const productPrice = getProductPrice(product)
+  const addonPrice = addons.reduce((sum, addon) => sum + getProductPrice(addon), 0)
+
+  const programPrice = type === "programs" ? productPrice * duration : productPrice
   const subtotal = programPrice + addonPrice
-  const gst = Math.round(subtotal * 0.18)
+  const gst = 0
   const total = subtotal + gst
 
   return {
     type,
     selectedProduct: productId,
-    selectedAddon: addonId,
+    selectedAddon: addonIds.length ? addonIds : null,
     productData: {
       id: product.id,
       name: product.name,
       price: productPrice,
-      duration: type === "program" ? duration : undefined,
-      category: product.category.includes("program") ? product.category.replace("program-", "") : undefined,
+      duration: type === "programs" ? duration : undefined,
+      category: product.category.includes("programs") ? product.category.replace("program-", "") : undefined,
       tier: product.name.toLowerCase().includes("basic")
         ? "basic"
         : product.name.toLowerCase().includes("pro")
@@ -149,14 +158,14 @@ export const createStandardizedPackageData = (
             : undefined,
       features: product.features || [],
     },
-    addonData: addon
-      ? {
+    addonData: addons.length
+      ? addons.map(addon => ({
           id: addon.id,
           name: addon.name,
-          price: addonPrice,
+          price: getProductPrice(addon),
           description: addon.description,
           features: addon.features || [],
-        }
+        }))
       : null,
     pricing: {
       programPrice,

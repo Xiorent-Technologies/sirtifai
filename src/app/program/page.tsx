@@ -32,7 +32,7 @@ export default function ProgramPage({ params }: ProgramProps) {
 
       {/* Adds on pricing */}
 
-      <AddOnsPricing />
+      {/* <AddOnsPricing /> */}
 
       {/* who can use it */}
       <WhoCanUse />

@@ -1,11 +1,77 @@
+"use client";
 import { CtaButton } from "../../common/cta-button";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
+
+const MotionDiv = motion.div as React.ComponentType<any>;
+const MotionImg = motion.img as React.ComponentType<any>;
+const MotionH1 = motion.h1 as React.ComponentType<any>;
+const MotionP = motion.p as React.ComponentType<any>;
+const MotionSection = motion.section as React.ComponentType<any>;
 
 export default function JobTech() {
+  const jobTechRef = useRef<HTMLDivElement>(null);
+  const jobTechInView = useInView(jobTechRef as React.RefObject<Element>, {
+    once: true,
+    margin: "-100px",
+  });
+  // Animation variants for grid items
+  const gridItemVariants = {
+    hidden: { opacity: 0, y: 40 },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.7, delay: 0.2 + i * 0.15 },
+    }),
+  };
+
+  // Divider animation
+  const dividerVariants = {
+    hidden: { opacity: 0, scaleX: 0 },
+    visible: {
+      opacity: 1,
+      scaleX: 1,
+      transition: { duration: 0.7, delay: 0.5 },
+    },
+  };
+
+  // CTA animation
+  const ctaVariants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: { duration: 0.7, delay: 1.2 },
+    },
+  };
+
   return (
-    <section className="w-full bg-[#fff] py-16">
-      <div className=" mx-auto ">
+    <MotionSection
+      ref={jobTechRef}
+      className="w-full bg-[#fff] py-16"
+      initial={{ opacity: 0 }}
+      animate={jobTechInView ? { opacity: 1 } : { opacity: 0 }}
+      transition={{ duration: 0.8 }}
+    >
+      <MotionDiv
+        className=" mx-auto "
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={
+          jobTechInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }
+        }
+        transition={{ duration: 0.8, delay: 0.3 }}
+      >
         {/* Header */}
-        <div className="mb-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
+        <MotionDiv
+          className="mb-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={
+            jobTechInView
+              ? { opacity: 1, scale: 1 }
+              : { opacity: 0, scale: 0.9 }
+          }
+          transition={{ duration: 0.8, delay: 0.3 }}
+        >
           <p className="text-sm font-semibold tracking-wide text-[#FC4C03] uppercase mb-2">
             About Sirtifai
           </p>
@@ -18,12 +84,17 @@ export default function JobTech() {
             <span className="sm:hidden">Project Stack</span> •{" "}
             <span className="font-normal">Integrating</span>
           </h3>
-        </div>
+        </MotionDiv>
 
-        {/* Divider */}
-        <div className="h-8 w-full bg-[#FE7743] mb-10"></div>
+        {/* Divider with animation */}
+        <MotionDiv
+          className="h-8 w-full bg-[#FE7743] mb-10 origin-left"
+          initial="hidden"
+          animate={jobTechInView ? "visible" : "hidden"}
+          variants={dividerVariants}
+        ></MotionDiv>
 
-        {/* Content Grid */}
+        {/* Content Grid with staggered animation */}
         <div className="grid md:grid-cols-2 max-w-7xl mx-auto px-4 md:px-6 lg:px-8 gap-10 text-sm text-gray-800">
           {/* Left Column */}
           <div className="space-y-6">
@@ -112,7 +183,7 @@ export default function JobTech() {
                   track.
                 </li>
               </ul>
-              <p className="mt-1">💰 Pricing: ₹5,999 – ₹59999/month</p>
+              <p className="mt-1">💰 Pricing: ₹5,999 – ₹5,99,999/month</p>
 
               <h5 className="font-bold mt-4 mb-1">Sirtifai International</h5>
               <ul className="list-disc list-inside space-y-1 text-gray-700">
@@ -121,8 +192,8 @@ export default function JobTech() {
                 <li>ROI: ₹59,000–₹3L investment → ₹20–35L/year jobs abroad.</li>
               </ul>
               <p className="mt-1">
-                💰 Pricing: Basic – ₹59,000 | Pro – ₹1,77,000 | Elite –
-                ₹3,00,000
+                💰 Pricing: Basic – ₹79,999 | Pro – ₹2,12,999 | Elite –
+                ₹6,37,999
               </p>
 
               <h5 className="font-bold mt-4 mb-1">
@@ -134,7 +205,7 @@ export default function JobTech() {
                 <li>Income range: ₹12K–₹35K/month.</li>
               </ul>
               <p className="mt-1">
-                💰 Pricing: Basic – ₹11,798 | Pro – ₹23,598 | Elite – ₹42,478
+                💰 Pricing: Basic – ₹15,000 | Pro – ₹31,860 | Elite – ₹70,800
               </p>
             </div>
 
@@ -156,11 +227,16 @@ export default function JobTech() {
           </div>
         </div>
 
-        {/* Optional CTA Button */}
-        <div className="mt-12 text-center">
+        {/* Optional CTA Button with animation */}
+        <MotionDiv
+          className="mt-12 text-center"
+          initial="hidden"
+          animate={jobTechInView ? "visible" : "hidden"}
+          variants={ctaVariants}
+        >
           {/* <CtaButton>Learn More</CtaButton> */}
-        </div>
-      </div>
-    </section>
+        </MotionDiv>
+      </MotionDiv>
+    </MotionSection>
   );
 }
