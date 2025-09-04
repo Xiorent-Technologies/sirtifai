@@ -93,6 +93,7 @@ export default function ImpactActions() {
             className="w-full sm:w-auto inline-flex justify-center items-center rounded-full bg-[#FE7743] hover:bg-[#FE7743] text-white font-medium text-sm md:text-base px-4 md:px-10 py-2 md:py-4 shadow-sm transition-colors"
           >
             Donate Now
+
           </MotionButton>
           <MotionButton
             whileHover={{ scale: 1.03 }}
@@ -105,6 +106,7 @@ export default function ImpactActions() {
         </MotionDiv>
       </MotionDiv>
             <DonateModal isOpen={isDonateModalOpen} onClose={() => setDonateModalOpen(false)} />
+
 
     </section>
 

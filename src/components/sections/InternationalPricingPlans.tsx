@@ -61,7 +61,9 @@ const PRICING_PLANS: PricingPlan[] = [
       'Legal documentation assistance',
       'Relocation support services',
       'Dedicated international placement manager',
-      '6-month post-placement support'
+      '6-month post-placement support',
+      'Visa and Immigration support and Assign RM until they settle in represent country',
+      '4 Months additional Resume Booster with mentor and Workshops '
     ],
     buttonText: 'Select Elite Plan'
   }
