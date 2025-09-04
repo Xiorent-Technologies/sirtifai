@@ -17,6 +17,12 @@ declare global {
   }
 }
 
+
+const MotionDiv = motion.div as React.ComponentType<
+  React.HTMLAttributes<HTMLDivElement> & import('framer-motion').MotionProps
+>;
+
+
 export default function DonateModal({ isOpen, onClose }: DonateModalProps) {
   const [selected, setSelected] = useState<string | null>(null)
   const [customAmount, setCustomAmount] = useState("")
@@ -53,7 +59,9 @@ export default function DonateModal({ isOpen, onClose }: DonateModalProps) {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
-    const { name, value, type, checked } = e.target
+    const { name, value, type } = e.target
+    const checked = (e.target as HTMLInputElement).checked
+    
     setFormData((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
@@ -154,16 +162,16 @@ export default function DonateModal({ isOpen, onClose }: DonateModalProps) {
   return (
     <AnimatePresence>
       {isOpen && (
-        <motion.div
+        <MotionDiv
           key="backdrop"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm px-4"
           onClick={onClose}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm px-4"
         >
           {/* Modal Container */}
-          <motion.div
+          <MotionDiv
             key="modal"
             initial={{ opacity: 0, scale: 0.95, y: 30 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -272,8 +280,8 @@ export default function DonateModal({ isOpen, onClose }: DonateModalProps) {
             >
               {loading ? "Processing..." : "Proceed to Donate"}
             </button>
-          </motion.div>
-        </motion.div>
+          </MotionDiv>
+        </MotionDiv>
       )}
     </AnimatePresence>
   )
