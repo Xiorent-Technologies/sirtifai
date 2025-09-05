@@ -111,20 +111,13 @@ const PricingInterface = () => {
           </div>
 
           {/* Skill Phase */}
-          <div className="p-6 border-b">
+          {/* <div className="p-6 border-b">
             <div className="flex items-center justify-between mb-4">
               <div>
                 <h3 className="text-xl font-bold">Freelancer Basic Package</h3>
-                {/* <div className="text-2xl font-bold text-gray-900 mt-1">
-                  ₹7199 <span className="text-sm font-normal text-gray-500">Inclusive GST</span>
-                </div> */}
+                
               </div>
-              {/* <div className="flex items-center gap-4">
-                <select className="border rounded px-3 py-2 text-sm">
-                  <option>1 Month</option>
-                </select>
-                <ChevronDown className="w-4 h-4 text-gray-400" />
-              </div> */}
+             
             </div>
 
             <ProgramSelection
@@ -136,24 +129,16 @@ const PricingInterface = () => {
               selectedDurations={selectedDurations}
               setSelectedDurations={setSelectedDurations}
             />
-          </div>
+          </div> */}
 
           {/* Practice Phase */}
-          <div className="p-6 border-b">
+          {/* <div className="p-6 border-b">
             <div className="flex items-center justify-between mb-4">
               <div>
                 <h3 className="text-xl font-bold">Freelancer Pro Package</h3>
-                {/* <div className="text-2xl font-bold text-gray-900 mt-1">
-                  ₹7199 <span className="text-sm font-normal text-gray-500">Inclusive GST</span>
-                </div> */}
+              
               </div>
-              {/* <div className="flex items-center gap-4">
-                <select className="border rounded px-3 py-2 text-sm">
-                  <option>3 Months</option>
-                  <option>6 Months</option>
-                </select>
-                <ChevronDown className="w-4 h-4 text-gray-400" />
-              </div> */}
+            
             </div>
 
             <ProgramSelection
@@ -165,13 +150,16 @@ const PricingInterface = () => {
               selectedDurations={selectedDurations}
               setSelectedDurations={setSelectedDurations}
             />
-          </div>
+          </div> */}
 
           {/* Progress Phase */}
           <div className="p-6 border-b">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h3 className="text-xl font-bold">Freelancer Elite Package</h3>
+                <h3 className="text-xl font-bold">
+                  Freelancer 
+                   Package
+                   </h3>
                 {/* <div className="text-2xl font-bold text-gray-900 mt-1">
                   ₹7199 <span className="text-sm font-normal text-gray-500">Inclusive GST</span>
                 </div> */}

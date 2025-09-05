@@ -77,13 +77,18 @@ export const Header = () => {
       <nav className="bg-white z-50 px-4 sm:px-8 lg:px-[50px] lg:pr-[60px] py-3 flex justify-between items-center">
         {/* Logo */}
         <div className="flex items-center">
-          <img 
-            width={48} 
-            height={48} 
-            className="sm:w-[70px] sm:h-[70px] lg:w-[70px] lg:h-[70px]" 
-            src="/assets/logo.png" 
-            alt="Sirtify Logo" 
-          />
+          <button 
+            onClick={() => handleNavigation('/')}
+            className="cursor-pointer hover:opacity-80 transition-opacity"
+          >
+            <img 
+              width={48} 
+              height={48} 
+              className="sm:w-[70px] sm:h-[70px] lg:w-[70px] lg:h-[70px]" 
+              src="/assets/logo.png" 
+              alt="Sirtify Logo" 
+            />
+          </button>
         </div>
 
         {/* Desktop Navigation */}
@@ -185,7 +190,15 @@ export const Header = () => {
         
         {/* Mobile Menu Header */}
         <div className="flex justify-between items-center p-4 border-b border-gray-200 flex-shrink-0">
-          <img width={60} height={60} src="/assets/logo.png" alt="Sirtify Logo" />
+          <button 
+            onClick={() => {
+              handleNavigation('/');
+              setMobileMenuOpen(false);
+            }}
+            className="cursor-pointer hover:opacity-80 transition-opacity"
+          >
+            <img width={60} height={60} src="/assets/logo.png" alt="Sirtify Logo" />
+          </button>
           <button
             onClick={() => setMobileMenuOpen(false)}
             className="p-2 text-gray-700 hover:text-orange-500 transition-colors"

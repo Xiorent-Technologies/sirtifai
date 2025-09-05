@@ -14,7 +14,7 @@ export default function ContactPage() {
       {/* <h1>hello</h1> */}
       <Header />
       <HeroSection />
-      <PrimeInvestor />
+      {/* <PrimeInvestor /> */}
       <JobTech />
       {/* <IndustryApplications />
       <InnovationInAction />
